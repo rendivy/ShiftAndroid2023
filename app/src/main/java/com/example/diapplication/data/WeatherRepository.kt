@@ -13,8 +13,6 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 
-
-
 class WeatherRepository {
     companion object {
         const val BASE_URL = "http://api.weatherapi.com/v1/"
@@ -26,7 +24,9 @@ class WeatherRepository {
     private val retrofit = Retrofit.Builder()
         .client(provideOkHttpClientWithProgress())
         .baseUrl(BASE_URL)
-        .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(Json {
+            ignoreUnknownKeys = true
+        }.asConverterFactory("application/json".toMediaType()))
         .build()
 
     private fun provideOkHttpClientWithProgress(): OkHttpClient =
@@ -36,15 +36,13 @@ class WeatherRepository {
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .build()
 
-
-
     private val weatherApi by lazy {
         retrofit.create(WeatherApiService::class.java)
     }
 
 
     suspend fun getCurrentWeather(location: String): Weather {
-        return weatherApi.getCurrentWeather(location)
+        return weatherApi.getCurrentWeather(q = location)
     }
 
 

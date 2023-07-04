@@ -11,17 +11,6 @@ data class Weather(
 )
 
 
-@Serializable
-data class Location(
-    @SerialName("name") val name: String,
-    @SerialName("region") val region: String,
-    @SerialName("country") val country: String,
-)
 
 
-@Serializable
-data class CurrentWeather(
-    @SerialName("last_updated") val lastUpdated: String,
-    @SerialName("temp_c") val temperatureCelsius: Double,
-    @SerialName("temp_f") val temperatureFahrenheit: Double,
-)
+
