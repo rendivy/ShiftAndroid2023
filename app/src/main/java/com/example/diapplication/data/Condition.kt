@@ -1,4 +1,4 @@
-package com.example.diapplication.model
+package com.example.diapplication.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
