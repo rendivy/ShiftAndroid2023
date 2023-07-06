@@ -57,7 +57,7 @@ private fun WeatherScreen(weatherViewModel: WeatherViewModel) {
 
         Button(
             onClick = {
-                weatherViewModel.updateWeatherData(weatherViewModel, weatherCast, cityName)
+                weatherViewModel.updateWeatherData(weatherCast, cityName)
             },
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
