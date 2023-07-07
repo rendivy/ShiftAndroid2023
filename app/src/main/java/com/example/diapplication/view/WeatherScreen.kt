@@ -23,17 +23,12 @@ import com.example.diapplication.ui.theme.weatherButtonText
 import com.example.diapplication.viewModel.WeatherViewModel
 
 
-@Preview(showBackground = true)
-@Composable
-fun WeatherScreenPreview() {
-    val weatherViewModel = WeatherViewModel()
-    WeatherScreen(weatherViewModel = weatherViewModel)
-}
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun WeatherScreen(weatherViewModel: WeatherViewModel) {
+fun WeatherScreen(weatherViewModel: WeatherViewModel) {
     val weatherCast = remember { mutableStateOf("--") }
     val cityName = remember { mutableStateOf("") }
     Box(

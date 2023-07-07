@@ -5,13 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diapplication.data.Weather
 import com.example.diapplication.data.repository.WeatherRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WeatherViewModel : ViewModel() {
-    private val repository = WeatherRepository()
+@HiltViewModel
+class WeatherViewModel @Inject constructor(private val repository: WeatherRepository): ViewModel() {
+
     var weather: Weather? = null
 
-    suspend fun getWeather(location: String) {
+    private suspend fun getWeather(location: String) {
         weather = repository.getCurrentWeather(location)
     }
 
