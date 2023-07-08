@@ -43,9 +43,6 @@ class WeatherModule {
             ignoreUnknownKeys = true
         }.asConverterFactory("application/json".toMediaType()))
         .build().create(WeatherApiService::class.java)
-
-
-    @Provides
     @Singleton
     fun provideRepository(apiService: WeatherApiService): WeatherRepository{
         return WeatherRepository(apiService)
