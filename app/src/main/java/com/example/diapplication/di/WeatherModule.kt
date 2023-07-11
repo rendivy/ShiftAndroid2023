@@ -15,6 +15,11 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
+private val json = Json {
+    ignoreUnknownKeys = true
+}
+
+
 @Module
 @InstallIn(SingletonComponent::class)
 class WeatherModule {
@@ -34,17 +39,18 @@ class WeatherModule {
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .build()
 
+
     @Provides
     @Singleton
     fun provideWeatherApiService(): WeatherApiService = Retrofit.Builder()
         .client(provideOkHttpClientWithProgress())
         .baseUrl(BASE_URL)
-        .addConverterFactory(Json {
-            ignoreUnknownKeys = true
-        }.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build().create(WeatherApiService::class.java)
+
+
     @Singleton
-    fun provideRepository(apiService: WeatherApiService): WeatherRepository{
+    fun provideRepository(apiService: WeatherApiService): WeatherRepository {
         return WeatherRepository(apiService)
     }
 

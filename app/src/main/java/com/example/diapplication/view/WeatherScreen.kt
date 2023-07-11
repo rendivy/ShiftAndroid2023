@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.diapplication.R
 import com.example.diapplication.ui.theme.lightWeatherColor
 import com.example.diapplication.ui.theme.weatherButtonText
@@ -33,8 +34,8 @@ import com.example.diapplication.viewModel.WeatherViewModel
 fun WeatherScreen(weatherViewModel: WeatherViewModel) {
     val weatherCast = remember { mutableStateOf("--") }
     val cityName = remember { mutableStateOf("") }
-    val weatherState by weatherViewModel.weather.collectAsState()
-    val isLoading by weatherViewModel.isLoading.collectAsState()
+    val weatherState by weatherViewModel.weather.collectAsStateWithLifecycle()
+    val isLoading by weatherViewModel.isLoading.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier
