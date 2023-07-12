@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Condition(
-    @SerialName("text") val text: String
+    @SerialName("text") val text: String,
+    @SerialName("icon") val icon: String
 )

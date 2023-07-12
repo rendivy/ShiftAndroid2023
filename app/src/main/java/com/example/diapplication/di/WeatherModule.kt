@@ -2,6 +2,10 @@ package com.example.diapplication.di
 
 import com.example.diapplication.data.remote.WeatherApiService
 import com.example.diapplication.data.repository.WeatherRepository
+import com.example.diapplication.data.utils.Constants.BASE_URL
+import com.example.diapplication.data.utils.Constants.CONNECT_TIMEOUT
+import com.example.diapplication.data.utils.Constants.READ_TIMEOUT
+import com.example.diapplication.data.utils.Constants.WRITE_TIMEOUT
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -23,12 +27,7 @@ private val json = Json {
 @Module
 @InstallIn(SingletonComponent::class)
 class WeatherModule {
-    private companion object {
-        const val BASE_URL = "http://api.weatherapi.com/v1/"
-        const val CONNECT_TIMEOUT = 10L
-        const val READ_TIMEOUT = 10L
-        const val WRITE_TIMEOUT = 10L
-    }
+
 
     @Provides
     @Singleton

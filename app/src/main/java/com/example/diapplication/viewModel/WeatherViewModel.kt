@@ -1,8 +1,10 @@
 package com.example.diapplication.viewModel
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.diapplication.R
 import com.example.diapplication.data.CurrentWeather
 import com.example.diapplication.data.Weather
 import com.example.diapplication.data.repository.WeatherRepository
@@ -25,20 +27,27 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    private val _error = MutableStateFlow<Boolean?>(null)
+    val error: StateFlow<Boolean?> = _error
+
 
     private suspend fun getWeather(location: String) {
         _weather.value = repository.getCurrentWeather(location)
     }
 
     fun updateWeatherData(
-        weatherCast: MutableState<String>,
         cityName: MutableState<String>
     ) {
         viewModelScope.launch {
             _isLoading.value = true
-            getWeather(cityName.value)
+            try {
+                getWeather(cityName.value)
+                _error.value = true
+            } catch (e: Exception) {
+                _error.value = false
+            }
             _isLoading.value = false
         }
-        weatherCast.value = weather.value?.current?.temperatureCelsius.toString() + "°C"
+
     }
 }
