@@ -64,6 +64,8 @@ android {
 dependencies {
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
     implementation("io.coil-kt:coil-compose:$coilVersion")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation 'com.google.accompanist:accompanist-permissions:0.24.13-rc'
     androidTestImplementation "androidx.test.espresso:espresso-core:$esperssoVersion"
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlinSerrialization")
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -71,6 +73,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerrializationVersion"
     implementation 'androidx.core:core-ktx:1.10.1'
+    implementation ("androidx.work:work-runtime-ktx:2.8.1")
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation "androidx.lifecycle:lifecycle-runtime-compose:$lifeCycleVersion"

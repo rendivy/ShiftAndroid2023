@@ -1,26 +1,19 @@
 package com.example.diapplication.view
 
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,12 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.diapplication.R
 import com.example.diapplication.ui.theme.SfProDisplay
-import com.example.diapplication.ui.theme.lightWeatherColor
+import com.example.diapplication.ui.theme.SystemTealLight
 import com.example.diapplication.viewModel.WeatherViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,9 +41,9 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(lightWeatherColor),
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(SystemTealLight),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (error == false) {
             Column(
@@ -69,12 +63,18 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
         } else {
             weatherState?.location?.let {
                 Text(
-                    text = weatherState?.current?.temperatureCelsius.toString() + "°C",
-                    fontSize = 100.sp,
+                    text = weatherState?.current?.temperatureCelsius?.toInt().toString() + "°",
+                    fontSize = 102.sp,
+                    fontFamily = SfProDisplay,
+                    fontWeight = FontWeight(200),
+                    textAlign = TextAlign.Center,
+
+                )
+                Text(
+                    text = weatherState?.current?.weatherCondition?.text.toString(),
                     fontFamily = SfProDisplay,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .padding(top = 32.dp)
+                    fontSize = 22.sp,
                 )
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -101,27 +101,28 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                         fontSize = 22.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
-                }
-                Column(verticalArrangement = Arrangement.Center){
+                    LoadImageFromUrl(imageUrl = "https:" + weatherState?.current?.weatherCondition?.icon.toString())
                     Text(
-                        text = weatherState?.current?.weatherCondition?.text.toString(),
+                        text = "Last update " + weatherState?.current?.lastUpdated.toString(),
                         fontFamily = SfProDisplay,
                         fontWeight = FontWeight.Medium,
                         fontSize = 22.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
-                    Log.i(TAG, weatherState?.current?.weatherCondition?.icon.toString())
-                    LoadImageFromUrl(imageUrl = "https:"+ weatherState?.current?.weatherCondition?.icon.toString())
 
-                    Text(
-                        text = "Updated "+ weatherState?.current?.lastUpdated.toString(),
-                        fontFamily = SfProDisplay,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 22.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
                 }
-
+                Row{
+                    for (i in 0..weatherState?.forecast?.forecastDayList!!.size - 1){
+                        LoadImageFromUrl(imageUrl = "https:" + weatherState?.forecast?.forecastDayList!![i].day.condition.icon.toString())
+                        Text(
+                            text = weatherState?.forecast?.forecastDayList!![i].day.averageTemperature.toInt().toString(),
+                            fontFamily = SfProDisplay,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 22.sp,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
             }
         }
         TextField(

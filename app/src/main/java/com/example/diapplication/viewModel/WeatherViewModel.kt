@@ -1,19 +1,13 @@
 package com.example.diapplication.viewModel
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.diapplication.R
-import com.example.diapplication.data.CurrentWeather
 import com.example.diapplication.data.Weather
 import com.example.diapplication.data.repository.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

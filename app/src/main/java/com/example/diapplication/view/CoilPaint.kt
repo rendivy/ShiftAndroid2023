@@ -2,7 +2,9 @@ package com.example.diapplication.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -23,13 +25,11 @@ import coil.request.ImageRequest
 @Composable
 fun LoadImageFromUrl(imageUrl: String?) {
     Box(
-        modifier = Modifier
-            .height(25.dp)
-            .width(25.dp),
+        modifier = Modifier.height(75.dp).width(75.dp),
         contentAlignment = Alignment.Center
     ) {
         AsyncImage(
-            modifier = Modifier.clip(CircleShape),
+            modifier = Modifier.clip(CircleShape).size(65.dp),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl).crossfade(true).build(),
             contentDescription = "Weather icon",
