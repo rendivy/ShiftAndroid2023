@@ -77,11 +77,13 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
             } else {
                 weatherState?.location?.let {
                     MainWeatherData(weatherState = weatherState)
+                    Spacer(modifier = Modifier.padding(8.dp))
                     WeatherForeCastScreen(weatherState = weatherState)
-                    Spacer(modifier = Modifier.padding(10.dp))
+                    Spacer(modifier = Modifier.padding(16.dp))
                     HourScreen(weatherState = weatherState)
-                    Spacer(modifier = Modifier.padding(10.dp))
+                    Spacer(modifier = Modifier.padding(16.dp))
                     AstroScreen(weatherState = weatherState)
+                    Spacer(modifier = Modifier.padding(16.dp))
                     if (weatherState?.alerts?.alertList?.isNotEmpty() == true) {
                         GovernmentAlertButton(weatherState = weatherState)
                     }

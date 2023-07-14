@@ -1,6 +1,5 @@
 package com.example.diapplication.view
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,10 +16,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -29,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -39,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
 import com.example.diapplication.data.Weather
-import com.example.diapplication.data.model.InvertDate
+import com.example.diapplication.data.model.DateConverter
 
 
 @Composable
@@ -79,7 +74,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             )
         )
         Text(
-            text = InvertDate.invertDateTime(weatherState?.current?.lastUpdated.toString()),
+            text = DateConverter.invertDateTime(weatherState?.current?.lastUpdated.toString()),
             fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
             fontWeight = FontWeight(400),
             fontSize = 20.sp,
@@ -121,7 +116,6 @@ fun MainWeatherData(weatherState: Weather?) {
                 letterSpacing = 0.37.sp,
             )
         )
-        LoadImageFromUrl(imageUrl = "https:" + weatherState?.current?.weatherCondition?.icon.toString())
         Text(
             text = weatherState?.current?.weatherCondition?.text.toString(),
             style = TextStyle(
@@ -173,7 +167,7 @@ fun OtherDaysScreen(weatherState: Weather?) {
     LazyRow {
         for (i in 0 until weatherState?.forecast?.forecastDayList!!.size) {
             item {
-                LoadImageFromUrl(imageUrl = "https:" + weatherState.forecast.forecastDayList[i].day.condition.icon)
+                WeatherPainter(imageUrl = "https:" + weatherState.forecast.forecastDayList[i].day.condition.icon)
                 Column(verticalArrangement = Arrangement.SpaceEvenly) {
                     Text(
                         text = weatherState.forecast.forecastDayList[i].day.averageTemperature.toInt()
@@ -186,7 +180,7 @@ fun OtherDaysScreen(weatherState: Weather?) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Text(
-                        text = InvertDate.invertDate(weatherState.forecast.forecastDayList[i].date),
+                        text = DateConverter.invertDate(weatherState.forecast.forecastDayList[i].date),
                         fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                         fontWeight = FontWeight(400),
                         fontSize = 34.sp,
@@ -318,7 +312,11 @@ fun AstroScreen(weatherState: Weather?) {
                     textAlign = TextAlign.Center,
                 )
                 Text(
-                    text = weatherState?.forecast?.forecastDayList?.get(0)?.astro?.sunrise.toString(),
+                    text = DateConverter.convertTo24HourFormat(
+                        weatherState?.forecast?.forecastDayList?.get(
+                            0
+                        )?.astro?.sunrise.toString()
+                    ),
                     fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                     fontWeight = FontWeight(400),
                     fontSize = 20.sp,
@@ -340,7 +338,11 @@ fun AstroScreen(weatherState: Weather?) {
                     textAlign = TextAlign.Center,
                 )
                 Text(
-                    text = weatherState?.forecast?.forecastDayList?.get(0)?.astro?.sunset.toString(),
+                    text = DateConverter.convertTo24HourFormat(
+                        weatherState?.forecast?.forecastDayList?.get(
+                            0
+                        )?.astro?.sunset.toString()
+                    ),
                     fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                     fontWeight = FontWeight(400),
                     fontSize = 20.sp,
@@ -362,7 +364,11 @@ fun AstroScreen(weatherState: Weather?) {
                     textAlign = TextAlign.Center,
                 )
                 Text(
-                    text = weatherState?.forecast?.forecastDayList?.get(0)?.astro?.moonrise.toString(),
+                    text = DateConverter.convertTo24HourFormat(
+                        weatherState?.forecast?.forecastDayList?.get(
+                            0
+                        )?.astro?.moonrise.toString()
+                    ),
                     fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                     fontWeight = FontWeight(400),
                     fontSize = 20.sp,
@@ -384,7 +390,11 @@ fun AstroScreen(weatherState: Weather?) {
                     textAlign = TextAlign.Center,
                 )
                 Text(
-                    text = weatherState?.forecast?.forecastDayList?.get(0)?.astro?.moonset.toString(),
+                    text = DateConverter.convertTo24HourFormat(
+                        weatherState?.forecast?.forecastDayList?.get(
+                            0
+                        )?.astro?.moonset.toString()
+                    ),
                     fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                     fontWeight = FontWeight(400),
                     fontSize = 20.sp,
@@ -419,7 +429,7 @@ fun HourScreen(weatherState: Weather?) {
                         color = Color(0xFFFFFFFF),
                         textAlign = TextAlign.Center,
                     )
-                    LoadImageFromUrl(
+                    WeatherPainter(
                         imageUrl = "https:" + weatherState.forecast.forecastDayList.get(0).hourList
                             .get(i).condition.icon
                     )
