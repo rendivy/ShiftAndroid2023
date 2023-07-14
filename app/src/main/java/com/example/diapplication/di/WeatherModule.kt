@@ -19,14 +19,16 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
-private val json = Json {
-    ignoreUnknownKeys = true
-}
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 class WeatherModule {
+
+    @get:Provides
+    val json = Json {
+        ignoreUnknownKeys = true
+    }
 
 
     @Provides

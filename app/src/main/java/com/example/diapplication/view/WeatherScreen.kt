@@ -4,11 +4,14 @@ package com.example.diapplication.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -19,124 +22,110 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.diapplication.R
+import com.example.diapplication.data.Hour
 import com.example.diapplication.ui.theme.SfProDisplay
-import com.example.diapplication.ui.theme.SystemTealLight
 import com.example.diapplication.viewModel.WeatherViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherScreen(weatherViewModel: WeatherViewModel) {
-    val cityName = remember { mutableStateOf("Angarsk") }
+    val cityName = remember { mutableStateOf("Los-Angeles") }
     val weatherState by weatherViewModel.weather.collectAsStateWithLifecycle()
     val isLoading by weatherViewModel.isLoading.collectAsStateWithLifecycle()
     val error by weatherViewModel.error.collectAsStateWithLifecycle(null)
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(SystemTealLight),
+            .paint(
+                painter = painterResource(R.drawable.background),
+                contentScale = ContentScale.Crop
+            ),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (error == false) {
-            Column(
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(
-                    text = stringResource(id = R.string.error_message),
-                    fontFamily = SfProDisplay,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-            }
-        } else if (isLoading) {
-            CircularProgressIndicator(modifier = Modifier)
-        } else {
-            weatherState?.location?.let {
-                Text(
-                    text = weatherState?.current?.temperatureCelsius?.toInt().toString() + "°",
-                    fontSize = 102.sp,
-                    fontFamily = SfProDisplay,
-                    fontWeight = FontWeight(200),
-                    textAlign = TextAlign.Center,
-
-                )
-                Text(
-                    text = weatherState?.current?.weatherCondition?.text.toString(),
-                    fontFamily = SfProDisplay,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
-                )
+        item {
+            if (error == false) {
                 Column(
+                    verticalArrangement = Arrangement.SpaceEvenly,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Text(
-                        text = weatherState?.location?.country.toString(),
+                        text = stringResource(id = R.string.error_message),
                         fontFamily = SfProDisplay,
                         fontWeight = FontWeight.Medium,
                         fontSize = 22.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
-                    Text(
-                        text = weatherState?.location?.region.toString() + " region",
-                        fontFamily = SfProDisplay,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 22.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    Text(
-                        text = weatherState?.location?.name.toString(),
-                        fontFamily = SfProDisplay,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 22.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    LoadImageFromUrl(imageUrl = "https:" + weatherState?.current?.weatherCondition?.icon.toString())
-                    Text(
-                        text = "Last update " + weatherState?.current?.lastUpdated.toString(),
-                        fontFamily = SfProDisplay,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 22.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-
                 }
-                Row{
-                    for (i in 0..weatherState?.forecast?.forecastDayList!!.size - 1){
-                        LoadImageFromUrl(imageUrl = "https:" + weatherState?.forecast?.forecastDayList!![i].day.condition.icon.toString())
-                        Text(
-                            text = weatherState?.forecast?.forecastDayList!![i].day.averageTemperature.toInt().toString(),
-                            fontFamily = SfProDisplay,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 22.sp,
-                            modifier = Modifier.padding(8.dp)
-                        )
+            } else if (isLoading) {
+                CircularProgressIndicator(modifier = Modifier)
+            } else {
+                weatherState?.location?.let {
+                    MainWeatherData(weatherState = weatherState)
+                    WeatherForeCastScreen(weatherState = weatherState)
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    HourScreen(weatherState = weatherState)
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    AstroScreen(weatherState = weatherState)
+                    if (weatherState?.alerts?.alertList?.isNotEmpty() == true) {
+                        GovernmentAlertButton(weatherState = weatherState)
                     }
+                    OtherDaysScreen(weatherState = weatherState)
                 }
             }
-        }
-        TextField(
-            value = cityName.value,
-            onValueChange = { cityName.value = it },
-            label = { Text("Enter city name") }
-        )
+            TextField(
+                modifier = Modifier
+                    .padding(2.dp)
+                    .background(color = Color.Transparent, shape = RoundedCornerShape(size = 18.dp))
+                    .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp),
+                value = cityName.value,
+                onValueChange = { cityName.value = it },
+                label = {
+                    Text(
+                        text = "Enter city name",
+                        fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+                        fontWeight = FontWeight(400),
+                        fontSize = 20.sp,
+                        color = Color(0xFFFFFFFF),
+                        textAlign = TextAlign.Center)
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
+            )
+            Button(
+                onClick = {
+                    weatherViewModel.updateWeatherData(cityName)
+                },
+                modifier = Modifier
+                    .padding(2.dp)
+                    .background(color = Color.Transparent, shape = RoundedCornerShape(size = 18.dp))
+                    .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB200)),
+            ) {
+                Text(
+                    text = "3-day forecast",
+                    fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+                    fontWeight = FontWeight(400),
+                    fontSize = 20.sp,
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                )
+            }
 
-        Button(
-            onClick = {
-                weatherViewModel.updateWeatherData(cityName)
-            },
-        ) {
-            Text(text = stringResource(id = R.string.weatherButtonText))
         }
     }
 }
