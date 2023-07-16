@@ -50,11 +50,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
 
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .paint(
-                painter = painterResource(R.drawable.background),
-                contentScale = ContentScale.Crop
-            ),
+            .fillMaxSize().background(color = Color.Black),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -99,7 +95,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                 onValueChange = { cityName.value = it },
                 label = {
                     Text(
-                        text = "Enter city name",
+                        text = stringResource(id = R.string.city_name),
                         fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                         fontWeight = FontWeight(400),
                         fontSize = 20.sp,
@@ -119,7 +115,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB200)),
             ) {
                 Text(
-                    text = "3-day forecast",
+                    text = stringResource(id = R.string.update_weather),
                     fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                     fontWeight = FontWeight(400),
                     fontSize = 20.sp,

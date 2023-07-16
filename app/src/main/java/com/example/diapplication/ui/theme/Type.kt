@@ -13,7 +13,7 @@ val SfProDisplay = FontFamily(
         Font(R.font.sf_pro_meduim, FontWeight.Normal),
         Font(R.font.sf_pro_bold, FontWeight.Bold),
         Font(R.font.sf_pro_regular, FontWeight.Medium),
-        Font(R.font.sf_pro_thin, FontWeight.Thin)
+        Font(R.font.ubuntu_condensed, FontWeight.Thin)
 )
 
 
