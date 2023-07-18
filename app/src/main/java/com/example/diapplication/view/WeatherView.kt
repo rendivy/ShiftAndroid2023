@@ -3,11 +3,8 @@ package com.example.diapplication.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-
 import androidx.compose.foundation.layout.Column
-
 import androidx.compose.foundation.layout.Row
-
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -128,19 +125,9 @@ fun MainWeatherData(weatherState: Weather?) {
                 )
             )
         }
+        WeatherConditionImage(weatherCondition = weatherState?.current?.weatherCondition?.text.toString())
 
-        Text(
-            text = weatherState?.current?.weatherCondition?.text.toString(),
-            style = TextStyle(
-                fontSize = 32.sp,
-                lineHeight = 24.sp,
-                fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                fontWeight = FontWeight(600),
-                color = Color(0x99EBEBF5),
-                textAlign = TextAlign.Center,
-                letterSpacing = 0.38.sp,
-            )
-        )
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -175,6 +162,18 @@ fun MainWeatherData(weatherState: Weather?) {
                 )
             )
         }
+        Text(
+            text = weatherState?.current?.weatherCondition?.text.toString(),
+            style = TextStyle(
+                fontSize = 32.sp,
+                lineHeight = 24.sp,
+                fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+                fontWeight = FontWeight(600),
+                color = Color(0x99EBEBF5),
+                textAlign = TextAlign.Center,
+                letterSpacing = 0.38.sp,
+            )
+        )
     }
 }
 

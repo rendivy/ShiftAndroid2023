@@ -10,8 +10,6 @@ data class Weather(
     @SerialName("current") val current: CurrentWeather,
     @SerialName("forecast") val forecast: Forecast,
     @SerialName("alerts") val alerts: Alerts?,
-
-
 )
 
 
