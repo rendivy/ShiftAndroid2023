@@ -8,7 +8,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 class DateConverter {
-    companion object{
+    companion object {
         fun invertDate(dateString: String): String {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
             val date = LocalDate.parse(dateString, formatter)
@@ -20,7 +20,6 @@ class DateConverter {
 
             return "$dayOfMonth $monthName"
         }
-
 
 
         fun invertDateTime(dateTimeString: String): String {
