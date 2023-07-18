@@ -35,8 +35,6 @@ class DateConverter {
 
             return "$dayOfMonth $monthName $hour:$minute"
         }
-
-
         fun convertTo24HourFormat(time12Hour: String): String {
             val time12HourPattern = "h:mm a"
             val time24HourPattern = "HH:mm"

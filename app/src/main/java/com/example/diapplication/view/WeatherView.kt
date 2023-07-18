@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -31,8 +32,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
+import com.example.diapplication.data.Location
 import com.example.diapplication.data.Weather
 import com.example.diapplication.data.model.DateConverter
+import com.example.diapplication.data.model.LocationTimeConverter
+import java.util.Calendar
 
 
 @Composable
@@ -43,7 +47,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
     ) {
         Text(
             text = weatherState?.location?.country.toString(),
-            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(400),
             fontSize = 20.sp,
             color = Color(0xFFFFFFFF),
@@ -92,15 +96,7 @@ fun MainWeatherData(weatherState: Weather?) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(51.dp)
     ) {
-        Text(
-            text = weatherState?.location?.name.toString(),
-            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-            fontWeight = FontWeight(400),
-            fontSize = 34.sp,
-            color = Color(0xFFFFFFFF),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+
         Row() {
             Text(
                 text = weatherState?.current?.temperatureCelsius?.toInt()
@@ -432,32 +428,35 @@ fun HourScreen(weatherState: Weather?) {
     ) {
         item {
             for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
-                Column(
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-                ) {
-                    Text(
-                        text = "$i:00",
-                        fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                        fontWeight = FontWeight(400),
-                        fontSize = 20.sp,
-                        color = Color(0xFFFFFFFF),
-                        textAlign = TextAlign.Center,
-                    )
-                    WeatherPainter(
-                        imageUrl = "https:" + weatherState.forecast.forecastDayList.get(0).hourList
-                            .get(i).condition.icon
-                    )
-                    Text(
-                        text = weatherState.forecast.forecastDayList.get(0).hourList.get(i).tempC.toString() + "°",
-                        fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                        fontWeight = FontWeight(400),
-                        fontSize = 20.sp,
-                        color = Color(0xFFFFFFFF),
-                        textAlign = TextAlign.Center,
-                    )
+                if (i >= LocationTimeConverter.getCityHour(weatherState.location.name)){
+                    Column(
+                        verticalArrangement = Arrangement.SpaceBetween,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+                    ) {
+                        Text(
+                            text = "$i:00",
+                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+                            fontWeight = FontWeight(400),
+                            fontSize = 20.sp,
+                            color = Color(0xFFFFFFFF),
+                            textAlign = TextAlign.Center,
+                        )
+                        WeatherPainter(
+                            imageUrl = "https:" + weatherState.forecast.forecastDayList.get(0).hourList
+                                .get(i).condition.icon
+                        )
+                        Text(
+                            text = weatherState.forecast.forecastDayList.get(0).hourList.get(i).tempC.toString() + "°",
+                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+                            fontWeight = FontWeight(400),
+                            fontSize = 20.sp,
+                            color = Color(0xFFFFFFFF),
+                            textAlign = TextAlign.Center,
+                        )
+                    }
                 }
+
             }
         }
     }
