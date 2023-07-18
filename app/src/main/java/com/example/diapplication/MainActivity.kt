@@ -3,12 +3,10 @@ package com.example.diapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.diapplication.ui.theme.DIapplicationTheme
 import com.example.diapplication.view.WeatherScreen
 import com.example.diapplication.viewModel.WeatherViewModel
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

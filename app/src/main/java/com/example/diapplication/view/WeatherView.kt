@@ -3,11 +3,8 @@ package com.example.diapplication.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-
 import androidx.compose.foundation.layout.Column
-
 import androidx.compose.foundation.layout.Row
-
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -53,7 +51,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Text(
-            text = weatherState?.location?.region.toString() + " region",
+            text = weatherState?.location?.region.toString() + stringResource(id = R.string.region_suffix),
             fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
             fontWeight = FontWeight(400),
             fontSize = 20.sp,
@@ -62,7 +60,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Text(
-            text = "Last update",
+            text = stringResource(id = R.string.last_update),
             style = TextStyle(
                 fontSize = 24.sp,
                 lineHeight = 24.sp,
@@ -103,37 +101,41 @@ fun MainWeatherData(weatherState: Weather?) {
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        Text(
-            text = weatherState?.current?.temperatureCelsius?.toInt()
-                .toString() + "\u00B0",
-            style = TextStyle(
-                fontSize = 96.sp,
-                lineHeight = 70.sp,
-                fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                fontWeight = FontWeight(200),
-                color = Color(0xFFFFFFFF),
-                textAlign = TextAlign.Center,
-                letterSpacing = 0.37.sp,
+        Row() {
+            Text(
+                text = weatherState?.current?.temperatureCelsius?.toInt()
+                    .toString(),
+                style = TextStyle(
+                    fontSize = 96.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFFFFFFFF),
+                    letterSpacing = 0.37.sp,
+                )
             )
-        )
-        Text(
-            text = weatherState?.current?.weatherCondition?.text.toString(),
-            style = TextStyle(
-                fontSize = 32.sp,
-                lineHeight = 24.sp,
-                fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                fontWeight = FontWeight(600),
-                color = Color(0x99EBEBF5),
-                textAlign = TextAlign.Center,
-                letterSpacing = 0.38.sp,
+            Text(
+                text = "°C",
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Justify,
+                    letterSpacing = 0.37.sp,
+                )
             )
-        )
+        }
+        WeatherConditionImage(weatherCondition = weatherState?.current?.weatherCondition?.text.toString())
+
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "H:" + weatherState?.forecast?.forecastDayList?.get(0)?.day?.maximumTemperature.toString() + "\u00B0",
+                text = stringResource(id = R.string.high_sign) + weatherState?.forecast?.forecastDayList?.get(
+                    0
+                )?.day?.maximumTemperature.toString() + "\u00B0",
                 style = TextStyle(
                     fontSize = 20.sp,
                     lineHeight = 24.sp,
@@ -146,7 +148,9 @@ fun MainWeatherData(weatherState: Weather?) {
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text = "L:" + weatherState?.forecast?.forecastDayList?.get(0)?.day?.minimumTemperature.toString() + "\u00B0",
+                text = stringResource(id = R.string.low_sign) + weatherState?.forecast?.forecastDayList?.get(
+                    0
+                )?.day?.minimumTemperature.toString() + "\u00B0",
                 style = TextStyle(
                     fontSize = 20.sp,
                     lineHeight = 24.sp,
@@ -158,13 +162,25 @@ fun MainWeatherData(weatherState: Weather?) {
                 )
             )
         }
+        Text(
+            text = weatherState?.current?.weatherCondition?.text.toString(),
+            style = TextStyle(
+                fontSize = 32.sp,
+                lineHeight = 24.sp,
+                fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+                fontWeight = FontWeight(600),
+                color = Color(0x99EBEBF5),
+                textAlign = TextAlign.Center,
+                letterSpacing = 0.38.sp,
+            )
+        )
     }
 }
 
 
 @Composable
 fun OtherDaysScreen(weatherState: Weather?) {
-    LazyRow {
+    LazyRow(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
         for (i in 0 until weatherState?.forecast?.forecastDayList!!.size) {
             item {
                 WeatherPainter(imageUrl = "https:" + weatherState.forecast.forecastDayList[i].day.condition.icon)
@@ -210,7 +226,7 @@ fun GovernmentAlertButton(weatherState: Weather?) {
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB200)),
     ) {
         Text(
-            text = "Government Alert",
+            text = stringResource(id = R.string.goverment_alert),
             fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
             fontWeight = FontWeight(400),
             fontSize = 20.sp,
@@ -225,7 +241,7 @@ fun GovernmentAlertButton(weatherState: Weather?) {
             onDismissRequest = { showDialog.value = false },
             title = {
                 Text(
-                    text = "Government Alert",
+                    text = stringResource(id = R.string.goverment_alert),
                     fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                     fontWeight = FontWeight(400),
                     fontSize = 45.sp,

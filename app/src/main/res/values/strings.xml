@@ -2,4 +2,11 @@
     <string name="app_name">DIapplication</string>
     <string name="weatherButtonText">Get Weather</string>
     <string name="error_message">Please, сheck the correctness of the city</string>
+    <string name="update_weather">3-day forecast</string>
+    <string name="city_name">Enter city name</string>
+    <string name="goverment_alert">Government Alert</string>
+    <string name="region_suffix">\u0020 region</string>
+    <string name="last_update">Last update</string>'
+    <string name="high_sign">H:</string>
+    <string name="low_sign">L:</string>
 </resources>

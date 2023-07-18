@@ -22,10 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -36,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.diapplication.R
-import com.example.diapplication.data.Hour
 import com.example.diapplication.ui.theme.SfProDisplay
 import com.example.diapplication.viewModel.WeatherViewModel
 
@@ -50,11 +46,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
 
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .paint(
-                painter = painterResource(R.drawable.background),
-                contentScale = ContentScale.Crop
-            ),
+            .fillMaxSize().background(color = Color.Black),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -99,7 +91,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                 onValueChange = { cityName.value = it },
                 label = {
                     Text(
-                        text = "Enter city name",
+                        text = stringResource(id = R.string.city_name),
                         fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                         fontWeight = FontWeight(400),
                         fontSize = 20.sp,
@@ -119,7 +111,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB200)),
             ) {
                 Text(
-                    text = "3-day forecast",
+                    text = stringResource(id = R.string.update_weather),
                     fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                     fontWeight = FontWeight(400),
                     fontSize = 20.sp,
