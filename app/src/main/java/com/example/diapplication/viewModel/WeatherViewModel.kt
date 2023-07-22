@@ -36,9 +36,9 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
             _isLoading.value = true
             try {
                 getWeather(cityName.value)
-                _error.value = true
-            } catch (e: Exception) {
                 _error.value = false
+            } catch (e: Exception) {
+                _error.value = true
             }
             _isLoading.value = false
         }

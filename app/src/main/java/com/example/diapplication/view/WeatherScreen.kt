@@ -1,6 +1,7 @@
 package com.example.diapplication.view
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -30,15 +32,31 @@ import com.example.diapplication.R
 import com.example.diapplication.ui.theme.SfProDisplay
 import com.example.diapplication.view.buttons.WeatherIconButton
 import com.example.diapplication.viewModel.WeatherViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.gms.location.FusedLocationProviderClient
 
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("MissingPermission")
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
-fun WeatherScreen(weatherViewModel: WeatherViewModel) {
+fun WeatherScreen(
+    weatherViewModel: WeatherViewModel,
+    fusedLocationProviderClient: FusedLocationProviderClient
+) {
+    val context = LocalContext.current
+    val locationPermissionState =
+        rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     val cityName = remember { mutableStateOf("Los-Angeles") }
     val weatherState by weatherViewModel.weather.collectAsStateWithLifecycle()
     val isLoading by weatherViewModel.isLoading.collectAsStateWithLifecycle()
     val error by weatherViewModel.error.collectAsStateWithLifecycle(null)
     weatherViewModel.updateWeatherData(cityName)
+    fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+        latitude = it.latitude
+        longitude = it.longitude
+    }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +64,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
-            if (error == false) {
+            if (error == true) {
                 Column(
                     verticalArrangement = Arrangement.SpaceEvenly,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,6 +73,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                         text = stringResource(id = R.string.error_message),
                         fontFamily = SfProDisplay,
                         fontWeight = FontWeight.Medium,
+                        color = Color.White,
                         fontSize = 22.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
@@ -78,6 +97,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                                 fontSize = 24.sp,
                                 color = Color(0xFFFFFFFF),
                             )
+
                             Text(
                                 text = "Current location",
                                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -102,7 +122,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel) {
                     AstroScreen(weatherState = weatherState)
                     //Spacer(modifier = Modifier.padding(16.dp))
                     //if (weatherState?.alerts?.alertList?.isNotEmpty() == true) {
-                        //GovernmentAlertButton(weatherState = weatherState)
+                    //GovernmentAlertButton(weatherState = weatherState)
                     //}
                     //OtherDaysScreen(weatherState = weatherState)
 

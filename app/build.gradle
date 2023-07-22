@@ -67,7 +67,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
     implementation("io.coil-kt:coil-compose:$coilVersion")
     implementation("com.google.android.gms:play-services-location:21.0.1")
-    implementation 'com.google.accompanist:accompanist-permissions:0.24.13-rc'
+    implementation 'com.google.accompanist:accompanist-permissions:0.31.5-beta'
     androidTestImplementation "androidx.test.espresso:espresso-core:$esperssoVersion"
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlinSerrialization")
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

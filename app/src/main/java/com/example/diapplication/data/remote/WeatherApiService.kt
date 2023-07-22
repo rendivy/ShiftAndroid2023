@@ -15,6 +15,8 @@ interface WeatherApiService {
         @Query("key") key: String? = API_TOKEN,
         @Query("q") q: String,
         @Query("days") days: Int? = 3,
+        @Query("latitude") latitude: Double? = null,
+        @Query("longitude") longitude: Double? = null,
         @Query("alerts") alerts: String? = "yes",
     ): Weather
 }
