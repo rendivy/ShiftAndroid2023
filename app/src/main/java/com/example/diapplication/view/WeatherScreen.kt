@@ -17,12 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -31,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.diapplication.R
-import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.SfProDisplay
@@ -41,33 +37,28 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.FusedLocationProviderClient
 
+
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun WeatherScreen(
     weatherViewModel: WeatherViewModel,
-    userViewModel: UserViewModel,
     fusedLocationProviderClient: FusedLocationProviderClient
 ) {
-    val context = LocalContext.current
+
     val locationPermissionState =
         rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
-    val cityName = remember { mutableStateOf("") }
-    val userState by userViewModel.userState.collectAsStateWithLifecycle()
     val weatherState by weatherViewModel.weatherState.collectAsStateWithLifecycle()
-    fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-        userViewModel.updateUserInfo(it.latitude, it.longitude)
 
-        println("City name: ${cityName.value}")
-    }
 
+    //TODO Add missing permissions
     LaunchedEffect(locationPermissionState) {
         if (!locationPermissionState.status.isGranted) {
             locationPermissionState.launchPermissionRequest()
         } else {
-            // Уже имеем разрешение - запрашиваем локацию
             fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-                userViewModel.updateUserInfo(it.latitude, it.longitude)
+                weatherViewModel.updateWeatherData("${it.latitude},${it.longitude}")
+                println("Location: ${it.latitude},${it.longitude}")
             }
         }
     }
@@ -82,8 +73,7 @@ fun WeatherScreen(
             when (weatherState) {
                 is WeatherState.Loading -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(modifier = Modifier.size(120.dp))
-                        userState?.city?.let { weatherViewModel.updateWeatherData(it) }
+                        CircularProgressIndicator(modifier = Modifier.size(120.dp), color = Color.White)
                     }
                 }
 
@@ -120,7 +110,6 @@ fun WeatherScreen(
                                 fontSize = 24.sp,
                                 color = Color(0xFFFFFFFF),
                             )
-                            println(content.weather.location.name)
                             Text(
                                 text = "Current location",
                                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
