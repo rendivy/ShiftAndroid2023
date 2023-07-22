@@ -1,7 +1,7 @@
 package com.example.diapplication.data.repository
 
-import com.example.diapplication.data.UserGeocoding
 import com.example.diapplication.data.remote.ClientGeolocationService
+import com.example.diapplication.domain.entity.UserGeocoding
 import javax.inject.Inject
 import javax.inject.Singleton
 

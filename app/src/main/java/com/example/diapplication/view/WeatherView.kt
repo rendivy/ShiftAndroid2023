@@ -34,9 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
-import com.example.diapplication.data.Weather
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.data.model.LocationTimeConverter
+import com.example.diapplication.domain.entity.Weather
 
 
 @Composable

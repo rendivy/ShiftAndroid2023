@@ -1,11 +1,8 @@
-package com.example.diapplication.di
+package com.example.diapplication.domain.di
 
 import com.example.diapplication.data.remote.WeatherApiService
 import com.example.diapplication.data.repository.WeatherRepository
-import com.example.diapplication.data.utils.Constants.BASE_URL
-import com.example.diapplication.data.utils.Constants.CONNECT_TIMEOUT
-import com.example.diapplication.data.utils.Constants.READ_TIMEOUT
-import com.example.diapplication.data.utils.Constants.WRITE_TIMEOUT
+import com.example.diapplication.domain.utils.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -15,7 +12,6 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -29,21 +25,10 @@ class WeatherModule {
     val json = Json {
         ignoreUnknownKeys = true
     }
-
-
     @Provides
     @Singleton
-    fun provideOkHttpClientWithProgress(): OkHttpClient =
-        OkHttpClient().newBuilder()
-            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-            .build()
-
-    @Provides
-    @Singleton
-    fun provideWeatherApiService(): WeatherApiService = Retrofit.Builder()
-        .client(provideOkHttpClientWithProgress())
+    fun provideWeatherApiService(okHttpClient: OkHttpClient): WeatherApiService = Retrofit.Builder()
+        .client(okHttpClient)
         .baseUrl(BASE_URL)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build().create(WeatherApiService::class.java)

@@ -1,4 +1,4 @@
-package com.example.diapplication.data
+package com.example.diapplication.domain.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,6 +1,6 @@
 package com.example.diapplication.data.remote
 
-import com.example.diapplication.data.UserGeocoding
+import com.example.diapplication.domain.entity.UserGeocoding
 import retrofit2.http.GET
 import retrofit2.http.Query
 
