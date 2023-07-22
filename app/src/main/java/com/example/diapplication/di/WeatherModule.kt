@@ -29,6 +29,8 @@ class WeatherModule {
     val json = Json {
         ignoreUnknownKeys = true
     }
+
+
     @Provides
     @Singleton
     fun provideOkHttpClientWithProgress(): OkHttpClient =
@@ -38,7 +40,6 @@ class WeatherModule {
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .build()
 
-
     @Provides
     @Singleton
     fun provideWeatherApiService(): WeatherApiService = Retrofit.Builder()
@@ -46,7 +47,6 @@ class WeatherModule {
         .baseUrl(BASE_URL)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build().create(WeatherApiService::class.java)
-
 
     @Singleton
     fun provideRepository(apiService: WeatherApiService): WeatherRepository {

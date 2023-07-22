@@ -46,17 +46,18 @@ fun WeatherScreen(
     val context = LocalContext.current
     val locationPermissionState =
         rememberPermissionState(android.Manifest.permission.ACCESS_FINE_LOCATION)
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
-    val cityName = remember { mutableStateOf("Los-Angeles") }
+
+    val cityName = remember { mutableStateOf("") }
     val weatherState by weatherViewModel.weather.collectAsStateWithLifecycle()
+    val userInfoState by weatherViewModel.userGeocoding.collectAsStateWithLifecycle()
     val isLoading by weatherViewModel.isLoading.collectAsStateWithLifecycle()
     val error by weatherViewModel.error.collectAsStateWithLifecycle(null)
-    weatherViewModel.updateWeatherData(cityName)
     fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-        latitude = it.latitude
-        longitude = it.longitude
+        weatherViewModel.updateUserInfo(it.latitude, it.longitude)
+
+        println("City name: ${cityName.value}")
     }
+    weatherViewModel.updateWeatherData(userInfoState?.city.toString())
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -97,7 +98,6 @@ fun WeatherScreen(
                                 fontSize = 24.sp,
                                 color = Color(0xFFFFFFFF),
                             )
-
                             Text(
                                 text = "Current location",
                                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
