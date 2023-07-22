@@ -48,7 +48,14 @@ fun WeatherConditionImage(weatherCondition: String?) {
     when (weatherCondition) {
         "Clear", "Sunny" -> Image(
             painter = painterResource(id = R.drawable.sunny), contentDescription = "Sunny weather",
-            modifier = Modifier.padding(1.dp).width(128.dp).height(128.dp).padding(16.dp),
+            modifier = Modifier.padding(top = 32.dp, bottom = 8.dp).width(148.dp).height(148.dp).padding(16.dp),
+            colorFilter = ColorFilter.tint(color = Color.White),
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.Center,
+        )
+        "Cloudy", "Partly cloudy"  -> Image(
+            painter = painterResource(id = R.drawable.cloud), contentDescription = "Cloudy weather",
+            modifier = Modifier.padding(top = 32.dp, bottom = 8.dp).width(148.dp).height(148.dp).padding(16.dp),
             colorFilter = ColorFilter.tint(color = Color.White),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,

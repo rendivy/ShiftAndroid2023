@@ -1,5 +1,6 @@
 package com.example.diapplication.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,8 +22,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -32,11 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
-import com.example.diapplication.data.Location
 import com.example.diapplication.data.Weather
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.data.model.LocationTimeConverter
-import java.util.Calendar
 
 
 @Composable
@@ -45,7 +45,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Text(
+        /*Text(
             text = weatherState?.location?.country.toString(),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(400),
@@ -62,28 +62,8 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             color = Color(0xFFFFFFFF),
             textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-        Text(
-            text = stringResource(id = R.string.last_update),
-            style = TextStyle(
-                fontSize = 24.sp,
-                lineHeight = 24.sp,
-                fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                fontWeight = FontWeight(600),
-                color = Color(0x99EBEBF5),
-                textAlign = TextAlign.Center,
-                letterSpacing = 0.38.sp,
-            )
-        )
-        Text(
-            text = DateConverter.invertDateTime(weatherState?.current?.lastUpdated.toString()),
-            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-            fontWeight = FontWeight(400),
-            fontSize = 20.sp,
-            color = Color(0xFFFFFFFF),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+        )*/
+
 
     }
 }
@@ -92,82 +72,90 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
 @Composable
 fun MainWeatherData(weatherState: Weather?) {
     Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(51.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 32.dp)
     ) {
+        Text(
+            text = DateConverter.convertDateTime(weatherState?.current?.lastUpdated.toString()),
+            style = TextStyle(
+                fontSize = 24.sp,
+                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                fontWeight = FontWeight(400),
+                color = Color(0xFF616161),
+            )
+        )
+        Text(
+            text = weatherState?.current?.temperatureCelsius?.toInt()
+                .toString() + "°C",
+            style = TextStyle(
+                fontSize = 96.sp,
+                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                fontWeight = FontWeight(400),
+                color = Color(0xFFFFFFFF),
+                letterSpacing = 0.37.sp,
+            )
+        )
 
-        Row() {
-            Text(
-                text = weatherState?.current?.temperatureCelsius?.toInt()
-                    .toString(),
-                style = TextStyle(
-                    fontSize = 96.sp,
-                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    color = Color(0xFFFFFFFF),
-                    letterSpacing = 0.37.sp,
-                )
-            )
-            Text(
-                text = "°C",
-                style = TextStyle(
-                    fontSize = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Justify,
-                    letterSpacing = 0.37.sp,
-                )
-            )
-        }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 20.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.down_arrow),
+                        contentDescription = "down_arrow",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Text(
+                        text = weatherState?.forecast?.forecastDayList?.get(0)?.day?.minimumTemperature
+                            .toString() + "°C",
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF616161),
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.padding(8.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.up_arrow),
+                        contentDescription = "up_arrow",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Text(
+                        text = weatherState?.forecast?.forecastDayList?.get(0)?.day?.maximumTemperature
+                            .toString() + "°C",
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF616161),
+                        )
+                    )
+                }
+
+            }
         WeatherConditionImage(weatherCondition = weatherState?.current?.weatherCondition?.text.toString())
-
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(id = R.string.high_sign) + weatherState?.forecast?.forecastDayList?.get(
-                    0
-                )?.day?.maximumTemperature.toString() + "\u00B0",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    lineHeight = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.sf_pro_meduim)),
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
-                    letterSpacing = 0.38.sp,
-                )
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = stringResource(id = R.string.low_sign) + weatherState?.forecast?.forecastDayList?.get(
-                    0
-                )?.day?.minimumTemperature.toString() + "\u00B0",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    lineHeight = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.sf_pro_meduim)),
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
-                    letterSpacing = 0.38.sp,
-                )
-            )
-        }
         Text(
             text = weatherState?.current?.weatherCondition?.text.toString(),
             style = TextStyle(
-                fontSize = 32.sp,
-                lineHeight = 24.sp,
-                fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                fontWeight = FontWeight(600),
-                color = Color(0x99EBEBF5),
-                textAlign = TextAlign.Center,
-                letterSpacing = 0.38.sp,
+                fontSize = 24.sp,
+                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                fontWeight = FontWeight(400),
+                color = Color(0xFF616161),
             )
         )
     }
@@ -305,119 +293,54 @@ fun GovernmentAlertButton(weatherState: Weather?) {
 
 @Composable
 fun AstroScreen(weatherState: Weather?) {
-    LazyRow(
+    Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 32.dp)
     ) {
-        item {
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    text = "Sunrise",
-                    fontFamily = FontFamily(Font(R.font.sf_pro_regular)),
-                    fontWeight = FontWeight(400),
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sunrise), contentDescription = null,
+                modifier = Modifier.size(20.dp), contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                text = weatherState?.forecast?.forecastDayList?.get(0)?.astro?.sunrise.toString(),
+                style = TextStyle(
                     fontSize = 24.sp,
-                    color = Color(216, 175, 71, 255),
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = DateConverter.convertTo24HourFormat(
-                        weatherState?.forecast?.forecastDayList?.get(
-                            0
-                        )?.astro?.sunrise.toString()
-                    ),
-                    fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
-                    fontSize = 20.sp,
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
+                    color = Color(0xFF616161),
                 )
-            }
-            Spacer(modifier = Modifier.width(20.dp))
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    text = "Sunset",
-                    fontFamily = FontFamily(Font(R.font.sf_pro_regular)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 24.sp,
-                    color = Color(255, 255, 255, 255),
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = DateConverter.convertTo24HourFormat(
-                        weatherState?.forecast?.forecastDayList?.get(
-                            0
-                        )?.astro?.sunset.toString()
-                    ),
-                    fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 20.sp,
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
-                )
-            }
-            Spacer(modifier = Modifier.width(20.dp))
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    text = "Moonrise",
-                    fontFamily = FontFamily(Font(R.font.sf_pro_regular)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 24.sp,
-                    color = Color(255, 255, 255, 255),
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = DateConverter.convertTo24HourFormat(
-                        weatherState?.forecast?.forecastDayList?.get(
-                            0
-                        )?.astro?.moonrise.toString()
-                    ),
-                    fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 20.sp,
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
-                )
-            }
-            Spacer(modifier = Modifier.width(20.dp))
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    text = "Moonset",
-                    fontFamily = FontFamily(Font(R.font.sf_pro_regular)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 24.sp,
-                    color = Color(238, 93, 30, 255),
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = DateConverter.convertTo24HourFormat(
-                        weatherState?.forecast?.forecastDayList?.get(
-                            0
-                        )?.astro?.moonset.toString()
-                    ),
-                    fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 20.sp,
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
-                )
-            }
+            )
         }
-
+        Spacer(modifier = Modifier.padding(16.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sunset), contentDescription = null,
+                modifier = Modifier.size(20.dp), contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                text =
+                weatherState?.forecast?.forecastDayList?.get(0)?.astro?.sunset.toString(),
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFF616161),
+                )
+            )
+        }
     }
 }
+
 
 @Composable
 fun HourScreen(weatherState: Weather?) {
@@ -428,7 +351,7 @@ fun HourScreen(weatherState: Weather?) {
     ) {
         item {
             for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
-                if (i >= LocationTimeConverter.getCityHour(weatherState.location.name)){
+                if (i >= LocationTimeConverter.getCityHour(weatherState.location.name)) {
                     Column(
                         verticalArrangement = Arrangement.SpaceBetween,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -443,11 +366,10 @@ fun HourScreen(weatherState: Weather?) {
                             textAlign = TextAlign.Center,
                         )
                         WeatherPainter(
-                            imageUrl = "https:" + weatherState.forecast.forecastDayList.get(0).hourList
-                                .get(i).condition.icon
+                            imageUrl = "https:" + weatherState.forecast.forecastDayList[0].hourList[i].condition.icon
                         )
                         Text(
-                            text = weatherState.forecast.forecastDayList.get(0).hourList.get(i).tempC.toString() + "°",
+                            text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() + "°",
                             fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
                             fontWeight = FontWeight(400),
                             fontSize = 20.sp,

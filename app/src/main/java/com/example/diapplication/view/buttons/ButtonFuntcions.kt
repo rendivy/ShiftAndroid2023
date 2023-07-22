@@ -19,7 +19,7 @@ fun WeatherIconButton(id: Int){
         Image(
             painter = painterResource(id = id),
             contentDescription = "search button",
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.size(21.dp),
             contentScale = ContentScale.Crop
         )
     }

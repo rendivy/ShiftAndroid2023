@@ -21,20 +21,20 @@ class DateConverter {
             return "$dayOfMonth $monthName"
         }
 
+        fun convertDateTime(inputDateTime: String): String {
+            // Формат строки входной даты и времени
+            val inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
+            // Формат строки, в которую будет произведено преобразование
+            val outputFormat = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale.ENGLISH)
 
-        fun invertDateTime(dateTimeString: String): String {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ENGLISH)
-            val dateTime = LocalDateTime.parse(dateTimeString, formatter)
-            val dayOfMonth = dateTime.dayOfMonth
-            val month = dateTime.month
-            val hour = dateTime.hour
-            val minute = dateTime.minute
+            // Парсим входную строку в объект LocalDateTime
+            val localDateTime = LocalDateTime.parse(inputDateTime, inputFormat)
 
-            val monthName = month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
-
-            return "$dayOfMonth $monthName $hour:$minute"
+            // Преобразуем объект LocalDateTime в строку заданного формата
+            return localDateTime.format(outputFormat)
         }
+
         fun convertTo24HourFormat(time12Hour: String): String {
             val time12HourPattern = "h:mm a"
             val time24HourPattern = "HH:mm"

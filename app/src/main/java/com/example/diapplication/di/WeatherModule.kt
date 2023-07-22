@@ -29,8 +29,6 @@ class WeatherModule {
     val json = Json {
         ignoreUnknownKeys = true
     }
-
-
     @Provides
     @Singleton
     fun provideOkHttpClientWithProgress(): OkHttpClient =
