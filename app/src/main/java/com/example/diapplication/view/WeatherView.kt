@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -38,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
-import com.example.diapplication.data.model.LocationTimeConverter
 import com.example.diapplication.domain.entity.Weather
 
 
@@ -334,48 +332,6 @@ fun AstroScreen(weatherState: Weather?) {
 }
 
 
-@Composable
-fun HourScreen(weatherState: Weather?) {
-    LazyRow(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-    ) {
-        item {
-            for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
-                if (i >= LocationTimeConverter.getCityHour(weatherState.location.name)) {
-                    Column(
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-                    ) {
-                        Text(
-                            text = "$i:00",
-                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
-                            color = Color(0xFFFFFFFF),
-                            textAlign = TextAlign.Center,
-                        )
-                        WeatherPainter(
-                            imageUrl = "https:" + weatherState.forecast.forecastDayList[0].hourList[i].condition.icon
-                        )
-                        Text(
-                            text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() + "°",
-                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
-                            color = Color(0xFFFFFFFF),
-                            textAlign = TextAlign.Center,
-                        )
-                    }
-                }
-
-            }
-        }
-    }
-
-}
 
 
 

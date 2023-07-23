@@ -153,7 +153,7 @@ fun WeatherScreen(
                         }
                         WeatherForeCastScreen(weatherState = content.weather)
                         //Spacer(modifier = Modifier.padding(16.dp))
-                        //HourScreen(weatherState = weatherState)
+
                         //Spacer(modifier = Modifier.padding(16.dp))
 
                         //Spacer(modifier = Modifier.padding(16.dp))

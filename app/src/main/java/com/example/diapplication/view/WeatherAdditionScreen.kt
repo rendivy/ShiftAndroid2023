@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -30,6 +31,76 @@ import com.example.diapplication.domain.entity.Weather
 
 @Composable
 fun ForecastWeatherScreen(weatherState: Weather?) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly
+    )
+    {
+        HorlyForecastScreen(weatherState = weatherState)
+        Spacer(modifier = Modifier.height(32.dp))
+        DailyForecastScreen(weatherState = weatherState)
+    }
+}
+
+@Composable
+fun HorlyForecastScreen(weatherState: Weather?) {
+    Text(
+        text = "Hourly Forecast", style = TextStyle(
+            fontSize = 22.sp,
+            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+            fontWeight = FontWeight(400),
+            color = Color.Gray,
+        ), modifier = Modifier.padding(start = 32.dp, bottom = 16.dp)
+    )
+    LazyRow(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .padding(start = 32.dp, end = 32.dp)
+            .fillMaxWidth()
+    ) {
+        item {
+            for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
+                Column(
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+                ) {
+                    Text(
+                        text = "$i:00",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            color = Color.White,
+                        ),
+                    )
+                    WeatherConditionImage(
+                        weatherCondition = weatherState.forecast.forecastDayList[0].hourList[i].condition.text,
+                        modifier = Modifier
+                            .padding(top = 8.dp, bottom = 8.dp)
+                            .size(36.dp)
+
+                    )
+                    Text(
+                        text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() + "°",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            color = Color.Gray,
+                        ),
+                    )
+                }
+            }
+
+        }
+    }
+}
+
+
+@Composable
+fun DailyForecastScreen(weatherState: Weather?) {
     Text(
         text = "Daily Forecast", style = TextStyle(
             fontSize = 22.sp,
@@ -64,7 +135,8 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
                         )
                         WeatherConditionImage(
                             weatherCondition = weatherState.forecast.forecastDayList[i].day.condition.text,
-                            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
+                            modifier = Modifier
+                                .padding(top = 8.dp, bottom = 8.dp)
                                 .size(36.dp)
 
                         )
@@ -117,7 +189,6 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
         }
     }
 }
-
 
 @Composable
 fun DetailsScreen(weatherState: Weather?) {
