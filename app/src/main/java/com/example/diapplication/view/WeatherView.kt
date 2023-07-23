@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,11 +44,12 @@ import com.example.diapplication.domain.entity.Weather
 
 @Composable
 fun WeatherForeCastScreen(weatherState: Weather?) {
-    val isForecastClicked = remember { mutableStateOf(false)}
+    val isForecastClicked = remember { mutableStateOf(false) }
     Column {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 32.dp, bottom = 16.dp, top = 16.dp, end = 32.dp)
         ) {
             Text(
@@ -55,7 +58,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
-                    color = if (!isForecastClicked.value) Color(0xFF616161) else Color.White,
+                    color = if (isForecastClicked.value) Color(0xFF616161) else Color.White,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = false }
             )
@@ -65,12 +68,12 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
-                    color = if (isForecastClicked.value) Color(0xFF616161) else Color.White,
+                    color = if (!isForecastClicked.value) Color(0xFF616161) else Color.White,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = true }
             )
         }
-        when(isForecastClicked.value) {
+        when (isForecastClicked.value) {
             false -> DetailsScreen(weatherState = weatherState)
             else -> ForecastWeatherScreen(weatherState = weatherState)
         }
@@ -158,7 +161,14 @@ fun MainWeatherData(weatherState: Weather?) {
             }
 
         }
-        WeatherConditionImage(weatherCondition = weatherState?.current?.weatherCondition?.text.toString())
+        WeatherConditionImage(
+            weatherCondition = weatherState?.current?.weatherCondition?.text.toString(),
+            modifier = Modifier
+                .padding(top = 32.dp, bottom = 8.dp)
+                .width(148.dp)
+                .height(148.dp)
+                .padding(16.dp)
+        )
         Text(
             text = weatherState?.current?.weatherCondition?.text.toString(),
             style = TextStyle(

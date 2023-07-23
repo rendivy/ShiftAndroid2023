@@ -3,7 +3,6 @@ package com.example.diapplication.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -44,18 +43,18 @@ fun WeatherPainter(imageUrl: String?) {
 
 
 @Composable
-fun WeatherConditionImage(weatherCondition: String?) {
+fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
     when (weatherCondition) {
         "Clear", "Sunny" -> Image(
             painter = painterResource(id = R.drawable.sunny), contentDescription = "Sunny weather",
-            modifier = Modifier.padding(top = 32.dp, bottom = 8.dp).width(148.dp).height(148.dp).padding(16.dp),
+            modifier = modifier,
             colorFilter = ColorFilter.tint(color = Color.White),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
         "Cloudy", "Partly cloudy"  -> Image(
             painter = painterResource(id = R.drawable.cloud), contentDescription = "Cloudy weather",
-            modifier = Modifier.padding(top = 32.dp, bottom = 8.dp).width(148.dp).height(148.dp).padding(16.dp),
+            modifier = modifier,
             colorFilter = ColorFilter.tint(color = Color.White),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
