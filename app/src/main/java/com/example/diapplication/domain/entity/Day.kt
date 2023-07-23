@@ -10,4 +10,4 @@ data class Day(
     @SerialName("mintemp_c") val minimumTemperature: Double,
     @SerialName("avgtemp_c") val averageTemperature: Double,
     @SerialName("condition") val condition: Condition,
-    )
+)
