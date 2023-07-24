@@ -36,14 +36,14 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
         verticalArrangement = Arrangement.SpaceEvenly
     )
     {
-        HorlyForecastScreen(weatherState = weatherState)
+        HourlyForecastScreen(weatherState = weatherState)
         Spacer(modifier = Modifier.height(32.dp))
         DailyForecastScreen(weatherState = weatherState)
     }
 }
 
 @Composable
-fun HorlyForecastScreen(weatherState: Weather?) {
+fun HourlyForecastScreen(weatherState: Weather?) {
     Text(
         text = "Hourly Forecast", style = TextStyle(
             fontSize = 22.sp,
@@ -83,7 +83,7 @@ fun HorlyForecastScreen(weatherState: Weather?) {
 
                     )
                     Text(
-                        text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() + "°",
+                        text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() + "°C",
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
