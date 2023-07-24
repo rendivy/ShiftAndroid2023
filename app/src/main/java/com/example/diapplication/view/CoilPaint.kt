@@ -44,21 +44,62 @@ fun WeatherPainter(imageUrl: String?) {
 
 @Composable
 fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
-    when (weatherCondition) {
-        "Clear", "Sunny" -> Image(
+    when {
+        weatherCondition?.contains("Clear") == true || weatherCondition?.contains("Sunny") == true -> Image(
             painter = painterResource(id = R.drawable.sunny), contentDescription = "Sunny weather",
             modifier = modifier,
             colorFilter = ColorFilter.tint(color = Color.White),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
-        "Cloudy", "Partly cloudy"  -> Image(
+
+        weatherCondition?.contains("Thunder") == true  -> Image(
+            painter = painterResource(id = R.drawable.cloud_lightning), contentDescription = "Sunny weather",
+            modifier = modifier,
+            colorFilter = ColorFilter.tint(color = Color.White),
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.Center,
+        )
+
+
+        weatherCondition?.contains("drizzle") == true -> Image(
+            painter = painterResource(id = R.drawable.drizzle),
+            contentDescription = "Cloudy weather",
+            modifier = modifier,
+            colorFilter = ColorFilter.tint(color = Color.White),
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.Center,
+        )
+
+        weatherCondition?.contains("rain") == true -> Image(
+            painter = painterResource(id = R.drawable.cloud_rain),
+            contentDescription = "Cloudy weather",
+            modifier = modifier,
+            colorFilter = ColorFilter.tint(color = Color.White),
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.Center,
+        )
+
+
+        weatherCondition?.contains("snow") == true || weatherCondition?.contains("sleet") == true ||
+                weatherCondition?.contains("blizzard") == true || weatherCondition?.contains("ice") == true -> Image(
+            painter = painterResource(id = R.drawable.cloud_snow),
+            contentDescription = "Sunny weather",
+            modifier = modifier,
+            colorFilter = ColorFilter.tint(color = Color.White),
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.Center,
+        )
+
+
+
+        else -> Image(
             painter = painterResource(id = R.drawable.cloud), contentDescription = "Cloudy weather",
             modifier = modifier,
             colorFilter = ColorFilter.tint(color = Color.White),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
-    }
 
+    }
 }

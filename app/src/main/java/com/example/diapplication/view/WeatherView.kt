@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -86,7 +87,7 @@ fun MainWeatherData(weatherState: Weather?) {
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(top = 32.dp)
     ) {
         Text(
@@ -179,13 +180,6 @@ fun MainWeatherData(weatherState: Weather?) {
         AstroScreen(weatherState = weatherState)
     }
 }
-
-
-@Composable
-fun OtherDaysScreen(weatherState: Weather?) {
-
-}
-
 
 @Composable
 fun GovernmentAlertButton(weatherState: Weather?) {

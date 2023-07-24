@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class Alert(
+data class Alert(
     @SerialName("headline") val headline: String?,
     @SerialName("event") val event: String?,
     @SerialName("desc") val description: String?,
