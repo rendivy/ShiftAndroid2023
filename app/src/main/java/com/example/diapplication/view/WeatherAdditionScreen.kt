@@ -1,3 +1,5 @@
+@file:OptIn(FlowPreview::class)
+
 package com.example.diapplication.view
 
 import androidx.compose.foundation.Image
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
+import kotlinx.coroutines.FlowPreview
 
 @Composable
 fun ForecastWeatherScreen(weatherState: Weather?) {
@@ -44,6 +48,7 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
 
 @Composable
 fun HourlyForecastScreen(weatherState: Weather?) {
+    val lazyListState = rememberLazyListState()
     Text(
         text = "Hourly Forecast", style = TextStyle(
             fontSize = 22.sp,
@@ -53,14 +58,15 @@ fun HourlyForecastScreen(weatherState: Weather?) {
         ), modifier = Modifier.padding(start = 32.dp, bottom = 16.dp)
     )
     LazyRow(
+        state = lazyListState,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .padding(start = 32.dp, end = 32.dp)
             .fillMaxWidth()
     ) {
-        item {
-            for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
+        for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
+            item {
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally,

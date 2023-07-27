@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.presentation.WeatherViewModel
@@ -49,7 +50,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 @Composable
 fun WeatherScreen(
     weatherViewModel: WeatherViewModel,
-    fusedLocationProviderClient: FusedLocationProviderClient
+    fusedLocationProviderClient: FusedLocationProviderClient,
+    navController: NavController
 ) {
     val context: Context = LocalContext.current
     val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -124,7 +126,7 @@ fun WeatherScreen(
                                 .fillMaxSize()
                                 .padding(32.dp)
                         ) {
-                            Column() {
+                            Column {
                                 Text(
                                     text = content.weather.location.name,
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -142,7 +144,8 @@ fun WeatherScreen(
                             }
                             Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                                 WeatherIconButton(id = R.drawable.location_button_icon)
-                                WeatherIconButton(id = R.drawable.settings_icon)
+                                { navController.navigate("search") }
+                                WeatherIconButton(id = R.drawable.settings_icon, onClick = {})
                             }
                         }
                         Box(
