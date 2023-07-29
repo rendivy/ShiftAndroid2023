@@ -3,8 +3,6 @@ package com.example.diapplication.view
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Location
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,7 +30,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
@@ -41,7 +38,6 @@ import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.SfProDisplay
 import com.example.diapplication.view.buttons.WeatherIconButton
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.FusedLocationProviderClient
 
@@ -59,25 +55,12 @@ fun WeatherScreen(
     val permissionDenied = rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(locationPermissionState) {
-        if (!locationPermissionState.status.isGranted) {
-            locationPermissionState.launchPermissionRequest()
-        } else {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    weatherViewModel.updateWeatherData("${location?.latitude},${location?.longitude}")
-                    permissionDenied.value = false
-                }
-            } else {
-                permissionDenied.value = true
-            }
-        }
+        weatherViewModel.updateUserGeolocation(
+            context = context,
+            fusedLocationProviderClient = fusedLocationProviderClient,
+            locationPermissionState = locationPermissionState,
+            permissionDenied = permissionDenied
+        )
     }
 
 
