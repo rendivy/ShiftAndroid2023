@@ -1,4 +1,4 @@
-@file:OptIn(FlowPreview::class, ExperimentalMaterial3Api::class)
+@file:OptIn(FlowPreview::class, ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.example.diapplication.view
 
@@ -22,6 +22,7 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,8 +38,10 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
@@ -215,6 +218,8 @@ fun AddLocationScreen(
     weatherViewModel: WeatherViewModel, navController: NavController
 ) {
     var city by remember { mutableStateOf("") }
+    val errorState by weatherViewModel.anotherCityError.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -222,9 +227,21 @@ fun AddLocationScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        Text(
+            modifier = Modifier.padding(32.dp),
+            text = errorState.toString(),
+            style = TextStyle(
+                fontSize = 32.sp,
+                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                fontWeight = FontWeight(400),
+                color = Color.White,
+            ),
+            textAlign = TextAlign.Center
+        )
+
         OutlinedTextField(
-            value = "",
-            onValueChange = { city += it },
+            value = city,
+            onValueChange = { city = it },
             label = {
                 Text(
                     text = "Enter city name",
@@ -242,10 +259,17 @@ fun AddLocationScreen(
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
                 color = Color.White,
-            )
+            ),
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = Color.White,
+                containerColor = Color.Transparent,
+                focusedIndicatorColor = Color.White
+                ),
         )
+        Spacer(modifier = Modifier.height(32.dp))
         ExtendedFloatingActionButton(
-            onClick = { weatherViewModel.updateAnotherCityWeather(cityName = city) },
+            onClick = { weatherViewModel.updateAnotherCityWeather(cityName = city,
+                navController = navController) },
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.upload_cloud),
@@ -264,7 +288,7 @@ fun AddLocationScreen(
                     )
                 )
             },
-        )
+            containerColor = Color.Transparent)
     }
 }
 

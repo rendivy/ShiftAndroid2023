@@ -8,6 +8,7 @@ import androidx.compose.runtime.MutableState
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.diapplication.domain.usecase.UpdateWeatherUseCase
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
@@ -33,6 +34,10 @@ class WeatherViewModel @Inject constructor(
         MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
     val citiesWeatherState: StateFlow<List<WeatherState.Content>> = _citiesWeatherState
 
+
+    private val _anotherCityError = MutableStateFlow<String?>("")
+    val anotherCityError: StateFlow<String?> = _anotherCityError
+
     private fun updateWeatherData(cityName: String) {
         viewModelScope.launch {
             _weatherState.value = WeatherState.Loading
@@ -48,17 +53,22 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun updateAnotherCityWeather(cityName: String) {
+    fun updateAnotherCityWeather(cityName: String, navController: NavController) {
         viewModelScope.launch {
             try {
                 val weather = updateWeatherUseCase(cityName)
                 val newWeatherState = WeatherState.Content(weather)
                 if (!_citiesWeatherState.value.contains(newWeatherState)){
                     _citiesWeatherState.value.add(WeatherState.Content(weather))
+                    _anotherCityError.value = ""
+                    navController.popBackStack()
+                }
+                else{
+                    _anotherCityError.value = "City already added"
                 }
             }
             catch (e: Exception) {
-                throw NullPointerException()
+                _anotherCityError.value = "City not found, please check correctness of city name"
             }
         }
     }
