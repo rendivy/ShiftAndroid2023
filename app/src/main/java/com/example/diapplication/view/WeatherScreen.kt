@@ -155,11 +155,8 @@ fun WeatherScreen(
                             MainWeatherData(weatherState = content.weather)
                         }
                         WeatherForeCastScreen(weatherState = content.weather)
-                        //Spacer(modifier = Modifier.padding(16.dp))
 
-                        //Spacer(modifier = Modifier.padding(16.dp))
-
-                        //Spacer(modifier = Modifier.padding(16.dp))
+                    //Spacer(modifier = Modifier.padding(16.dp))
                         //if (weatherState?.alerts?.alertList?.isNotEmpty() == true) {
                         //GovernmentAlertButton(weatherState = weatherState)
                         //}

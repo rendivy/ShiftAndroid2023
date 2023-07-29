@@ -6,6 +6,7 @@
     <string name="city_name">Enter city name</string>
     <string name="goverment_alert">Government Alert</string>
     <string name="region_suffix">\u0020 region</string>
+    <string name="celsius">°C</string>
     <string name="last_update">Last update</string>'
     <string name="high_sign">H:</string>
     <string name="low_sign">L:</string>
