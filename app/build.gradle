@@ -64,6 +64,7 @@ dependencies {
     def coilVersion = "2.4.0"
     def lifeCycleVersion = "2.6.1"
     def hiltNavCompose = "1.0.0"
+    def accompanistUi = "0.27.0"
 
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
@@ -71,6 +72,7 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hiltNavCompose"
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation 'com.google.accompanist:accompanist-permissions:0.31.5-beta'
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanistUi"
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlinSerialization")
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"

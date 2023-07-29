@@ -3,12 +3,15 @@ package com.example.diapplication.view
 
 import android.Manifest
 import android.content.Context
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,11 +25,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -34,7 +41,6 @@ import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.presentation.WeatherViewModel
-import com.example.diapplication.ui.theme.SfProDisplay
 import com.example.diapplication.view.buttons.WeatherIconButton
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
@@ -62,13 +68,13 @@ fun WeatherScreen(
         )
     }
 
-
-
     if (!permissionDenied.value) {
         when (weatherState) {
             is WeatherState.Loading -> {
                 Column(
-                    modifier = Modifier.fillMaxSize().background(Color.Black),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -81,16 +87,34 @@ fun WeatherScreen(
 
             is WeatherState.Error -> {
                 Column(
-                    verticalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxSize().background(Color.Black),
+                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
                         text = stringResource(id = R.string.error_message),
-                        fontFamily = SfProDisplay,
-                        fontWeight = FontWeight.Medium,
+                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                        fontWeight = FontWeight(400),
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Center,
+                        color = Color.Gray,
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Image(
+                        modifier = Modifier.size(128.dp),
+                        painter = painterResource(id = R.drawable.wifi_off),
+                        contentDescription = "bad connection",
+                        contentScale = ContentScale.Crop,
+                        colorFilter = ColorFilter.tint(Color.White)
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Text(
+                        text = stringResource(id = R.string.applucation_label),
+                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                        fontWeight = FontWeight(400),
+                        fontSize = 32.sp,
+                        textAlign = TextAlign.End,
                         color = Color.White,
-                        fontSize = 22.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }
             }
