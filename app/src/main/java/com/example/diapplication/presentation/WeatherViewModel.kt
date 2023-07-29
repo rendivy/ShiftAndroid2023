@@ -29,10 +29,11 @@ class WeatherViewModel @Inject constructor(
     private val _weatherState = MutableStateFlow<WeatherState>(WeatherState.Loading)
     val weatherState: StateFlow<WeatherState> = _weatherState
 
-    private val _citiesWeatherState = MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
+    private val _citiesWeatherState =
+        MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
     val citiesWeatherState: StateFlow<List<WeatherState.Content>> = _citiesWeatherState
 
-    fun updateWeatherData(cityName: String) {
+    private fun updateWeatherData(cityName: String) {
         viewModelScope.launch {
             _weatherState.value = WeatherState.Loading
             try {
@@ -50,28 +51,32 @@ class WeatherViewModel @Inject constructor(
         locationPermissionState: PermissionState,
         context: Context,
         permissionDenied: MutableState<Boolean>
-    ){
-        if (!locationPermissionState.status.isGranted) {
-            locationPermissionState.launchPermissionRequest()
-        } else {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    updateWeatherData("${location?.latitude},${location?.longitude}")
-                    permissionDenied.value = false
-                }
+    ) {
+        viewModelScope.launch {
+            if (!locationPermissionState.status.isGranted) {
+                locationPermissionState.launchPermissionRequest()
             } else {
-                permissionDenied.value = true
+                if (ActivityCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
+                        updateWeatherData("${location?.latitude},${location?.longitude}")
+                        permissionDenied.value = false
+                    }
+                } else {
+                    permissionDenied.value = true
+                }
             }
-        }
-    }
 
+
+        }
+
+    }
 
 
 }

@@ -41,7 +41,7 @@ fun DetailsWeatherScreen(weatherViewModel: WeatherViewModel, navController: NavC
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 32.dp, bottom = 32.dp),
+                    .padding(32.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {

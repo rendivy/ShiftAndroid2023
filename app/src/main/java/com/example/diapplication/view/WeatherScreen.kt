@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -64,43 +63,46 @@ fun WeatherScreen(
     }
 
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.Black),
-    ) {
-        item {
-            if (!permissionDenied.value) {
-                when (weatherState) {
-                    is WeatherState.Loading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(120.dp),
-                                color = Color.White
-                            )
-                        }
-                    }
 
-                    is WeatherState.Error -> {
-                        Column(
-                            verticalArrangement = Arrangement.SpaceEvenly,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.error_message),
-                                fontFamily = SfProDisplay,
-                                fontWeight = FontWeight.Medium,
-                                color = Color.White,
-                                fontSize = 22.sp,
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                            )
-                        }
-                    }
+    if (!permissionDenied.value) {
+        when (weatherState) {
+            is WeatherState.Loading -> {
+                Column(
+                    modifier = Modifier.fillMaxSize().background(Color.Black),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(120.dp),
+                        color = Color.White
+                    )
+                }
+            }
 
-                    is WeatherState.Content -> {
+            is WeatherState.Error -> {
+                Column(
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.error_message),
+                        fontFamily = SfProDisplay,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White,
+                        fontSize = 22.sp,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                }
+            }
+
+            is WeatherState.Content -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.Black),
+
+                    ) {
+                    item {
                         val content = weatherState as WeatherState.Content
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -139,7 +141,7 @@ fun WeatherScreen(
                         }
                         WeatherForeCastScreen(weatherState = content.weather)
 
-                    //Spacer(modifier = Modifier.padding(16.dp))
+                        //Spacer(modifier = Modifier.padding(16.dp))
                         //if (weatherState?.alerts?.alertList?.isNotEmpty() == true) {
                         //GovernmentAlertButton(weatherState = weatherState)
                         //}
@@ -147,16 +149,6 @@ fun WeatherScreen(
 
                     }
                 }
-            } else {
-                Text(
-                    text = "Please give location permission",
-                    style = TextStyle(
-                        fontSize = 24.sp,
-                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
-                    )
-                )
             }
         }
     }
