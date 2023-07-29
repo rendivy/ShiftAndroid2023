@@ -39,7 +39,9 @@ class WeatherViewModel @Inject constructor(
             try {
                 val weather = updateWeatherUseCase(cityName)
                 _weatherState.value = WeatherState.Content(weather)
-                _citiesWeatherState.value.add(0, WeatherState.Content(weather))
+                if (!_citiesWeatherState.value.contains(WeatherState.Content(weather))) {
+                    _citiesWeatherState.value.add(0, WeatherState.Content(weather))
+                }
             } catch (e: Exception) {
                 _weatherState.value = WeatherState.Error(true)
             }
@@ -50,7 +52,10 @@ class WeatherViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val weather = updateWeatherUseCase(cityName)
-                _citiesWeatherState.value.add(WeatherState.Content(weather))
+                val newWeatherState = WeatherState.Content(weather)
+                if (!_citiesWeatherState.value.contains(newWeatherState)){
+                    _citiesWeatherState.value.add(WeatherState.Content(weather))
+                }
             }
             catch (e: Exception) {
                 throw NullPointerException()
