@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,7 +44,8 @@ import com.example.diapplication.domain.entity.Weather
 
 @Composable
 fun WeatherForeCastScreen(weatherState: Weather?) {
-    val isForecastClicked = remember { mutableStateOf(false) }
+    val isForecastClicked = rememberSaveable { mutableStateOf(false) }
+
     Column {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -182,7 +184,7 @@ fun MainWeatherData(weatherState: Weather?) {
 }
 
 @Composable
-fun GovernmentAlertButton(weatherState: Weather?) {
+fun GovernmentAlertButton() {
     val showDialog = remember { mutableStateOf(false) }
 
     Button(
@@ -224,23 +226,7 @@ fun GovernmentAlertButton(weatherState: Weather?) {
                     modifier = Modifier.background(color = Color.Black)
                 ) {
                     item {
-                        Text(
-                            text = weatherState?.alerts?.alertList?.get(0)?.event.toString(),
-                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
-                            color = Color(0xFFFFFFFF),
-                            textAlign = TextAlign.Center,
-                        )
-                        Text(
-                            text = weatherState?.alerts?.alertList?.get(0)?.description.toString(),
-                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
-                            color = Color(0xFFFFFFFF),
-                            textAlign = TextAlign.Center,
 
-                            )
                     }
 
                 }

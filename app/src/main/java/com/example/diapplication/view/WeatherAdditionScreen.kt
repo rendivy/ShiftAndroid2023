@@ -1,6 +1,9 @@
+@file:OptIn(FlowPreview::class, ExperimentalMaterial3Api::class)
+
 package com.example.diapplication.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,8 +15,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,11 +36,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
+import com.example.diapplication.presentation.WeatherViewModel
+import kotlinx.coroutines.FlowPreview
 
 @Composable
 fun ForecastWeatherScreen(weatherState: Weather?) {
@@ -44,6 +61,7 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
 
 @Composable
 fun HourlyForecastScreen(weatherState: Weather?) {
+    val lazyListState = rememberLazyListState()
     Text(
         text = "Hourly Forecast", style = TextStyle(
             fontSize = 22.sp,
@@ -53,14 +71,15 @@ fun HourlyForecastScreen(weatherState: Weather?) {
         ), modifier = Modifier.padding(start = 32.dp, bottom = 16.dp)
     )
     LazyRow(
+        state = lazyListState,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .padding(start = 32.dp, end = 32.dp)
             .fillMaxWidth()
     ) {
-        item {
-            for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
+        for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
+            item {
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -189,6 +208,66 @@ fun DailyForecastScreen(weatherState: Weather?) {
         }
     }
 }
+
+
+@Composable
+fun AddLocationScreen(
+    weatherViewModel: WeatherViewModel, navController: NavController
+) {
+    var city by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = "",
+            onValueChange = { city += it },
+            label = {
+                Text(
+                    text = "Enter city name",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                        fontWeight = FontWeight(400),
+                        color = Color.White,
+                    )
+                )
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            textStyle = TextStyle(
+                fontSize = 20.sp,
+                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                fontWeight = FontWeight(400),
+                color = Color.White,
+            )
+        )
+        ExtendedFloatingActionButton(
+            onClick = { weatherViewModel.updateAnotherCityWeather(cityName = city) },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.upload_cloud),
+                    contentDescription = "add",
+                    tint = Color.White
+                )
+            },
+            text = {
+                Text(
+                    text = "Add another city",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                        fontWeight = FontWeight(400),
+                        color = Color.White,
+                    )
+                )
+            },
+        )
+    }
+}
+
 
 @Composable
 fun DetailsScreen(weatherState: Weather?) {
