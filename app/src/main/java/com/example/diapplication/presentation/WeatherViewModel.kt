@@ -46,6 +46,18 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
+    fun updateAnotherCityWeather(cityName: String) {
+        viewModelScope.launch {
+            try {
+                val weather = updateWeatherUseCase(cityName)
+                _citiesWeatherState.value.add(WeatherState.Content(weather))
+            }
+            catch (e: Exception) {
+                throw NullPointerException()
+            }
+        }
+    }
+
     fun updateUserGeolocation(
         fusedLocationProviderClient: FusedLocationProviderClient,
         locationPermissionState: PermissionState,

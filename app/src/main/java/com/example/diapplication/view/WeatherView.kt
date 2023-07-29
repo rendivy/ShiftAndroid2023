@@ -184,7 +184,7 @@ fun MainWeatherData(weatherState: Weather?) {
 }
 
 @Composable
-fun GovernmentAlertButton(weatherState: Weather?) {
+fun GovernmentAlertButton() {
     val showDialog = remember { mutableStateOf(false) }
 
     Button(
@@ -226,23 +226,7 @@ fun GovernmentAlertButton(weatherState: Weather?) {
                     modifier = Modifier.background(color = Color.Black)
                 ) {
                     item {
-                        Text(
-                            text = weatherState?.alerts?.alertList?.get(0)?.event.toString(),
-                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
-                            color = Color(0xFFFFFFFF),
-                            textAlign = TextAlign.Center,
-                        )
-                        Text(
-                            text = weatherState?.alerts?.alertList?.get(0)?.description.toString(),
-                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
-                            color = Color(0xFFFFFFFF),
-                            textAlign = TextAlign.Center,
 
-                            )
                     }
 
                 }

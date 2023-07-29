@@ -48,49 +48,55 @@ fun DetailsWeatherScreen(weatherViewModel: WeatherViewModel, navController: NavC
                 WeatherIconButton(id = R.drawable.back_icon) {
                     navController.popBackStack()
                 }
-                WeatherIconButton(id = R.drawable.add_location){
-                    navController.popBackStack()
+                WeatherIconButton(id = R.drawable.add_location) {
+                    navController.navigate("add_location_screen")
                 }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 32.dp, end = 32.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(
-                        text = cityWeatherState.value[0].weather.location.name,
-                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
-                        fontSize = 24.sp,
-                        color = Color(0xFFFFFFFF),
-                    )
-                    Text(
-                        text = cityWeatherState.value[0].weather.current.temperatureCelsius.toInt().toString()
-                                + stringResource(id = R.string.celsius),
-                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
-                        fontSize = 20.sp,
-                        color = Color.Gray
-                    )
-                    Text(
-                        text = cityWeatherState.value[0].weather.current.weatherCondition.text,
-                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
-                        fontSize = 16.sp,
-                        color = Color.Gray
+            for (i in 0 until cityWeatherState.value.size) {
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 32.dp, end = 32.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            text = cityWeatherState.value[i].weather.location.name,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            fontSize = 24.sp,
+                            color = Color(0xFFFFFFFF),
+                        )
+                        Text(
+                            text = cityWeatherState.value[i].weather.current.temperatureCelsius.toInt()
+                                .toString()
+                                    + stringResource(id = R.string.celsius),
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            fontSize = 20.sp,
+                            color = Color.Gray
+                        )
+                        Text(
+                            text = cityWeatherState.value[i].weather.current.weatherCondition.text,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            fontSize = 16.sp,
+                            color = Color.Gray
+                        )
+                    }
+                    WeatherConditionImage(
+                        weatherCondition = cityWeatherState.value[i].weather.current.weatherCondition.text,
+                        modifier = Modifier
+                            .padding(top = 32.dp, bottom = 8.dp)
+                            .width(85.dp)
+                            .height(85.dp)
+                            .padding(16.dp)
+                            .align(Alignment.CenterVertically)
                     )
                 }
-                WeatherConditionImage(
-                    weatherCondition = cityWeatherState.value[0].weather.current.weatherCondition.text,
-                    modifier = Modifier
-                        .padding(top = 32.dp, bottom = 8.dp)
-                        .width(85.dp)
-                        .height(85.dp)
-                        .padding(16.dp).align(Alignment.CenterVertically)
-                )
             }
         }
     }

@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalPermissionsApi::class)
+
 package com.example.diapplication.view
 
 
@@ -47,7 +49,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.FusedLocationProviderClient
 
 
-@OptIn(ExperimentalPermissionsApi::class)
+
 @Composable
 fun WeatherScreen(
     weatherViewModel: WeatherViewModel,
@@ -58,6 +60,7 @@ fun WeatherScreen(
     val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
     val weatherState by weatherViewModel.weatherState.collectAsStateWithLifecycle()
     val permissionDenied = rememberSaveable { mutableStateOf(false) }
+
 
     LaunchedEffect(locationPermissionState) {
         weatherViewModel.updateUserGeolocation(
@@ -70,6 +73,7 @@ fun WeatherScreen(
 
     if (!permissionDenied.value) {
         when (weatherState) {
+
             is WeatherState.Loading -> {
                 Column(
                     modifier = Modifier
