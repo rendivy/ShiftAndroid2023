@@ -12,6 +12,7 @@ import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.DIapplicationTheme
 import com.example.diapplication.view.AddLocationScreen
 import com.example.diapplication.view.DetailsScreen
+import com.example.diapplication.view.SettingsScreen
 import com.example.diapplication.view.WeatherScreen
 import com.example.diapplication.view.navigation.ScreenGraph
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -43,6 +44,9 @@ class MainActivity : ComponentActivity() {
                             weatherViewModel = viewModel,
                             navController = navController
                         )
+                    }
+                    composable(ScreenGraph.Settings.route) {
+                        SettingsScreen(navController = navController)
                     }
                 }
 

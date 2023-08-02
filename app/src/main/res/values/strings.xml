@@ -11,4 +11,12 @@
     <string name="last_update">Last update</string>'
     <string name="high_sign">H:</string>
     <string name="low_sign">L:</string>
+    <string name="settings_label">Settings</string>
+    <string name = "theme_label">Theme</string>
+    <string name ="about_label">About</string>
+    <string name = "theme_light">Light Theme</string>
+    <string name = "theme_dark">Dark Theme</string>
+    <string name = "team_label">About Weather</string>
+    <string name="feedback_label">Feedback</string>
+    <string name ="report_label">Report an Issue</string>
 </resources>
