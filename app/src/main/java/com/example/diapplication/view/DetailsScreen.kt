@@ -29,7 +29,7 @@ import com.example.diapplication.view.buttons.WeatherIconButton
 
 
 @Composable
-fun DetailsWeatherScreen(weatherViewModel: WeatherViewModel, navController: NavController) {
+fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavController) {
     val cityWeatherState = weatherViewModel.citiesWeatherState.collectAsStateWithLifecycle()
     LazyColumn(
         modifier = Modifier

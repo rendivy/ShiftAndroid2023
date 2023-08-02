@@ -158,7 +158,8 @@ fun WeatherScreen(
                             Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                                 WeatherIconButton(id = R.drawable.location_button_icon)
                                 { navController.navigate("search") }
-                                WeatherIconButton(id = R.drawable.settings_icon, onClick = {})
+                                WeatherIconButton(id = R.drawable.settings_icon)
+                                {navController.navigate("settings")}
                             }
                         }
                         Box(

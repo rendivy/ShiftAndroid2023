@@ -173,7 +173,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
                                 modifier = Modifier.size(18.dp)
                             )
                             Text(
-                                text = weatherState.forecast.forecastDayList[i].day.maximumTemperature.toInt()
+                                text = weatherState.forecast.forecastDayList[i].day.minimumTemperature.toInt()
                                     .toString() + "°C",
                                 style = TextStyle(
                                     fontSize = 18.sp,
