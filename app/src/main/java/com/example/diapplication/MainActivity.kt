@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.DIapplicationTheme
 import com.example.diapplication.view.AddLocationScreen
-import com.example.diapplication.view.DetailsWeatherScreen
+import com.example.diapplication.view.DetailsScreen
 import com.example.diapplication.view.WeatherScreen
 import com.example.diapplication.view.navigation.ScreenGraph
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         WeatherScreen(viewModel, fusedLocationProviderClient, navController)
                     }
                     composable(ScreenGraph.Search.route) {
-                        DetailsWeatherScreen(viewModel, navController)
+                        DetailsScreen(viewModel, navController)
                     }
                     composable("add_location_screen") {
                         AddLocationScreen(
