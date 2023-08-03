@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,7 +27,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -80,13 +80,13 @@ fun WeatherScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black),
+                        .background(MaterialTheme.colorScheme.background),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(120.dp),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.secondary
                     )
                 }
             }
@@ -95,7 +95,7 @@ fun WeatherScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black),
+                        .background(MaterialTheme.colorScheme.background),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -105,7 +105,7 @@ fun WeatherScreen(
                         fontWeight = FontWeight(400),
                         fontSize = 24.sp,
                         textAlign = TextAlign.Center,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                     Spacer(modifier = Modifier.height(32.dp))
                     Image(
@@ -113,7 +113,7 @@ fun WeatherScreen(
                         painter = painterResource(id = R.drawable.wifi_off),
                         contentDescription = "bad connection",
                         contentScale = ContentScale.Crop,
-                        colorFilter = ColorFilter.tint(Color.White)
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
                     )
                     Spacer(modifier = Modifier.height(32.dp))
                     Text(
@@ -122,7 +122,7 @@ fun WeatherScreen(
                         fontWeight = FontWeight(400),
                         fontSize = 32.sp,
                         textAlign = TextAlign.End,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
@@ -131,7 +131,7 @@ fun WeatherScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(color = Color.Black),
+                        .background(color = MaterialTheme.colorScheme.background),
 
                     ) {
                     item {
@@ -149,14 +149,14 @@ fun WeatherScreen(
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                                     fontWeight = FontWeight(400),
                                     fontSize = 24.sp,
-                                    color = Color(0xFFFFFFFF),
+                                    color = MaterialTheme.colorScheme.secondary,
                                 )
                                 Text(
                                     text = "Current location",
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                                     fontWeight = FontWeight(400),
                                     fontSize = 18.sp,
-                                    color = Color(0xFF414141),
+                                    color = MaterialTheme.colorScheme.tertiary,
                                 )
                             }
                             Row(horizontalArrangement = Arrangement.SpaceEvenly) {
@@ -174,11 +174,7 @@ fun WeatherScreen(
                         }
                         WeatherForeCastScreen(weatherState = content.weather)
 
-                        //Spacer(modifier = Modifier.padding(16.dp))
-                        //if (weatherState?.alerts?.alertList?.isNotEmpty() == true) {
                         //GovernmentAlertButton(weatherState = weatherState)
-                        //}
-                        //OtherDaysScreen(weatherState = weatherState)
 
                     }
                 }

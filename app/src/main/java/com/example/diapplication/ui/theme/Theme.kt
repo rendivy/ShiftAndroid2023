@@ -21,20 +21,19 @@ val DarkColorScheme = darkColorScheme(
     background = Color.Black,
     primary = Color.Black,
     secondary = Color.White,
-    tertiary = Color.Gray
+    tertiary = Translucent
 )
 
 val LightColorScheme = lightColorScheme(
     primary = Color.White,
     background = Color.White,
     secondary = Color.Black,
-    tertiary = Color.Gray
+    tertiary = Translucent
 )
 
 @Composable
 fun DIapplicationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

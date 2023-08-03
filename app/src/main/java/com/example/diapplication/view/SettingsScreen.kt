@@ -15,8 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -33,10 +30,6 @@ import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.Redirected
 import com.example.diapplication.view.buttons.WeatherIconButton
-
-
-
-
 
 
 @Composable
@@ -91,7 +84,7 @@ fun SettingsScreen(
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                             fontWeight = FontWeight(400),
                             fontSize = 22.sp,
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.tertiary,
                         )
                         if (darkTheme.value){
                             IconManager(tintColor = Color.White)
@@ -103,7 +96,7 @@ fun SettingsScreen(
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
                         fontSize = 20.sp,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -116,7 +109,7 @@ fun SettingsScreen(
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                             fontWeight = FontWeight(400),
                             fontSize = 22.sp,
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.tertiary,
                         )
                         if (!darkTheme.value){
                             IconManager(tintColor = Color.Black)
@@ -127,7 +120,7 @@ fun SettingsScreen(
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
                         fontSize = 20.sp,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 }
             }
@@ -167,7 +160,7 @@ fun SettingsScreen(
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
                     fontSize = 18.sp,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
             }
             Column(
@@ -198,7 +191,7 @@ fun SettingsScreen(
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
                     fontSize = 22.sp,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
@@ -206,11 +199,9 @@ fun SettingsScreen(
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
                     fontSize = 18.sp,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
             }
-
-
         }
     }
 }

@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -59,7 +60,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
-                    color = if (isForecastClicked.value) Color(0xFF616161) else Color.White,
+                    color = if (isForecastClicked.value) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = false }
             )
@@ -69,7 +70,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
-                    color = if (!isForecastClicked.value) Color(0xFF616161) else Color.White,
+                    color = if (!isForecastClicked.value) MaterialTheme.colorScheme.tertiary  else MaterialTheme.colorScheme.secondary,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = true }
             )
@@ -98,7 +99,7 @@ fun MainWeatherData(weatherState: Weather?) {
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             )
         )
         Text(
@@ -108,7 +109,7 @@ fun MainWeatherData(weatherState: Weather?) {
                 fontSize = 96.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFFFFFFFF),
+                color = MaterialTheme.colorScheme.secondary,
                 letterSpacing = 0.37.sp,
             )
         )
@@ -134,7 +135,7 @@ fun MainWeatherData(weatherState: Weather?) {
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }
@@ -156,7 +157,7 @@ fun MainWeatherData(weatherState: Weather?) {
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }
@@ -176,7 +177,7 @@ fun MainWeatherData(weatherState: Weather?) {
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             )
         )
         AstroScreen(weatherState = weatherState)
@@ -283,7 +284,7 @@ fun AstroScreen(weatherState: Weather?) {
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }
@@ -303,7 +304,7 @@ fun AstroScreen(weatherState: Weather?) {
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }
