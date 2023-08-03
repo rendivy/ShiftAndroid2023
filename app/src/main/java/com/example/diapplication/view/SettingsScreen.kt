@@ -92,7 +92,7 @@ fun SettingsScreen(
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Join the Dark Side!",
+                        text = stringResource(id = R.string.dark_side),
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
                         fontSize = 20.sp,
@@ -116,7 +116,7 @@ fun SettingsScreen(
                         }
                     }
                     Text(
-                        text = "Let There Be Light!",
+                        text = stringResource(id = R.string.light_side),
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
                         fontSize = 20.sp,
@@ -156,7 +156,7 @@ fun SettingsScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Read a bit more about the app.",
+                    text = stringResource(id = R.string.about_column_description),
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
                     fontSize = 18.sp,
@@ -195,7 +195,7 @@ fun SettingsScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Facing an issue? Report and we'll look into it.",
+                    text = stringResource(id = R.string.issue_description),
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
                     fontSize = 18.sp,

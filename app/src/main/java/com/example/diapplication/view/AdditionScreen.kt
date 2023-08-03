@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -67,7 +68,8 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
 fun HourlyForecastScreen(weatherState: Weather?) {
     val lazyListState = rememberLazyListState()
     Text(
-        text = "Hourly Forecast", style = TextStyle(
+        text = stringResource(id = R.string.hourly_forecast),
+        style = TextStyle(
             fontSize = 22.sp,
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(400),
@@ -90,7 +92,7 @@ fun HourlyForecastScreen(weatherState: Weather?) {
                     modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                 ) {
                     Text(
-                        text = "$i:00",
+                        text = "$i" + stringResource(id = R.string.hour_minute),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -106,7 +108,8 @@ fun HourlyForecastScreen(weatherState: Weather?) {
 
                     )
                     Text(
-                        text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() + "°C",
+                        text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() +
+                        stringResource(id = R.string.celsius),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -125,7 +128,8 @@ fun HourlyForecastScreen(weatherState: Weather?) {
 @Composable
 fun DailyForecastScreen(weatherState: Weather?) {
     Text(
-        text = "Daily Forecast", style = TextStyle(
+        text = stringResource(id = R.string.daily_forecast),
+        style = TextStyle(
             fontSize = 22.sp,
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(400),
@@ -175,7 +179,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
                             )
                             Text(
                                 text = weatherState.forecast.forecastDayList[i].day.minimumTemperature.toInt()
-                                    .toString() + "°C",
+                                    .toString() + stringResource(id = R.string.celsius),
                                 style = TextStyle(
                                     fontSize = 18.sp,
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -196,7 +200,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
                             )
                             Text(
                                 text = weatherState.forecast.forecastDayList[i].day.maximumTemperature.toInt()
-                                    .toString() + "°C",
+                                    .toString() + stringResource(id = R.string.celsius),
                                 style = TextStyle(
                                     fontSize = 18.sp,
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -245,7 +249,7 @@ fun AddLocationScreen(
             onValueChange = { city = it },
             label = {
                 Text(
-                    text = "Enter city name",
+                    text = stringResource(id = R.string.city_placeholder),
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -268,16 +272,18 @@ fun AddLocationScreen(
             ),
         )
         Spacer(modifier = Modifier.height(32.dp))
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                weatherViewModel.updateAnotherCityWeather(
-                    cityName = city,
-                    navController = navController
-                )
-            },
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    weatherViewModel.updateAnotherCityWeather(
+                        cityName = city,
+                        navController = navController
+                    )
+                },
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically) {
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
             Icon(
                 painter = painterResource(id = R.drawable.upload_cloud),
@@ -286,7 +292,7 @@ fun AddLocationScreen(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text = "Add another city",
+                text = stringResource(id = R.string.add_placeholder),
                 style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -305,7 +311,7 @@ fun AddLocationScreen(
 fun DetailsScreen(weatherState: Weather?) {
     Column(modifier = Modifier.padding(start = 32.dp)) {
         Text(
-            text = "Precipitation",
+            text = stringResource(id = R.string.precipitation),
             style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -314,7 +320,8 @@ fun DetailsScreen(weatherState: Weather?) {
             ),
         )
         Text(
-            text = weatherState?.forecast?.forecastDayList?.get(0)?.totalPrecipitationMm.toString() + " mm",
+            text = weatherState?.forecast?.forecastDayList?.get(0)?.totalPrecipitationMm.toString() +
+                    " " + stringResource(id = R.string.mm),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -325,7 +332,8 @@ fun DetailsScreen(weatherState: Weather?) {
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = weatherState?.current?.windDirection.toString() + " Wind",
+            text = weatherState?.current?.windDirection.toString() +
+                    " " + stringResource(id = R.string.wind),
             style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -334,7 +342,8 @@ fun DetailsScreen(weatherState: Weather?) {
             ),
         )
         Text(
-            text = weatherState?.current?.windKph.toString() + " km/h",
+            text = weatherState?.current?.windKph.toString() +
+                    " " + stringResource(id = R.string.kmh),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -345,7 +354,7 @@ fun DetailsScreen(weatherState: Weather?) {
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = "Humidity",
+            text = stringResource(id = R.string.humidity),
             style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -354,7 +363,8 @@ fun DetailsScreen(weatherState: Weather?) {
             ),
         )
         Text(
-            text = weatherState?.current?.humidity.toString() + " %",
+            text = weatherState?.current?.humidity.toString() +
+                    " " + stringResource(id = R.string.percent),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -365,7 +375,7 @@ fun DetailsScreen(weatherState: Weather?) {
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = "UV",
+            text = stringResource(id = R.string.UV),
             style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -394,7 +404,8 @@ fun DetailsScreen(weatherState: Weather?) {
             ),
         )
         Text(
-            text = weatherState?.current?.feelsLikeCelsius.toString(),
+            text = weatherState?.current?.feelsLikeCelsius?.toInt().toString()
+                    + stringResource(id = R.string.celsius),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -405,7 +416,7 @@ fun DetailsScreen(weatherState: Weather?) {
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = "Pressure",
+            text = stringResource(id = R.string.pressure),
             style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -414,7 +425,8 @@ fun DetailsScreen(weatherState: Weather?) {
             ),
         )
         Text(
-            text = weatherState?.current?.pressureMb.toString() + " mb",
+            text = weatherState?.current?.pressureMb.toString() +
+                    " " + stringResource(id = R.string.pressure_mb),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),

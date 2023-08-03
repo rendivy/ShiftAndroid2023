@@ -152,7 +152,7 @@ fun WeatherScreen(
                                     color = MaterialTheme.colorScheme.secondary,
                                 )
                                 Text(
-                                    text = "Current location",
+                                    text = stringResource(id = R.string.currentLocation_label),
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                                     fontWeight = FontWeight(400),
                                     fontSize = 18.sp,
