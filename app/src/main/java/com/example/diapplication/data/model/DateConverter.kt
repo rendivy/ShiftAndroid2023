@@ -35,16 +35,5 @@ class DateConverter {
             // Преобразуем объект LocalDateTime в строку заданного формата
             return localDateTime.format(outputFormat)
         }
-
-        fun convertTo24HourFormat(time12Hour: String): String {
-            val time12HourPattern = "h:mm a"
-            val time24HourPattern = "HH:mm"
-
-            val formatter12Hour = DateTimeFormatter.ofPattern(time12HourPattern)
-            val formatter24Hour = DateTimeFormatter.ofPattern(time24HourPattern)
-
-            val localTime = LocalTime.parse(time12Hour, formatter12Hour)
-            return localTime.format(formatter24Hour)
-        }
     }
 }

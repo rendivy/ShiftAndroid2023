@@ -15,6 +15,5 @@ class Redirected {
                 return Intent(Intent.ACTION_VIEW, Uri.parse(gitHubUrl))
             }
         }
-
     }
 }
