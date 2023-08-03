@@ -4,6 +4,7 @@ package com.example.diapplication.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,8 +19,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -33,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -66,11 +68,12 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
 fun HourlyForecastScreen(weatherState: Weather?) {
     val lazyListState = rememberLazyListState()
     Text(
-        text = "Hourly Forecast", style = TextStyle(
+        text = stringResource(id = R.string.hourly_forecast),
+        style = TextStyle(
             fontSize = 22.sp,
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(400),
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.tertiary,
         ), modifier = Modifier.padding(start = 32.dp, bottom = 16.dp)
     )
     LazyRow(
@@ -89,12 +92,12 @@ fun HourlyForecastScreen(weatherState: Weather?) {
                     modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                 ) {
                     Text(
-                        text = "$i:00",
+                        text = "$i" + stringResource(id = R.string.hour_minute),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                             fontWeight = FontWeight(400),
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.secondary,
                         ),
                     )
                     WeatherConditionImage(
@@ -105,12 +108,13 @@ fun HourlyForecastScreen(weatherState: Weather?) {
 
                     )
                     Text(
-                        text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() + "°C",
+                        text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() +
+                        stringResource(id = R.string.celsius),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                             fontWeight = FontWeight(400),
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.tertiary,
                         ),
                     )
                 }
@@ -124,11 +128,12 @@ fun HourlyForecastScreen(weatherState: Weather?) {
 @Composable
 fun DailyForecastScreen(weatherState: Weather?) {
     Text(
-        text = "Daily Forecast", style = TextStyle(
+        text = stringResource(id = R.string.daily_forecast),
+        style = TextStyle(
             fontSize = 22.sp,
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(400),
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.tertiary,
         ), modifier = Modifier.padding(start = 32.dp, bottom = 16.dp)
     )
     LazyRow(
@@ -152,7 +157,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
                                 fontSize = 20.sp,
                                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                                 fontWeight = FontWeight(400),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.secondary,
                             ),
                         )
                         WeatherConditionImage(
@@ -174,12 +179,12 @@ fun DailyForecastScreen(weatherState: Weather?) {
                             )
                             Text(
                                 text = weatherState.forecast.forecastDayList[i].day.minimumTemperature.toInt()
-                                    .toString() + "°C",
+                                    .toString() + stringResource(id = R.string.celsius),
                                 style = TextStyle(
                                     fontSize = 18.sp,
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                                     fontWeight = FontWeight(400),
-                                    color = Color.Gray,
+                                    color = MaterialTheme.colorScheme.tertiary,
                                 ),
                             )
                         }
@@ -195,12 +200,12 @@ fun DailyForecastScreen(weatherState: Weather?) {
                             )
                             Text(
                                 text = weatherState.forecast.forecastDayList[i].day.maximumTemperature.toInt()
-                                    .toString() + "°C",
+                                    .toString() + stringResource(id = R.string.celsius),
                                 style = TextStyle(
                                     fontSize = 18.sp,
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                                     fontWeight = FontWeight(400),
-                                    color = Color.Gray,
+                                    color = MaterialTheme.colorScheme.tertiary,
                                 ),
                             )
                         }
@@ -223,7 +228,7 @@ fun AddLocationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -234,7 +239,7 @@ fun AddLocationScreen(
                 fontSize = 32.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
             textAlign = TextAlign.Center
         )
@@ -244,12 +249,12 @@ fun AddLocationScreen(
             onValueChange = { city = it },
             label = {
                 Text(
-                    text = "Enter city name",
+                    text = stringResource(id = R.string.city_placeholder),
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 )
             },
@@ -258,37 +263,46 @@ fun AddLocationScreen(
                 fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
             colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.White,
+                textColor = MaterialTheme.colorScheme.secondary,
                 containerColor = Color.Transparent,
-                focusedIndicatorColor = Color.White
-                ),
+                focusedIndicatorColor = MaterialTheme.colorScheme.secondary
+            ),
         )
         Spacer(modifier = Modifier.height(32.dp))
-        ExtendedFloatingActionButton(
-            onClick = { weatherViewModel.updateAnotherCityWeather(cityName = city,
-                navController = navController) },
-            icon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.upload_cloud),
-                    contentDescription = "add",
-                    tint = Color.White
-                )
-            },
-            text = {
-                Text(
-                    text = "Add another city",
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
-                        color = Color.White,
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    weatherViewModel.updateAnotherCityWeather(
+                        cityName = city,
+                        navController = navController
                     )
+                },
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Icon(
+                painter = painterResource(id = R.drawable.upload_cloud),
+                contentDescription = "add",
+                tint = MaterialTheme.colorScheme.secondary
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = stringResource(id = R.string.add_placeholder),
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = MaterialTheme.colorScheme.secondary,
                 )
-            },
-            containerColor = Color.Transparent)
+            )
+        }
+
+
     }
 }
 
@@ -297,72 +311,76 @@ fun AddLocationScreen(
 fun DetailsScreen(weatherState: Weather?) {
     Column(modifier = Modifier.padding(start = 32.dp)) {
         Text(
-            text = "Precipitation",
+            text = stringResource(id = R.string.precipitation),
             style = TextStyle(
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             ),
         )
         Text(
-            text = weatherState?.forecast?.forecastDayList?.get(0)?.totalPrecipitationMm.toString() + " mm",
+            text = weatherState?.forecast?.forecastDayList?.get(0)?.totalPrecipitationMm.toString() +
+                    " " + stringResource(id = R.string.mm),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
         )
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = weatherState?.current?.windDirection.toString() + " Wind",
+            text = weatherState?.current?.windDirection.toString() +
+                    " " + stringResource(id = R.string.wind),
             style = TextStyle(
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             ),
         )
         Text(
-            text = weatherState?.current?.windKph.toString() + " km/h",
+            text = weatherState?.current?.windKph.toString() +
+                    " " + stringResource(id = R.string.kmh),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
         )
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = "Humidity",
+            text = stringResource(id = R.string.humidity),
             style = TextStyle(
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             ),
         )
         Text(
-            text = weatherState?.current?.humidity.toString() + " %",
+            text = weatherState?.current?.humidity.toString() +
+                    " " + stringResource(id = R.string.percent),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
         )
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = "UV",
+            text = stringResource(id = R.string.UV),
             style = TextStyle(
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary
             ),
         )
         Text(
@@ -371,7 +389,7 @@ fun DetailsScreen(weatherState: Weather?) {
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
         )
     }
@@ -379,39 +397,41 @@ fun DetailsScreen(weatherState: Weather?) {
         Text(
             text = "Feels Like",
             style = TextStyle(
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             ),
         )
         Text(
-            text = weatherState?.current?.feelsLikeCelsius.toString(),
+            text = weatherState?.current?.feelsLikeCelsius?.toInt().toString()
+                    + stringResource(id = R.string.celsius),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
         )
     }
     Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
         Text(
-            text = "Pressure",
+            text = stringResource(id = R.string.pressure),
             style = TextStyle(
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             ),
         )
         Text(
-            text = weatherState?.current?.pressureMb.toString() + " mb",
+            text = weatherState?.current?.pressureMb.toString() +
+                    " " + stringResource(id = R.string.pressure_mb),
             style = TextStyle(
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
             ),
         )
     }

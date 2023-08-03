@@ -19,4 +19,25 @@
     <string name = "team_label">About Weather</string>
     <string name="feedback_label">Feedback</string>
     <string name ="report_label">Report an Issue</string>
+    <string name="currentLocation_label">Current location</string>
+    <string name="forecast">Forecast</string>
+    <string name="details">Details</string>
+    <string name="precipitation">Precipitation</string>
+    <string name ="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="kmh">km/h</string>
+    <string name="percent">%</string>
+    <string name="UV">UV</string>
+    <string name="pressure_mb">mb</string>
+    <string name="pressure">Pressure</string>
+    <string name="daily_forecast">Daily Forecast</string>
+    <string name="hourly_forecast">Hourly Forecast</string>
+    <string name="mm">mm</string>
+    <string name="hour_minute">:00</string>
+    <string name="city_placeholder">Enter city name</string>
+    <string name="add_placeholder">Add another city</string>
+    <string name="dark_side">Join the Dark Side!</string>
+    <string name="light_side">Let There Be Light!</string>
+    <string name="about_column_description">Read a bit more about the app. </string>
+    <string name="issue_description">Read a bit more about the app. </string>
 </resources>

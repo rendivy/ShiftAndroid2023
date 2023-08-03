@@ -1,7 +1,6 @@
 package com.example.diapplication.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,19 +13,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -34,7 +27,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
@@ -54,22 +46,22 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
                 .padding(start = 32.dp, bottom = 16.dp, top = 16.dp, end = 32.dp)
         ) {
             Text(
-                text = "Details",
+                text = stringResource(id = R.string.details),
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
-                    color = if (isForecastClicked.value) Color(0xFF616161) else Color.White,
+                    color = if (isForecastClicked.value) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = false }
             )
             Text(
-                text = "Forecast",
+                text = stringResource(id = R.string.forecast),
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                     fontWeight = FontWeight(400),
-                    color = if (!isForecastClicked.value) Color(0xFF616161) else Color.White,
+                    color = if (!isForecastClicked.value) MaterialTheme.colorScheme.tertiary  else MaterialTheme.colorScheme.secondary,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = true }
             )
@@ -98,17 +90,17 @@ fun MainWeatherData(weatherState: Weather?) {
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             )
         )
         Text(
             text = weatherState?.current?.temperatureCelsius?.toInt()
-                .toString() + "°C",
+                .toString() + stringResource(id = R.string.celsius),
             style = TextStyle(
                 fontSize = 96.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFFFFFFFF),
+                color = MaterialTheme.colorScheme.secondary,
                 letterSpacing = 0.37.sp,
             )
         )
@@ -129,12 +121,12 @@ fun MainWeatherData(weatherState: Weather?) {
                 )
                 Text(
                     text = weatherState?.forecast?.forecastDayList?.get(0)?.day?.minimumTemperature
-                        .toString() + "°C",
+                        .toString() + stringResource(id = R.string.celsius),
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }
@@ -151,12 +143,12 @@ fun MainWeatherData(weatherState: Weather?) {
                 )
                 Text(
                     text = weatherState?.forecast?.forecastDayList?.get(0)?.day?.maximumTemperature
-                        .toString() + "°C",
+                        .toString() + stringResource(id = R.string.celsius),
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }
@@ -176,90 +168,12 @@ fun MainWeatherData(weatherState: Weather?) {
                 fontSize = 24.sp,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                 fontWeight = FontWeight(400),
-                color = Color(0xFF616161),
+                color = MaterialTheme.colorScheme.tertiary,
             )
         )
         AstroScreen(weatherState = weatherState)
     }
 }
-
-@Composable
-fun GovernmentAlertButton() {
-    val showDialog = remember { mutableStateOf(false) }
-
-    Button(
-        onClick = { showDialog.value = true },
-        modifier = Modifier
-            .padding(2.dp)
-            .background(color = Color.Transparent, shape = RoundedCornerShape(size = 18.dp))
-            .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB200)),
-    ) {
-        Text(
-            text = stringResource(id = R.string.goverment_alert),
-            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-            fontWeight = FontWeight(400),
-            fontSize = 20.sp,
-            color = Color(0xFFFFFFFF),
-            textAlign = TextAlign.Center,
-        )
-    }
-
-    if (showDialog.value) {
-        AlertDialog(
-            modifier = Modifier.background(color = Color.Black),
-            onDismissRequest = { showDialog.value = false },
-            title = {
-                Text(
-                    text = stringResource(id = R.string.goverment_alert),
-                    fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 45.sp,
-                    color = Color(0xFFFFB200),
-                    textAlign = TextAlign.Center,
-                )
-            },
-            text = {
-                LazyColumn(
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.background(color = Color.Black)
-                ) {
-                    item {
-
-                    }
-
-                }
-            },
-            confirmButton = {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Button(
-                        onClick = { showDialog.value = false },
-                        modifier = Modifier
-                            .align(alignment = Alignment.Center)
-                            .background(
-                                color = Color.Transparent,
-                                shape = RoundedCornerShape(size = 18.dp)
-                            )
-                            .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 10.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFB200)),
-                    ) {
-                        Text(
-                            text = "OK",
-                            fontFamily = FontFamily(Font(R.font.sf_pro_thin)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
-                            color = Color(0xFFFFFFFF),
-                            textAlign = TextAlign.Center,
-                        )
-                    }
-                }
-
-            }
-        )
-    }
-}
-
 
 @Composable
 fun AstroScreen(weatherState: Weather?) {
@@ -283,7 +197,7 @@ fun AstroScreen(weatherState: Weather?) {
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }
@@ -303,7 +217,7 @@ fun AstroScreen(weatherState: Weather?) {
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                         fontWeight = FontWeight(400),
-                        color = Color(0xFF616161),
+                        color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
             }

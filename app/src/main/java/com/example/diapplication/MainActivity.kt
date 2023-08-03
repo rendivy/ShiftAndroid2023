@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,7 +32,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
-            DIapplicationTheme {
+            val darkTheme = remember { mutableStateOf(false) }
+            DIapplicationTheme(darkTheme = darkTheme.value) {
                 navController = rememberNavController()
                 NavHost(navController = navController, startDestination = ScreenGraph.Home.route) {
                     composable(ScreenGraph.Home.route) {
@@ -46,7 +49,10 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(ScreenGraph.Settings.route) {
-                        SettingsScreen(navController = navController)
+                        SettingsScreen(navController = navController,
+                            darkTheme = darkTheme,
+
+                            )
                     }
                 }
 

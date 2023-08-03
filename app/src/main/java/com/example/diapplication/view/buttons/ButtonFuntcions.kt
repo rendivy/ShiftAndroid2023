@@ -3,8 +3,10 @@ package com.example.diapplication.view.buttons
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,7 @@ fun WeatherIconButton(id: Int, onClick: () -> Unit){
             painter = painterResource(id = id),
             contentDescription = "search button",
             modifier = Modifier.size(24.dp),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.tertiary),
             contentScale = ContentScale.Crop
         )
     }

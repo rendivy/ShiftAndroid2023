@@ -1,10 +1,10 @@
 package com.example.diapplication.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -16,7 +16,7 @@ fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
         weatherCondition?.contains("Clear") == true || weatherCondition?.contains("Sunny") == true -> Image(
             painter = painterResource(id = R.drawable.sunny), contentDescription = "Sunny weather",
             modifier = modifier,
-            colorFilter = ColorFilter.tint(color = Color.White),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
@@ -24,7 +24,7 @@ fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
         weatherCondition?.contains("Thunder") == true  -> Image(
             painter = painterResource(id = R.drawable.cloud_lightning), contentDescription = "Sunny weather",
             modifier = modifier,
-            colorFilter = ColorFilter.tint(color = Color.White),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
@@ -34,7 +34,7 @@ fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
             painter = painterResource(id = R.drawable.drizzle),
             contentDescription = "Cloudy weather",
             modifier = modifier,
-            colorFilter = ColorFilter.tint(color = Color.White),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
@@ -43,7 +43,7 @@ fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
             painter = painterResource(id = R.drawable.cloud_rain),
             contentDescription = "Cloudy weather",
             modifier = modifier,
-            colorFilter = ColorFilter.tint(color = Color.White),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
@@ -54,7 +54,7 @@ fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
             painter = painterResource(id = R.drawable.cloud_snow),
             contentDescription = "Sunny weather",
             modifier = modifier,
-            colorFilter = ColorFilter.tint(color = Color.White),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
@@ -64,7 +64,7 @@ fun WeatherConditionImage(weatherCondition: String?, modifier: Modifier) {
         else -> Image(
             painter = painterResource(id = R.drawable.cloud), contentDescription = "Cloudy weather",
             modifier = modifier,
-            colorFilter = ColorFilter.tint(color = Color.White),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
         )
