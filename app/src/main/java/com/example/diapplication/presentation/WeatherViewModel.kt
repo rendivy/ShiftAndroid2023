@@ -30,6 +30,7 @@ class WeatherViewModel @Inject constructor(
     private val _weatherState = MutableStateFlow<WeatherState>(WeatherState.Loading)
     val weatherState: StateFlow<WeatherState> = _weatherState
 
+
     private val _citiesWeatherState =
         MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
     val citiesWeatherState: StateFlow<List<WeatherState.Content>> = _citiesWeatherState
@@ -58,20 +59,19 @@ class WeatherViewModel @Inject constructor(
             try {
                 val weather = updateWeatherUseCase(cityName)
                 val newWeatherState = WeatherState.Content(weather)
-                if (!_citiesWeatherState.value.contains(newWeatherState)){
+                if (!_citiesWeatherState.value.contains(newWeatherState)) {
                     _citiesWeatherState.value.add(WeatherState.Content(weather))
                     _anotherCityError.value = ""
                     navController.popBackStack()
-                }
-                else{
+                } else {
                     _anotherCityError.value = "City already added"
                 }
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 _anotherCityError.value = "City not found, please check correctness of city name"
             }
         }
     }
+
 
     fun updateUserGeolocation(
         fusedLocationProviderClient: FusedLocationProviderClient,
@@ -82,6 +82,7 @@ class WeatherViewModel @Inject constructor(
         viewModelScope.launch {
             if (!locationPermissionState.status.isGranted) {
                 locationPermissionState.launchPermissionRequest()
+
             } else {
                 if (ActivityCompat.checkSelfPermission(
                         context,
@@ -91,19 +92,17 @@ class WeatherViewModel @Inject constructor(
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
-                        updateWeatherData("${location?.latitude},${location?.longitude}")
-                        permissionDenied.value = false
-                    }
+                    fusedLocationProviderClient.getCurrentLocation(100, null)
+                        .addOnSuccessListener { location: Location? ->
+                            location?.let {
+                                updateWeatherData("${location.latitude},${location.longitude}")
+                                permissionDenied.value = false
+                            }
+                        }
                 } else {
                     permissionDenied.value = true
                 }
             }
-
-
         }
-
     }
-
-
 }

@@ -53,8 +53,6 @@ fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavControll
                 }
             }
             for (i in 0 until cityWeatherState.value.size) {
-
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

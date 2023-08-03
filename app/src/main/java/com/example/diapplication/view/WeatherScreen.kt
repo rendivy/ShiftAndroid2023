@@ -49,7 +49,6 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.FusedLocationProviderClient
 
 
-
 @Composable
 fun WeatherScreen(
     weatherViewModel: WeatherViewModel,
@@ -60,15 +59,18 @@ fun WeatherScreen(
     val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
     val weatherState by weatherViewModel.weatherState.collectAsStateWithLifecycle()
     val permissionDenied = rememberSaveable { mutableStateOf(false) }
+    val launchedEffectExecuted = rememberSaveable { mutableStateOf(false) }
 
-
-    LaunchedEffect(locationPermissionState) {
-        weatherViewModel.updateUserGeolocation(
-            context = context,
-            fusedLocationProviderClient = fusedLocationProviderClient,
-            locationPermissionState = locationPermissionState,
-            permissionDenied = permissionDenied
-        )
+    if (!launchedEffectExecuted.value) {
+        LaunchedEffect(locationPermissionState) {
+            weatherViewModel.updateUserGeolocation(
+                context = context,
+                fusedLocationProviderClient = fusedLocationProviderClient,
+                locationPermissionState = locationPermissionState,
+                permissionDenied = permissionDenied
+            )
+            launchedEffectExecuted.value = true
+        }
     }
 
     if (!permissionDenied.value) {
@@ -91,7 +93,9 @@ fun WeatherScreen(
 
             is WeatherState.Error -> {
                 Column(
-                    modifier = Modifier.fillMaxSize().background(Color.Black),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
