@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,6 +19,9 @@ import com.example.diapplication.view.WeatherScreen
 import com.example.diapplication.view.navigation.ScreenGraph
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.FirebaseApp
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,8 +35,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
-            val darkTheme = remember { mutableStateOf(false) }
+            val darkTheme = rememberSaveable { mutableStateOf(false) }
+            val database = Firebase.database
+            val myRef = database.getReference("message")
+
+            myRef.setValue("Hello, World!")
+
+
+
             DIapplicationTheme(darkTheme = darkTheme.value) {
+                FirebaseApp.initializeApp(this)
                 navController = rememberNavController()
                 NavHost(navController = navController, startDestination = ScreenGraph.Home.route) {
                     composable(ScreenGraph.Home.route) {

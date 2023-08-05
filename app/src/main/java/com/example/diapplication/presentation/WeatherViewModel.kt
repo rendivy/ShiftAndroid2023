@@ -82,8 +82,8 @@ class WeatherViewModel @Inject constructor(
         viewModelScope.launch {
             if (!locationPermissionState.status.isGranted) {
                 locationPermissionState.launchPermissionRequest()
-
-            } else {
+            }
+            else {
                 if (ActivityCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_FINE_LOCATION
