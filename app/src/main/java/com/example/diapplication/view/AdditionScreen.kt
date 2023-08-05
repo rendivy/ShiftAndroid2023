@@ -1,7 +1,8 @@
-@file:OptIn(FlowPreview::class, ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.example.diapplication.view
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,6 +42,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -47,9 +50,9 @@ import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
+import com.example.diapplication.presentation.PredictViewModel
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.view.buttons.WeatherIconButton
-import kotlinx.coroutines.FlowPreview
 
 @Composable
 fun ForecastWeatherScreen(weatherState: Weather?) {
@@ -220,15 +223,20 @@ fun DailyForecastScreen(weatherState: Weather?) {
 
 @Composable
 fun AddLocationScreen(
-    weatherViewModel: WeatherViewModel, navController: NavController
+    weatherViewModel: WeatherViewModel, navController: NavController,
+    predictViewModel: PredictViewModel
 ) {
     var city by remember { mutableStateOf("") }
+    val predictedCities by predictViewModel.predicted.collectAsStateWithLifecycle()
+    val isVisible by remember { mutableStateOf(false) }
     val errorState by weatherViewModel.anotherCityError.collectAsStateWithLifecycle()
+
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+
     ) {
         Row(
             verticalAlignment = Alignment.Top,
@@ -248,9 +256,23 @@ fun AddLocationScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Text(
+                modifier = Modifier.padding(32.dp),
+                text = errorState.toString(),
+                style = TextStyle(
+                    fontSize = 32.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = MaterialTheme.colorScheme.secondary,
+                ),
+                textAlign = TextAlign.Center
+            )
             OutlinedTextField(
                 value = city,
-                onValueChange = { city = it },
+                onValueChange = { newValue ->
+                    city = newValue
+                    predictViewModel.getPredicted(newValue)
+                },
                 label = {
                     Text(
                         text = stringResource(id = R.string.city_placeholder),
@@ -275,6 +297,34 @@ fun AddLocationScreen(
                     focusedIndicatorColor = MaterialTheme.colorScheme.secondary
                 ),
             )
+            AnimatedVisibility(
+                visible = predictedCities.isNotEmpty(),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    items(predictedCities.size) {
+                        Text(
+                            text = predictedCities[it].name, modifier = Modifier
+                                .fillMaxWidth().padding(8.dp)
+                                .clickable {
+                                    city = predictedCities[it].name
+                                    predictViewModel.clearPredicted()
+                                },
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                                fontWeight = FontWeight(400),
+                                color = MaterialTheme.colorScheme.secondary,
+                            )
+                        )
+                    }
+                }
+            }
             Spacer(modifier = Modifier.height(32.dp))
             Row(
                 modifier = Modifier
@@ -305,7 +355,9 @@ fun AddLocationScreen(
                 )
             }
         }
+
     }
+
 }
 
 

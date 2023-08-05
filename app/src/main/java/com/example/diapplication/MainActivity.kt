@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.diapplication.presentation.PredictViewModel
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.DIapplicationTheme
@@ -26,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val weatherViewModel: WeatherViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
+    private val predictViewModel: PredictViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
 
@@ -60,6 +62,7 @@ class MainActivity : ComponentActivity() {
                 WeatherNavHost(
                     weatherViewModel = weatherViewModel,
                     userViewModel = userViewModel,
+                    predictViewModel = predictViewModel,
                     darkTheme = darkTheme,
                     citiesWeatherState = citiesState,
                     weatherState = weatherState,

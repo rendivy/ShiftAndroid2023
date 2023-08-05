@@ -32,6 +32,8 @@ class WeatherViewModel @Inject constructor(
     val weatherState: StateFlow<WeatherState> = _weatherState
 
 
+
+
     private val _citiesWeatherState =
         MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
     val citiesWeatherState: StateFlow<List<WeatherState.Content>> = _citiesWeatherState
@@ -47,9 +49,11 @@ class WeatherViewModel @Inject constructor(
 
     private fun getUserCities() {
         citiesReference.get().addOnSuccessListener {
-            val cities = it.value as List<String>
-            cities.forEach { cityName ->
-                updateAnotherCityWeather(cityName)
+            if (it.value != null){
+                val cities = it.value as List<String>
+                cities.forEach { cityName ->
+                    updateAnotherCityWeather(cityName)
+                }
             }
         }.addOnFailureListener {
             _weatherState.value = WeatherState.Error(true)

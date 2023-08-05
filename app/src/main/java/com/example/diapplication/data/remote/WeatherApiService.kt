@@ -1,6 +1,7 @@
 package com.example.diapplication.data.remote
 
 
+import com.example.diapplication.domain.entity.Location
 import com.example.diapplication.domain.entity.Weather
 import com.example.diapplication.domain.utils.Constants.API_TOKEN
 import retrofit2.http.GET
@@ -19,4 +20,11 @@ interface WeatherApiService {
         @Query("longitude") longitude: Double? = null,
         @Query("alerts") alerts: String? = "yes",
     ): Weather
+
+    @GET("search.json")
+    suspend fun getPredict(
+        @Query("key") key: String? = API_TOKEN,
+        @Query("q") q: String?,
+    ): List<Location>
+
 }
