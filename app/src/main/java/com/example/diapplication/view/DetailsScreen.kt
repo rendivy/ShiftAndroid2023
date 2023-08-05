@@ -26,10 +26,14 @@ import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.view.buttons.WeatherIconButton
+import com.google.firebase.database.FirebaseDatabase
 
 
 @Composable
-fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavController) {
+fun DetailsScreen(
+    weatherViewModel: WeatherViewModel, navController: NavController,
+    database: FirebaseDatabase
+) {
     val cityWeatherState = weatherViewModel.citiesWeatherState.collectAsStateWithLifecycle()
     LazyColumn(
         modifier = Modifier

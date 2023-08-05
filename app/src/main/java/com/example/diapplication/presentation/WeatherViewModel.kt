@@ -99,7 +99,8 @@ class WeatherViewModel @Inject constructor(
                                 permissionDenied.value = false
                             }
                         }
-                } else {
+                }
+                else {
                     permissionDenied.value = true
                 }
             }

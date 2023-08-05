@@ -49,6 +49,7 @@ import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
 import com.example.diapplication.presentation.WeatherViewModel
+import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.FlowPreview
 
 @Composable
@@ -109,7 +110,7 @@ fun HourlyForecastScreen(weatherState: Weather?) {
                     )
                     Text(
                         text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() +
-                        stringResource(id = R.string.celsius),
+                                stringResource(id = R.string.celsius),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -220,7 +221,8 @@ fun DailyForecastScreen(weatherState: Weather?) {
 
 @Composable
 fun AddLocationScreen(
-    weatherViewModel: WeatherViewModel, navController: NavController
+    weatherViewModel: WeatherViewModel, navController: NavController,
+    dataBaseReference: DatabaseReference
 ) {
     var city by remember { mutableStateOf("") }
     val errorState by weatherViewModel.anotherCityError.collectAsStateWithLifecycle()
@@ -280,6 +282,7 @@ fun AddLocationScreen(
                         cityName = city,
                         navController = navController
                     )
+                    dataBaseReference.setValue(weatherViewModel.citiesWeatherState.value.toList())
                 },
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically

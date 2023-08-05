@@ -4,19 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.DIapplicationTheme
-import com.example.diapplication.view.AddLocationScreen
-import com.example.diapplication.view.DetailsScreen
-import com.example.diapplication.view.SettingsScreen
-import com.example.diapplication.view.WeatherScreen
-import com.example.diapplication.view.navigation.ScreenGraph
+import com.example.diapplication.view.navigation.WeatherNavHost
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.FirebaseApp
@@ -26,8 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: WeatherViewModel by viewModels()
-    private lateinit var navController: NavHostController
+    private val weatherViewModel: WeatherViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
 
@@ -35,40 +29,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
-            val darkTheme = rememberSaveable { mutableStateOf(false) }
+            val darkTheme by userViewModel.darkTheme.collectAsStateWithLifecycle()
             val database = Firebase.database
-            val myRef = database.getReference("message")
+            val myRef = database.getReference("cities")
 
-            myRef.setValue("Hello, World!")
+            LaunchedEffect(Unit) {
+                userViewModel.getUserTheme()
+            }
+            FirebaseApp.initializeApp(this)
 
-
-
-            DIapplicationTheme(darkTheme = darkTheme.value) {
-                FirebaseApp.initializeApp(this)
-                navController = rememberNavController()
-                NavHost(navController = navController, startDestination = ScreenGraph.Home.route) {
-                    composable(ScreenGraph.Home.route) {
-                        WeatherScreen(viewModel, fusedLocationProviderClient, navController)
-                    }
-                    composable(ScreenGraph.Search.route) {
-                        DetailsScreen(viewModel, navController)
-                    }
-                    composable("add_location_screen") {
-                        AddLocationScreen(
-                            weatherViewModel = viewModel,
-                            navController = navController
-                        )
-                    }
-                    composable(ScreenGraph.Settings.route) {
-                        SettingsScreen(navController = navController,
-                            darkTheme = darkTheme,
-
-                            )
-                    }
-                }
+            DIapplicationTheme(darkTheme = darkTheme) {
+                WeatherNavHost(
+                    weatherViewModel = weatherViewModel,
+                    userViewModel = userViewModel,
+                    fusedLocationProviderClient = fusedLocationProviderClient,
+                    database = database,
+                    myRef = myRef,
+                    darkTheme = darkTheme
+                )
 
             }
         }
+
     }
 }
+
 
