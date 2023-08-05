@@ -3,8 +3,6 @@
 package com.example.diapplication.view
 
 
-import android.Manifest
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,15 +19,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -38,42 +31,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
-import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.view.buttons.WeatherIconButton
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
-import com.google.android.gms.location.FusedLocationProviderClient
 
 
 @Composable
 fun WeatherScreen(
-    weatherViewModel: WeatherViewModel,
-    fusedLocationProviderClient: FusedLocationProviderClient,
-    navController: NavController
+    navController: NavController,
+    weatherState: WeatherState,
+    permissionDenied: Boolean = false,
 ) {
-    val context: Context = LocalContext.current
-    val locationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
-    val weatherState by weatherViewModel.weatherState.collectAsStateWithLifecycle()
-    val permissionDenied = rememberSaveable { mutableStateOf(false) }
-    val launchedEffectExecuted = rememberSaveable { mutableStateOf(false) }
 
-    if (!launchedEffectExecuted.value) {
-        LaunchedEffect(locationPermissionState) {
-            weatherViewModel.updateUserGeolocation(
-                context = context,
-                fusedLocationProviderClient = fusedLocationProviderClient,
-                locationPermissionState = locationPermissionState,
-                permissionDenied = permissionDenied
-            )
-            launchedEffectExecuted.value = true
-        }
-    }
 
-    if (!permissionDenied.value) {
+
+    if (!permissionDenied) {
         when (weatherState) {
 
             is WeatherState.Loading -> {

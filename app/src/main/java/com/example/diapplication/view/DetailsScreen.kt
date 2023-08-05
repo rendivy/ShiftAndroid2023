@@ -21,16 +21,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
-import com.example.diapplication.presentation.WeatherViewModel
+import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.view.buttons.WeatherIconButton
 
 
 @Composable
-fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavController) {
-    val cityWeatherState = weatherViewModel.citiesWeatherState.collectAsStateWithLifecycle()
+fun DetailsScreen(
+    navController: NavController,
+    additionCitiesList: List<WeatherState.Content>
+) {
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +54,7 @@ fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavControll
                     navController.navigate("add_location_screen")
                 }
             }
-            for (i in 0 until cityWeatherState.value.size) {
+            for (i in additionCitiesList.indices) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -62,14 +64,14 @@ fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavControll
                 ) {
                     Column {
                         Text(
-                            text = cityWeatherState.value[i].weather.location.name,
+                            text = additionCitiesList[i].weather.location.name,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                             fontWeight = FontWeight(400),
                             fontSize = 24.sp,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                         Text(
-                            text = cityWeatherState.value[i].weather.current.temperatureCelsius.toInt()
+                            text = additionCitiesList[i].weather.current.temperatureCelsius.toInt()
                                 .toString()
                                     + stringResource(id = R.string.celsius),
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -78,7 +80,7 @@ fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavControll
                             color = MaterialTheme.colorScheme.tertiary
                         )
                         Text(
-                            text = cityWeatherState.value[i].weather.current.weatherCondition.text,
+                            text = additionCitiesList[i].weather.current.weatherCondition.text,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                             fontWeight = FontWeight(400),
                             fontSize = 16.sp,
@@ -86,7 +88,7 @@ fun DetailsScreen(weatherViewModel: WeatherViewModel, navController: NavControll
                         )
                     }
                     WeatherConditionImage(
-                        weatherCondition = cityWeatherState.value[i].weather.current.weatherCondition.text,
+                        weatherCondition = additionCitiesList[i].weather.current.weatherCondition.text,
                         modifier = Modifier
                             .padding(top = 32.dp, bottom = 8.dp)
                             .width(85.dp)

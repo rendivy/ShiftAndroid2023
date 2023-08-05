@@ -1,7 +1,8 @@
-@file:OptIn(FlowPreview::class, ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.example.diapplication.view
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -48,8 +50,9 @@ import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
+import com.example.diapplication.presentation.PredictViewModel
 import com.example.diapplication.presentation.WeatherViewModel
-import kotlinx.coroutines.FlowPreview
+import com.example.diapplication.view.buttons.WeatherIconButton
 
 @Composable
 fun ForecastWeatherScreen(weatherState: Weather?) {
@@ -109,7 +112,7 @@ fun HourlyForecastScreen(weatherState: Weather?) {
                     )
                     Text(
                         text = weatherState.forecast.forecastDayList[0].hourList[i].tempC.toString() +
-                        stringResource(id = R.string.celsius),
+                                stringResource(id = R.string.celsius),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -220,36 +223,129 @@ fun DailyForecastScreen(weatherState: Weather?) {
 
 @Composable
 fun AddLocationScreen(
-    weatherViewModel: WeatherViewModel, navController: NavController
+    weatherViewModel: WeatherViewModel, navController: NavController,
+    predictViewModel: PredictViewModel
 ) {
     var city by remember { mutableStateOf("") }
+    val predictedCities by predictViewModel.predicted.collectAsStateWithLifecycle()
+    val isVisible by remember { mutableStateOf(false) }
     val errorState by weatherViewModel.anotherCityError.collectAsStateWithLifecycle()
+
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            modifier = Modifier.padding(32.dp),
-            text = errorState.toString(),
-            style = TextStyle(
-                fontSize = 32.sp,
-                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
-                color = MaterialTheme.colorScheme.secondary,
-            ),
-            textAlign = TextAlign.Center
-        )
+            .background(MaterialTheme.colorScheme.background)
 
-        OutlinedTextField(
-            value = city,
-            onValueChange = { city = it },
-            label = {
+    ) {
+        Row(
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp)
+        ) {
+            WeatherIconButton(id = R.drawable.back_icon) {
+                navController.popBackStack()
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                modifier = Modifier.padding(32.dp),
+                text = errorState.toString(),
+                style = TextStyle(
+                    fontSize = 32.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = MaterialTheme.colorScheme.secondary,
+                ),
+                textAlign = TextAlign.Center
+            )
+            OutlinedTextField(
+                value = city,
+                onValueChange = { newValue ->
+                    city = newValue
+                    predictViewModel.getPredicted(newValue)
+                },
+                label = {
+                    Text(
+                        text = stringResource(id = R.string.city_placeholder),
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
+                    )
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                textStyle = TextStyle(
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = MaterialTheme.colorScheme.secondary,
+                ),
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colorScheme.secondary,
+                    containerColor = Color.Transparent,
+                    focusedIndicatorColor = MaterialTheme.colorScheme.secondary
+                ),
+            )
+            AnimatedVisibility(
+                visible = predictedCities.isNotEmpty(),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth().padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    items(predictedCities.size) {
+                        Text(
+                            text = predictedCities[it].name, modifier = Modifier
+                                .fillMaxWidth().padding(8.dp)
+                                .clickable {
+                                    city = predictedCities[it].name
+                                    predictViewModel.clearPredicted()
+                                },
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                                fontWeight = FontWeight(400),
+                                color = MaterialTheme.colorScheme.secondary,
+                            )
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        weatherViewModel.updateAnotherCityWeather(
+                            cityName = city,
+                        )
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Icon(
+                    painter = painterResource(id = R.drawable.upload_cloud),
+                    contentDescription = "add",
+                    tint = MaterialTheme.colorScheme.secondary
+                )
+                Spacer(modifier = Modifier.width(16.dp))
                 Text(
-                    text = stringResource(id = R.string.city_placeholder),
+                    text = stringResource(id = R.string.add_placeholder),
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -257,53 +353,11 @@ fun AddLocationScreen(
                         color = MaterialTheme.colorScheme.secondary,
                     )
                 )
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            textStyle = TextStyle(
-                fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
-                color = MaterialTheme.colorScheme.secondary,
-            ),
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colorScheme.secondary,
-                containerColor = Color.Transparent,
-                focusedIndicatorColor = MaterialTheme.colorScheme.secondary
-            ),
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    weatherViewModel.updateAnotherCityWeather(
-                        cityName = city,
-                        navController = navController
-                    )
-                },
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            Icon(
-                painter = painterResource(id = R.drawable.upload_cloud),
-                contentDescription = "add",
-                tint = MaterialTheme.colorScheme.secondary
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = stringResource(id = R.string.add_placeholder),
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            )
+            }
         }
 
-
     }
+
 }
 
 

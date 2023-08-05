@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "971014072864",
+    "project_id": "weather-mono",
+    "storage_bucket": "weather-mono.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971014072864:android:b0b9f5b1bfc7766cfcea45",
+        "android_client_info": {
+          "package_name": "com.example.diapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971014072864-cannpee89ev7j3vvnmkd2a02hgth3s9d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL-DIqbbxcoShVy4QXQEPHbDssiXrqcjM"
+        }
+      ],
+      "rules": {
+        ".read": false,
+        ".write": false
+      },
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971014072864-cannpee89ev7j3vvnmkd2a02hgth3s9d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

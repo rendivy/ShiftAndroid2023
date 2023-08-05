@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,14 +28,16 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.Redirected
+import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.view.buttons.WeatherIconButton
 
 
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    darkTheme: MutableState<Boolean>
-){
+    userDataViewModel: UserViewModel,
+    darkTheme: Boolean
+) {
     val context = LocalContext.current
     LazyColumn(
         modifier = Modifier
@@ -74,11 +75,13 @@ fun SettingsScreen(
                     fontSize = 32.sp,
                     color = MaterialTheme.colorScheme.secondary,
                 )
-                Column(modifier = Modifier.clickable { darkTheme.value = true}){
+                Column(modifier = Modifier.clickable { userDataViewModel.updateUserTheme(true) }) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Row(modifier = Modifier.fillMaxWidth(),
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically) {
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
                             text = stringResource(id = R.string.theme_dark),
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -86,7 +89,7 @@ fun SettingsScreen(
                             fontSize = 22.sp,
                             color = MaterialTheme.colorScheme.tertiary,
                         )
-                        if (darkTheme.value){
+                        if (darkTheme) {
                             IconManager(tintColor = Color.White)
                         }
                     }
@@ -100,10 +103,12 @@ fun SettingsScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                Column(modifier = Modifier.clickable { darkTheme.value = false}) {
-                    Row(modifier = Modifier.fillMaxWidth(),
+                Column(modifier = Modifier.clickable { userDataViewModel.updateUserTheme(false) }) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically) {
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
                             text = stringResource(id = R.string.theme_light),
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -111,7 +116,7 @@ fun SettingsScreen(
                             fontSize = 22.sp,
                             color = MaterialTheme.colorScheme.tertiary,
                         )
-                        if (!darkTheme.value){
+                        if (!darkTheme) {
                             IconManager(tintColor = Color.Black)
                         }
                     }
