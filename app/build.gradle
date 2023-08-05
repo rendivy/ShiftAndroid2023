@@ -67,6 +67,7 @@ dependencies {
     def lifeCycleVersion = "2.6.1"
     def hiltNavCompose = "1.0.0"
     def accompanistUi = "0.27.0"
+    def placesVersion = "3.2.0"
 
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
@@ -75,8 +76,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation 'com.google.accompanist:accompanist-permissions:0.31.5-beta'
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanistUi"
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlinSerialization")
+    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlinSerialization"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.google.android.libraries.places:places:$placesVersion"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion"

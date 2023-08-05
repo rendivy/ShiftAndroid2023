@@ -8,12 +8,12 @@ import androidx.compose.runtime.MutableState
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.example.diapplication.domain.usecase.UpdateWeatherUseCase
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +24,8 @@ import javax.inject.Inject
 @OptIn(ExperimentalPermissionsApi::class)
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val updateWeatherUseCase: UpdateWeatherUseCase
+    private val updateWeatherUseCase: UpdateWeatherUseCase,
+    private val database: FirebaseDatabase
 ) : ViewModel() {
 
     private val _weatherState = MutableStateFlow<WeatherState>(WeatherState.Loading)
@@ -38,6 +39,22 @@ class WeatherViewModel @Inject constructor(
 
     private val _anotherCityError = MutableStateFlow<String?>("")
     val anotherCityError: StateFlow<String?> = _anotherCityError
+
+    private val citiesReference = database.getReference("cities")
+    private fun updateCities() {
+        citiesReference.setValue(_citiesWeatherState.value.map { it.weather.location.name })
+    }
+
+    private fun getUserCities() {
+        citiesReference.get().addOnSuccessListener {
+            val cities = it.value as List<String>
+            cities.forEach { cityName ->
+                updateAnotherCityWeather(cityName)
+            }
+        }.addOnFailureListener {
+            _weatherState.value = WeatherState.Error(true)
+        }
+    }
 
     private fun updateWeatherData(cityName: String) {
         viewModelScope.launch {
@@ -54,15 +71,21 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun updateAnotherCityWeather(cityName: String, navController: NavController) {
+    fun getCities() {
+        viewModelScope.launch {
+            getUserCities()
+        }
+    }
+
+    fun updateAnotherCityWeather(cityName: String) {
         viewModelScope.launch {
             try {
                 val weather = updateWeatherUseCase(cityName)
                 val newWeatherState = WeatherState.Content(weather)
                 if (!_citiesWeatherState.value.contains(newWeatherState)) {
                     _citiesWeatherState.value.add(WeatherState.Content(weather))
+                    updateCities()
                     _anotherCityError.value = ""
-                    navController.popBackStack()
                 } else {
                     _anotherCityError.value = "City already added"
                 }
@@ -82,8 +105,7 @@ class WeatherViewModel @Inject constructor(
         viewModelScope.launch {
             if (!locationPermissionState.status.isGranted) {
                 locationPermissionState.launchPermissionRequest()
-            }
-            else {
+            } else {
                 if (ActivityCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -99,8 +121,7 @@ class WeatherViewModel @Inject constructor(
                                 permissionDenied.value = false
                             }
                         }
-                }
-                else {
+                } else {
                     permissionDenied.value = true
                 }
             }

@@ -9,6 +9,8 @@ import javax.inject.Singleton
 @Singleton
 class UserDataRepository @Inject constructor(database: FirebaseDatabase) {
     private val themeReference = database.getReference("darkThemeIsEnabled")
+
+
     fun updateUserTheme(darkTheme: MutableStateFlow<Boolean>) {
         themeReference.setValue(darkTheme.value)
     }

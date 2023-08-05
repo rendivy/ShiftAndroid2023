@@ -40,7 +40,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -49,7 +48,7 @@ import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
 import com.example.diapplication.presentation.WeatherViewModel
-import com.google.firebase.database.DatabaseReference
+import com.example.diapplication.view.buttons.WeatherIconButton
 import kotlinx.coroutines.FlowPreview
 
 @Composable
@@ -221,8 +220,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
 
 @Composable
 fun AddLocationScreen(
-    weatherViewModel: WeatherViewModel, navController: NavController,
-    dataBaseReference: DatabaseReference
+    weatherViewModel: WeatherViewModel, navController: NavController
 ) {
     var city by remember { mutableStateOf("") }
     val errorState by weatherViewModel.anotherCityError.collectAsStateWithLifecycle()
@@ -230,28 +228,74 @@ fun AddLocationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        Text(
-            modifier = Modifier.padding(32.dp),
-            text = errorState.toString(),
-            style = TextStyle(
-                fontSize = 32.sp,
-                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
-                color = MaterialTheme.colorScheme.secondary,
-            ),
-            textAlign = TextAlign.Center
-        )
+        Row(
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp)
+        ) {
+            WeatherIconButton(id = R.drawable.back_icon) {
+                navController.popBackStack()
+            }
+        }
 
-        OutlinedTextField(
-            value = city,
-            onValueChange = { city = it },
-            label = {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            OutlinedTextField(
+                value = city,
+                onValueChange = { city = it },
+                label = {
+                    Text(
+                        text = stringResource(id = R.string.city_placeholder),
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                            fontWeight = FontWeight(400),
+                            color = MaterialTheme.colorScheme.secondary,
+                        )
+                    )
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                textStyle = TextStyle(
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
+                    fontWeight = FontWeight(400),
+                    color = MaterialTheme.colorScheme.secondary,
+                ),
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colorScheme.secondary,
+                    containerColor = Color.Transparent,
+                    focusedIndicatorColor = MaterialTheme.colorScheme.secondary
+                ),
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        weatherViewModel.updateAnotherCityWeather(
+                            cityName = city,
+                        )
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Icon(
+                    painter = painterResource(id = R.drawable.upload_cloud),
+                    contentDescription = "add",
+                    tint = MaterialTheme.colorScheme.secondary
+                )
+                Spacer(modifier = Modifier.width(16.dp))
                 Text(
-                    text = stringResource(id = R.string.city_placeholder),
+                    text = stringResource(id = R.string.add_placeholder),
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -259,53 +303,8 @@ fun AddLocationScreen(
                         color = MaterialTheme.colorScheme.secondary,
                     )
                 )
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            textStyle = TextStyle(
-                fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
-                color = MaterialTheme.colorScheme.secondary,
-            ),
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colorScheme.secondary,
-                containerColor = Color.Transparent,
-                focusedIndicatorColor = MaterialTheme.colorScheme.secondary
-            ),
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    weatherViewModel.updateAnotherCityWeather(
-                        cityName = city,
-                        navController = navController
-                    )
-                    dataBaseReference.setValue(weatherViewModel.citiesWeatherState.value.toList())
-                },
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            Icon(
-                painter = painterResource(id = R.drawable.upload_cloud),
-                contentDescription = "add",
-                tint = MaterialTheme.colorScheme.secondary
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = stringResource(id = R.string.add_placeholder),
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            )
+            }
         }
-
-
     }
 }
 
