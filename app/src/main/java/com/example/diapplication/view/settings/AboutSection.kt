@@ -18,13 +18,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.example.diapplication.R
 import com.example.diapplication.data.model.Redirected
+import com.example.diapplication.domain.utils.Constants
 import com.example.diapplication.ui.theme.MediumFont
 import com.example.diapplication.ui.theme.PartSmallFont
+import com.example.diapplication.ui.theme.SpacingMedium
+import com.example.diapplication.ui.theme.SpacingSmall
+import com.example.diapplication.ui.theme.SpacingTiny
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
 
@@ -36,11 +38,11 @@ fun AboutSection(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp, start = 32.dp)
+            .padding(top = SpacingMedium, start = SpacingMedium)
             .clickable {
                 ContextCompat.startActivity(
                     context,
-                    Redirected.redirectUser("gitHub"),
+                    Redirected.redirectUser(Constants.GIT_HUB_KEY),
                     null
                 )
             },
@@ -54,7 +56,7 @@ fun AboutSection(
             fontSize = MediumFont,
             color = MaterialTheme.colorScheme.secondary,
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(SpacingSmall))
 
         Text(
             text = stringResource(id = R.string.team_label),
@@ -63,7 +65,7 @@ fun AboutSection(
             fontSize = PartSmallFont,
             color = Color.Gray,
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(SpacingTiny))
         Text(
             text = stringResource(id = R.string.about_column_description),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),

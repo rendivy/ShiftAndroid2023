@@ -18,7 +18,6 @@ object DatabaseModule {
     fun provideDatabase(): FirebaseDatabase{
         return Firebase.database
     }
-
     @Provides
     @Singleton
     fun provideCitiesReference(database: FirebaseDatabase) = database.getReference("cities")

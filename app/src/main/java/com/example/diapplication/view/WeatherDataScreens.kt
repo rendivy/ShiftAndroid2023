@@ -35,6 +35,8 @@ import com.example.diapplication.domain.entity.Weather
 import com.example.diapplication.ui.theme.LargeFont
 import com.example.diapplication.ui.theme.LargeIconSize
 import com.example.diapplication.ui.theme.RegularFont
+import com.example.diapplication.ui.theme.SpacingMedium
+import com.example.diapplication.ui.theme.SpacingSmall
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.forecast.AdditionalDetailsScreen
 import com.example.diapplication.view.forecast.ForecastWeatherScreen
@@ -50,7 +52,7 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 32.dp, bottom = 16.dp, top = 16.dp, end = 32.dp)
+                .padding(start = SpacingMedium, bottom = SpacingSmall, top = SpacingSmall, end = SpacingMedium)
         ) {
             Text(
                 text = stringResource(id = R.string.details),

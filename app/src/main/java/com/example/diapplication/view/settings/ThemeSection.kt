@@ -18,13 +18,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.ui.theme.MediumFont
 import com.example.diapplication.ui.theme.PartSmallFont
-import com.example.diapplication.ui.theme.SmallFont
+import com.example.diapplication.ui.theme.SpacingMedium
+import com.example.diapplication.ui.theme.SpacingSmall
+import com.example.diapplication.ui.theme.SpacingTiny
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.IconManager
@@ -37,7 +37,7 @@ fun ThemeSection(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp, start = 32.dp, end = 32.dp),
+            .padding(top = SpacingMedium, start = SpacingMedium, end = SpacingMedium),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -49,7 +49,7 @@ fun ThemeSection(
             color = MaterialTheme.colorScheme.secondary,
         )
         Column(modifier = Modifier.clickable { userDataViewModel.updateUserTheme(true) }) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(SpacingSmall))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -66,7 +66,7 @@ fun ThemeSection(
                     IconManager(tintColor = Color.White)
                 }
             }
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(SpacingTiny))
             Text(
                 text = stringResource(id = R.string.dark_side),
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -75,7 +75,7 @@ fun ThemeSection(
                 color = MaterialTheme.colorScheme.tertiary,
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(SpacingSmall))
         Column(modifier = Modifier.clickable { userDataViewModel.updateUserTheme(false) }) {
             Row(
                 modifier = Modifier.fillMaxWidth(),

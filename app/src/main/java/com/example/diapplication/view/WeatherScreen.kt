@@ -29,13 +29,13 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.ui.theme.MediumFont
+import com.example.diapplication.ui.theme.PartLargeIconSize
 import com.example.diapplication.ui.theme.RegularFont
+import com.example.diapplication.ui.theme.SpacingMedium
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.WeatherIconButton
@@ -60,7 +60,7 @@ fun WeatherScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(120.dp),
+                        modifier = Modifier.size(PartLargeIconSize),
                         color = MaterialTheme.colorScheme.secondary
                     )
                 }
@@ -82,15 +82,15 @@ fun WeatherScreen(
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.tertiary,
                     )
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(SpacingMedium))
                     Image(
-                        modifier = Modifier.size(128.dp),
+                        modifier = Modifier.size(PartLargeIconSize),
                         painter = painterResource(id = R.drawable.wifi_off),
                         contentDescription = "bad connection",
                         contentScale = ContentScale.Crop,
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
                     )
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(SpacingMedium))
                     Text(
                         text = stringResource(id = R.string.applucation_label),
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -115,7 +115,7 @@ fun WeatherScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(32.dp)
+                                .padding(SpacingMedium)
                         ) {
                             Column {
                                 Text(

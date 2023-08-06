@@ -19,14 +19,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.ui.theme.BigIconSize
 import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.SmallFont
+import com.example.diapplication.ui.theme.SpacingMedium
+import com.example.diapplication.ui.theme.SpacingPartTiny
+import com.example.diapplication.ui.theme.SpacingSmall
 import com.example.diapplication.ui.theme.TinyFont
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.WeatherConditionImage
@@ -49,7 +50,7 @@ fun DetailsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(32.dp),
+                    .padding(SpacingMedium),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -64,7 +65,7 @@ fun DetailsScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 32.dp, end = 32.dp),
+                        .padding(start = SpacingMedium, end = SpacingMedium),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -96,10 +97,10 @@ fun DetailsScreen(
                     WeatherConditionImage(
                         weatherCondition = additionCitiesList[i].weather.current.weatherCondition.text,
                         modifier = Modifier
-                            .padding(top = 32.dp, bottom = 8.dp)
+                            .padding(top = SpacingMedium, bottom = SpacingPartTiny)
                             .width(BigIconSize)
                             .height(BigIconSize)
-                            .padding(16.dp)
+                            .padding(SpacingSmall)
                             .align(Alignment.CenterVertically)
                     )
                 }
