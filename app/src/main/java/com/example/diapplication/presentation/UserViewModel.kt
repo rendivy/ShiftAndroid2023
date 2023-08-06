@@ -14,7 +14,7 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(
     private val repository: UserDataRepository,
 ) : ViewModel() {
-    private val _darkTheme = MutableStateFlow(false)
+    private val _darkTheme = MutableStateFlow(true)
     val darkTheme: StateFlow<Boolean> = _darkTheme
 
 
