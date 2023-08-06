@@ -8,5 +8,6 @@ object Constants {
     const val WRITE_TIMEOUT = 10L
     const val EMPTY_STRING = ""
     const val PRIORITY = 100
+    const val SHORT_SPACE = " "
     const val PREDICT_DELAY = 300L
 }

@@ -33,6 +33,7 @@ import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
 import com.example.diapplication.ui.theme.LargeFont
+import com.example.diapplication.ui.theme.LargeIconSize
 import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.forecast.AdditionalDetailsScreen
@@ -164,8 +165,8 @@ fun MainWeatherData(weatherState: Weather?) {
             weatherCondition = weatherState?.current?.weatherCondition?.text.toString(),
             modifier = Modifier
                 .padding(top = 32.dp, bottom = 8.dp)
-                .width(148.dp)
-                .height(148.dp)
+                .width(LargeIconSize)
+                .height(LargeIconSize)
                 .padding(16.dp)
         )
         Text(

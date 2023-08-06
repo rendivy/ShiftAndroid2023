@@ -11,12 +11,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.diapplication.R
+import com.example.diapplication.ui.theme.RegularIconSize
 
 @Composable
 fun IconManager(tintColor: Color){
     Image(
         painter = painterResource(id = R.drawable.check), contentDescription = "Sunny weather",
-        modifier = Modifier.size(32.dp),
+        modifier = Modifier.size(RegularIconSize),
         colorFilter = ColorFilter.tint(color = tintColor),
         contentScale = ContentScale.Crop,
         alignment = Alignment.Center,

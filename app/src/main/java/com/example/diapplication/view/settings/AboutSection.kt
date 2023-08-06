@@ -23,6 +23,10 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.example.diapplication.R
 import com.example.diapplication.data.model.Redirected
+import com.example.diapplication.ui.theme.MediumFont
+import com.example.diapplication.ui.theme.PartSmallFont
+import com.example.diapplication.ui.theme.ThickFont
+import com.example.diapplication.ui.theme.UbuntuBold
 
 
 @Composable
@@ -46,8 +50,8 @@ fun AboutSection(
         Text(
             text = stringResource(id = R.string.about_label),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-            fontWeight = FontWeight(400),
-            fontSize = 32.sp,
+            fontWeight = FontWeight(UbuntuBold),
+            fontSize = MediumFont,
             color = MaterialTheme.colorScheme.secondary,
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -55,16 +59,16 @@ fun AboutSection(
         Text(
             text = stringResource(id = R.string.team_label),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-            fontWeight = FontWeight(400),
-            fontSize = 22.sp,
+            fontWeight = FontWeight(UbuntuBold),
+            fontSize = PartSmallFont,
             color = Color.Gray,
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = stringResource(id = R.string.about_column_description),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-            fontWeight = FontWeight(400),
-            fontSize = 18.sp,
+            fontWeight = FontWeight(UbuntuBold),
+            fontSize = ThickFont,
             color = MaterialTheme.colorScheme.tertiary,
         )
     }

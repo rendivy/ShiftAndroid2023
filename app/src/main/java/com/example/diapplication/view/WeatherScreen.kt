@@ -34,6 +34,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
+import com.example.diapplication.ui.theme.MediumFont
+import com.example.diapplication.ui.theme.RegularFont
+import com.example.diapplication.ui.theme.ThickFont
+import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.WeatherIconButton
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
@@ -73,8 +77,8 @@ fun WeatherScreen(
                     Text(
                         text = stringResource(id = R.string.error_message),
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
-                        fontSize = 24.sp,
+                        fontWeight = FontWeight(UbuntuBold),
+                        fontSize = RegularFont,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.tertiary,
                     )
@@ -90,8 +94,8 @@ fun WeatherScreen(
                     Text(
                         text = stringResource(id = R.string.applucation_label),
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
-                        fontSize = 32.sp,
+                        fontWeight = FontWeight(UbuntuBold),
+                        fontSize = MediumFont,
                         textAlign = TextAlign.End,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -106,7 +110,6 @@ fun WeatherScreen(
 
                     ) {
                     item {
-                        val content = weatherState as WeatherState.Content
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -116,17 +119,17 @@ fun WeatherScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = content.weather.location.name,
+                                    text = weatherState.weather.location.name,
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                                    fontWeight = FontWeight(400),
-                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight(UbuntuBold),
+                                    fontSize = RegularFont,
                                     color = MaterialTheme.colorScheme.secondary,
                                 )
                                 Text(
                                     text = stringResource(id = R.string.currentLocation_label),
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                                    fontWeight = FontWeight(400),
-                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight(UbuntuBold),
+                                    fontSize = ThickFont,
                                     color = MaterialTheme.colorScheme.tertiary,
                                 )
                             }
@@ -141,9 +144,9 @@ fun WeatherScreen(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            MainWeatherData(weatherState = content.weather)
+                            MainWeatherData(weatherState = weatherState.weather)
                         }
-                        WeatherForeCastScreen(weatherState = content.weather)
+                        WeatherForeCastScreen(weatherState = weatherState.weather)
                     }
                 }
             }

@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.diapplication.ui.theme.MediumIconSize
 
 @Composable
 fun WeatherIconButton(id: Int, onClick: () -> Unit){
@@ -20,7 +21,7 @@ fun WeatherIconButton(id: Int, onClick: () -> Unit){
         Image(
             painter = painterResource(id = id),
             contentDescription = "search button",
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.size(MediumIconSize),
             colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.tertiary),
             contentScale = ContentScale.Crop
         )

@@ -22,6 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
 import com.example.diapplication.presentation.UserViewModel
+import com.example.diapplication.ui.theme.MediumFont
+import com.example.diapplication.ui.theme.PartSmallFont
+import com.example.diapplication.ui.theme.SmallFont
+import com.example.diapplication.ui.theme.ThickFont
+import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.IconManager
 
 @Composable
@@ -39,8 +44,8 @@ fun ThemeSection(
         Text(
             text = stringResource(id = R.string.theme_label),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-            fontWeight = FontWeight(400),
-            fontSize = 32.sp,
+            fontWeight = FontWeight(UbuntuBold),
+            fontSize = MediumFont,
             color = MaterialTheme.colorScheme.secondary,
         )
         Column(modifier = Modifier.clickable { userDataViewModel.updateUserTheme(true) }) {
@@ -53,8 +58,8 @@ fun ThemeSection(
                 Text(
                     text = stringResource(id = R.string.theme_dark),
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 22.sp,
+                    fontWeight = FontWeight(UbuntuBold),
+                    fontSize = PartSmallFont,
                     color = MaterialTheme.colorScheme.tertiary,
                 )
                 if (darkTheme) {
@@ -65,8 +70,8 @@ fun ThemeSection(
             Text(
                 text = stringResource(id = R.string.dark_side),
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
-                fontSize = 20.sp,
+                fontWeight = FontWeight(UbuntuBold),
+                fontSize = ThickFont,
                 color = MaterialTheme.colorScheme.tertiary,
             )
         }
@@ -80,8 +85,8 @@ fun ThemeSection(
                 Text(
                     text = stringResource(id = R.string.theme_light),
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 22.sp,
+                    fontWeight = FontWeight(UbuntuBold),
+                    fontSize = PartSmallFont,
                     color = MaterialTheme.colorScheme.tertiary,
                 )
                 if (!darkTheme) {
@@ -91,8 +96,8 @@ fun ThemeSection(
             Text(
                 text = stringResource(id = R.string.light_side),
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
-                fontSize = 20.sp,
+                fontWeight = FontWeight(UbuntuBold),
+                fontSize = ThickFont,
                 color = MaterialTheme.colorScheme.tertiary,
             )
         }

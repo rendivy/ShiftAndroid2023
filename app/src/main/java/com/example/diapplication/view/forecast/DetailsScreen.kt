@@ -24,6 +24,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
+import com.example.diapplication.ui.theme.BigIconSize
+import com.example.diapplication.ui.theme.RegularFont
+import com.example.diapplication.ui.theme.SmallFont
+import com.example.diapplication.ui.theme.TinyFont
+import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.WeatherConditionImage
 import com.example.diapplication.view.utils.WeatherIconButton
 
@@ -67,8 +72,8 @@ fun DetailsScreen(
                         Text(
                             text = additionCitiesList[i].weather.location.name,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 24.sp,
+                            fontWeight = FontWeight(UbuntuBold),
+                            fontSize = RegularFont,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                         Text(
@@ -76,15 +81,15 @@ fun DetailsScreen(
                                 .toString()
                                     + stringResource(id = R.string.celsius),
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 20.sp,
+                            fontWeight = FontWeight(UbuntuBold),
+                            fontSize = SmallFont,
                             color = MaterialTheme.colorScheme.tertiary
                         )
                         Text(
                             text = additionCitiesList[i].weather.current.weatherCondition.text,
                             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                            fontWeight = FontWeight(400),
-                            fontSize = 16.sp,
+                            fontWeight = FontWeight(UbuntuBold),
+                            fontSize = TinyFont,
                             color = MaterialTheme.colorScheme.tertiary
                         )
                     }
@@ -92,8 +97,8 @@ fun DetailsScreen(
                         weatherCondition = additionCitiesList[i].weather.current.weatherCondition.text,
                         modifier = Modifier
                             .padding(top = 32.dp, bottom = 8.dp)
-                            .width(85.dp)
-                            .height(85.dp)
+                            .width(BigIconSize)
+                            .height(BigIconSize)
                             .padding(16.dp)
                             .align(Alignment.CenterVertically)
                     )

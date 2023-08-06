@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.UserViewModel
+import com.example.diapplication.ui.theme.RegularFont
+import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.WeatherIconButton
 
 
@@ -48,8 +50,8 @@ fun SettingsScreen(
                 Text(
                     text = stringResource(id = R.string.settings_label),
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    fontSize = 24.sp,
+                    fontWeight = FontWeight(UbuntuBold),
+                    fontSize = RegularFont,
                     color = MaterialTheme.colorScheme.secondary,
                 )
             }
