@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DIapplication</string>
+    <string name="app_name">Mono Weather</string>
     <string name="weatherButtonText">Get Weather</string>
     <string name="error_message">Please, check your Wi-Fi or Mobile connection</string>
     <string name="update_weather">3-day forecast</string>
