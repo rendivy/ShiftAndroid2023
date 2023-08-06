@@ -1,4 +1,4 @@
-package com.example.diapplication.view
+package com.example.diapplication.view.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.material3.MaterialTheme

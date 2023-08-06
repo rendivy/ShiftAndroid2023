@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
-import com.example.diapplication.view.buttons.WeatherIconButton
+import com.example.diapplication.view.utils.WeatherIconButton
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 
@@ -44,9 +44,6 @@ fun WeatherScreen(
     weatherState: WeatherState,
     permissionDenied: Boolean = false,
 ) {
-
-
-
     if (!permissionDenied) {
         when (weatherState) {
 
@@ -147,14 +144,10 @@ fun WeatherScreen(
                             MainWeatherData(weatherState = content.weather)
                         }
                         WeatherForeCastScreen(weatherState = content.weather)
-
-                        //GovernmentAlertButton(weatherState = weatherState)
-
                     }
                 }
             }
         }
     }
-
 }
 

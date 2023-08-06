@@ -8,8 +8,8 @@ import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.presentation.WeatherViewModel
-import com.example.diapplication.view.AddLocationScreen
-import com.example.diapplication.view.DetailsScreen
+import com.example.diapplication.view.forecast.DetailsScreen
+import com.example.diapplication.view.forecast.AddLocationScreen
 import com.example.diapplication.view.settings.SettingsScreen
 import com.example.diapplication.view.WeatherScreen
 

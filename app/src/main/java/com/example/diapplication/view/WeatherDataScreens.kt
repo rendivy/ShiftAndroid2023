@@ -32,6 +32,12 @@ import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
+import com.example.diapplication.ui.theme.LargeFont
+import com.example.diapplication.ui.theme.RegularFont
+import com.example.diapplication.ui.theme.UbuntuBold
+import com.example.diapplication.view.forecast.AdditionalDetailsScreen
+import com.example.diapplication.view.forecast.ForecastWeatherScreen
+import com.example.diapplication.view.utils.WeatherConditionImage
 
 
 @Composable
@@ -48,9 +54,9 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             Text(
                 text = stringResource(id = R.string.details),
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = RegularFont,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
+                    fontWeight = FontWeight(UbuntuBold),
                     color = if (isForecastClicked.value) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = false }
@@ -58,16 +64,16 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             Text(
                 text = stringResource(id = R.string.forecast),
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = RegularFont,
                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                    fontWeight = FontWeight(400),
-                    color = if (!isForecastClicked.value) MaterialTheme.colorScheme.tertiary  else MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight(UbuntuBold),
+                    color = if (!isForecastClicked.value) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
                 ),
                 modifier = Modifier.clickable { isForecastClicked.value = true }
             )
         }
         when (isForecastClicked.value) {
-            false -> DetailsScreen(weatherState = weatherState)
+            false -> AdditionalDetailsScreen(weatherState = weatherState)
             else -> ForecastWeatherScreen(weatherState = weatherState)
         }
 
@@ -87,9 +93,9 @@ fun MainWeatherData(weatherState: Weather?) {
         Text(
             text = DateConverter.convertDateTime(weatherState?.current?.lastUpdated.toString()),
             style = TextStyle(
-                fontSize = 24.sp,
+                fontSize = RegularFont,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
+                fontWeight = FontWeight(UbuntuBold),
                 color = MaterialTheme.colorScheme.tertiary,
             )
         )
@@ -97,9 +103,9 @@ fun MainWeatherData(weatherState: Weather?) {
             text = weatherState?.current?.temperatureCelsius?.toInt()
                 .toString() + stringResource(id = R.string.celsius),
             style = TextStyle(
-                fontSize = 96.sp,
+                fontSize = LargeFont,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
+                fontWeight = FontWeight(UbuntuBold),
                 color = MaterialTheme.colorScheme.secondary,
                 letterSpacing = 0.37.sp,
             )
@@ -123,9 +129,9 @@ fun MainWeatherData(weatherState: Weather?) {
                     text = weatherState?.forecast?.forecastDayList?.get(0)?.day?.minimumTemperature
                         .toString() + stringResource(id = R.string.celsius),
                     style = TextStyle(
-                        fontSize = 24.sp,
+                        fontSize = RegularFont,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight(UbuntuBold),
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
@@ -145,9 +151,9 @@ fun MainWeatherData(weatherState: Weather?) {
                     text = weatherState?.forecast?.forecastDayList?.get(0)?.day?.maximumTemperature
                         .toString() + stringResource(id = R.string.celsius),
                     style = TextStyle(
-                        fontSize = 24.sp,
+                        fontSize = RegularFont,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight(UbuntuBold),
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
@@ -165,18 +171,18 @@ fun MainWeatherData(weatherState: Weather?) {
         Text(
             text = weatherState?.current?.weatherCondition?.text.toString(),
             style = TextStyle(
-                fontSize = 24.sp,
+                fontSize = RegularFont,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                fontWeight = FontWeight(400),
+                fontWeight = FontWeight(UbuntuBold),
                 color = MaterialTheme.colorScheme.tertiary,
             )
         )
-        AstroScreen(weatherState = weatherState)
+        AstropyScreen(weatherState = weatherState)
     }
 }
 
 @Composable
-fun AstroScreen(weatherState: Weather?) {
+fun AstropyScreen(weatherState: Weather?) {
     Box(contentAlignment = Alignment.Center) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -194,9 +200,9 @@ fun AstroScreen(weatherState: Weather?) {
                 Text(
                     text = weatherState?.forecast?.forecastDayList?.get(0)?.astro?.sunrise.toString(),
                     style = TextStyle(
-                        fontSize = 24.sp,
+                        fontSize = RegularFont,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight(UbuntuBold),
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                 )
@@ -214,9 +220,9 @@ fun AstroScreen(weatherState: Weather?) {
                     text =
                     weatherState?.forecast?.forecastDayList?.get(0)?.astro?.sunset.toString(),
                     style = TextStyle(
-                        fontSize = 24.sp,
+                        fontSize = RegularFont,
                         fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight(UbuntuBold),
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                 )

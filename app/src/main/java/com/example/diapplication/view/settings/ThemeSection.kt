@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
 import com.example.diapplication.presentation.UserViewModel
-import com.example.diapplication.view.IconManager
+import com.example.diapplication.view.utils.IconManager
 
 @Composable
 fun ThemeSection(

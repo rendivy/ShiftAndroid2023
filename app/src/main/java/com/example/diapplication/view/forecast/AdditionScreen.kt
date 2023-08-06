@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
-package com.example.diapplication.view
+package com.example.diapplication.view.forecast
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -52,7 +52,8 @@ import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
 import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.WeatherViewModel
-import com.example.diapplication.view.buttons.WeatherIconButton
+import com.example.diapplication.view.utils.WeatherConditionImage
+import com.example.diapplication.view.utils.WeatherIconButton
 
 @Composable
 fun ForecastWeatherScreen(weatherState: Weather?) {
@@ -221,6 +222,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddLocationScreen(
     weatherViewModel: WeatherViewModel, navController: NavController,
@@ -363,7 +365,7 @@ fun AddLocationScreen(
 
 
 @Composable
-fun DetailsScreen(weatherState: Weather?) {
+fun AdditionalDetailsScreen(weatherState: Weather?) {
     Column(modifier = Modifier.padding(start = 32.dp)) {
         Text(
             text = stringResource(id = R.string.precipitation),

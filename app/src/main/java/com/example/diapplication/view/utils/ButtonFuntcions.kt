@@ -1,4 +1,4 @@
-package com.example.diapplication.view.buttons
+package com.example.diapplication.view.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
