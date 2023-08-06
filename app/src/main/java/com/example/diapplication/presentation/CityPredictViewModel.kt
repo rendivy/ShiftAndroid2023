@@ -2,7 +2,6 @@ package com.example.diapplication.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.diapplication.data.repository.WeatherRepository
 import com.example.diapplication.domain.entity.Location
 import com.example.diapplication.domain.usecase.PredictCityUseCase
 import com.example.diapplication.domain.utils.Constants
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CityPredictViewModel @Inject constructor(
-    private val cityUseCase: PredictCityUseCase
+    private val cityUseCase: PredictCityUseCase,
 ) : ViewModel(){
 
     private val _predictedCitiesState = MutableStateFlow(listOf<Location>())

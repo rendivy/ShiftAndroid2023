@@ -13,15 +13,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
-import com.example.diapplication.presentation.WeatherState
+import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.BigIconSize
 import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.SmallFont
@@ -37,8 +39,10 @@ import com.example.diapplication.view.utils.WeatherIconButton
 @Composable
 fun DetailsScreen(
     navController: NavController,
-    additionCitiesList: List<WeatherState.Content>
+    weatherViewModel: WeatherViewModel
 ) {
+
+    val additionCitiesList by weatherViewModel.citiesWeatherState.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier

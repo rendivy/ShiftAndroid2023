@@ -37,9 +37,8 @@ class MainActivity : ComponentActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
             val darkTheme by userViewModel.darkTheme.collectAsStateWithLifecycle()
-            val citiesState by weatherViewModel.citiesWeatherState.collectAsStateWithLifecycle()
+
             val context: Context = LocalContext.current
-            val weatherState by weatherViewModel.weatherState.collectAsStateWithLifecycle()
             val permissionDenied = rememberSaveable { mutableStateOf(false) }
             val locationPermissionState =
                 rememberPermissionState(permission = android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -50,11 +49,10 @@ class MainActivity : ComponentActivity() {
                     context = context,
                     fusedLocationProviderClient = fusedLocationProviderClient,
                     locationPermissionState = locationPermissionState,
-                    permissionDenied = permissionDenied
+                    permissionDenied = permissionDenied,
                 )
                 weatherViewModel.getCities()
             }
-
 
             FirebaseApp.initializeApp(this)
 
@@ -64,8 +62,6 @@ class MainActivity : ComponentActivity() {
                     userViewModel = userViewModel,
                     cityPredictViewModel = cityPredictViewModel,
                     darkTheme = darkTheme,
-                    citiesWeatherState = citiesState,
-                    weatherState = weatherState,
                 )
 
             }

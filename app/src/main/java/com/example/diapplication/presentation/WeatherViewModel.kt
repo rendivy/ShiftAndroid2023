@@ -103,7 +103,7 @@ class WeatherViewModel @Inject constructor(
         fusedLocationProviderClient: FusedLocationProviderClient,
         locationPermissionState: PermissionState,
         context: Context,
-        permissionDenied: MutableState<Boolean>
+        permissionDenied: MutableState<Boolean>,
     ) {
         viewModelScope.launch {
             if (!locationPermissionState.status.isGranted) {

@@ -19,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -29,9 +30,11 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.WeatherState
+import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.MediumFont
 import com.example.diapplication.ui.theme.PartLargeIconSize
 import com.example.diapplication.ui.theme.RegularFont
@@ -45,9 +48,11 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 @Composable
 fun WeatherScreen(
     navController: NavController,
-    weatherState: WeatherState,
+    weatherViewModel: WeatherViewModel,
     permissionDenied: Boolean = false,
 ) {
+
+    val weatherState by weatherViewModel.weatherState.collectAsStateWithLifecycle()
     if (!permissionDenied) {
         when (weatherState) {
 
@@ -103,6 +108,7 @@ fun WeatherScreen(
             }
 
             is WeatherState.Content -> {
+                val content = weatherState as WeatherState.Content
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -119,7 +125,7 @@ fun WeatherScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = weatherState.weather.location.name,
+                                    text = content.weather.location.name,
                                     fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
                                     fontWeight = FontWeight(UbuntuBold),
                                     fontSize = RegularFont,
@@ -137,16 +143,16 @@ fun WeatherScreen(
                                 WeatherIconButton(id = R.drawable.location_button_icon)
                                 { navController.navigate("search") }
                                 WeatherIconButton(id = R.drawable.settings_icon)
-                                {navController.navigate("settings")}
+                                { navController.navigate("settings") }
                             }
                         }
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            MainWeatherData(weatherState = weatherState.weather)
+                            MainWeatherData(weatherState = content.weather)
                         }
-                        WeatherForeCastScreen(weatherState = weatherState.weather)
+                        WeatherForeCastScreen(weatherState = content.weather)
                     }
                 }
             }

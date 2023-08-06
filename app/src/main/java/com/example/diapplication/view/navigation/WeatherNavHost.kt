@@ -6,12 +6,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.UserViewModel
-import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.presentation.WeatherViewModel
-import com.example.diapplication.view.forecast.DetailsScreen
-import com.example.diapplication.view.forecast.AddLocationScreen
-import com.example.diapplication.view.settings.SettingsScreen
 import com.example.diapplication.view.WeatherScreen
+import com.example.diapplication.view.forecast.AddLocationScreen
+import com.example.diapplication.view.forecast.DetailsScreen
+import com.example.diapplication.view.settings.SettingsScreen
 
 
 @Composable
@@ -19,9 +18,7 @@ fun WeatherNavHost(
     weatherViewModel: WeatherViewModel,
     userViewModel: UserViewModel,
     cityPredictViewModel: CityPredictViewModel,
-    citiesWeatherState: List<WeatherState.Content>,
     darkTheme: Boolean,
-    weatherState: WeatherState
 ) {
     val navController = rememberNavController()
 
@@ -30,14 +27,14 @@ fun WeatherNavHost(
         composable(WeatherNavRoutes.Home.route) {
             WeatherScreen(
                 navController = navController,
-                weatherState =  weatherState
-            )
+                weatherViewModel = weatherViewModel,
+                )
         }
 
         composable(WeatherNavRoutes.Search.route) {
             DetailsScreen(
                 navController = navController,
-                additionCitiesList = citiesWeatherState,
+                weatherViewModel = weatherViewModel,
             )
         }
 
@@ -45,7 +42,7 @@ fun WeatherNavHost(
             AddLocationScreen(
                 weatherViewModel = weatherViewModel,
                 navController = navController,
-                cityPredictViewModel = cityPredictViewModel
+                cityPredictViewModel = cityPredictViewModel,
             )
         }
 
