@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.diapplication.presentation.PredictViewModel
+import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherState
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.view.AddLocationScreen
 import com.example.diapplication.view.DetailsScreen
-import com.example.diapplication.view.SettingsScreen
+import com.example.diapplication.view.settings.SettingsScreen
 import com.example.diapplication.view.WeatherScreen
 
 
@@ -18,7 +18,7 @@ import com.example.diapplication.view.WeatherScreen
 fun WeatherNavHost(
     weatherViewModel: WeatherViewModel,
     userViewModel: UserViewModel,
-    predictViewModel: PredictViewModel,
+    cityPredictViewModel: CityPredictViewModel,
     citiesWeatherState: List<WeatherState.Content>,
     darkTheme: Boolean,
     weatherState: WeatherState
@@ -45,7 +45,7 @@ fun WeatherNavHost(
             AddLocationScreen(
                 weatherViewModel = weatherViewModel,
                 navController = navController,
-                predictViewModel = predictViewModel
+                cityPredictViewModel = cityPredictViewModel
             )
         }
 

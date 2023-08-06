@@ -9,10 +9,13 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diapplication.domain.usecase.UpdateWeatherUseCase
+import com.example.diapplication.domain.utils.Constants
+import com.example.diapplication.domain.utils.UiError
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,24 +28,18 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val updateWeatherUseCase: UpdateWeatherUseCase,
-    private val database: FirebaseDatabase
+    private val citiesReference: DatabaseReference,
 ) : ViewModel() {
 
     private val _weatherState = MutableStateFlow<WeatherState>(WeatherState.Loading)
     val weatherState: StateFlow<WeatherState> = _weatherState
 
-
-
-
-    private val _citiesWeatherState =
-        MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
+    private val _citiesWeatherState = MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
     val citiesWeatherState: StateFlow<List<WeatherState.Content>> = _citiesWeatherState
 
-
-    private val _anotherCityError = MutableStateFlow<String?>("")
+    private val _anotherCityError = MutableStateFlow<String?>(Constants.EMPTY_STRING)
     val anotherCityError: StateFlow<String?> = _anotherCityError
 
-    private val citiesReference = database.getReference("cities")
     private fun updateCities() {
         citiesReference.setValue(_citiesWeatherState.value.map { it.weather.location.name })
     }
@@ -75,6 +72,10 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
+    fun clearErrorState(){
+        _anotherCityError.value = Constants.EMPTY_STRING
+    }
+
     fun getCities() {
         viewModelScope.launch {
             getUserCities()
@@ -89,12 +90,12 @@ class WeatherViewModel @Inject constructor(
                 if (!_citiesWeatherState.value.contains(newWeatherState)) {
                     _citiesWeatherState.value.add(WeatherState.Content(weather))
                     updateCities()
-                    _anotherCityError.value = ""
+                    _anotherCityError.value = Constants.EMPTY_STRING
                 } else {
-                    _anotherCityError.value = "City already added"
+                    _anotherCityError.value = UiError.CITY_ALREADY_EXISTS.message
                 }
             } catch (e: Exception) {
-                _anotherCityError.value = "City not found, please check correctness of city name"
+                _anotherCityError.value = UiError.CITY_NOT_FOUND.message
             }
         }
     }
@@ -118,7 +119,7 @@ class WeatherViewModel @Inject constructor(
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    fusedLocationProviderClient.getCurrentLocation(100, null)
+                    fusedLocationProviderClient.getCurrentLocation(Constants.PRIORITY, null)
                         .addOnSuccessListener { location: Location? ->
                             location?.let {
                                 updateWeatherData("${location.latitude},${location.longitude}")

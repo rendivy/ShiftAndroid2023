@@ -50,7 +50,7 @@ import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
-import com.example.diapplication.presentation.PredictViewModel
+import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.view.buttons.WeatherIconButton
 
@@ -224,11 +224,10 @@ fun DailyForecastScreen(weatherState: Weather?) {
 @Composable
 fun AddLocationScreen(
     weatherViewModel: WeatherViewModel, navController: NavController,
-    predictViewModel: PredictViewModel
+    cityPredictViewModel: CityPredictViewModel
 ) {
     var city by remember { mutableStateOf("") }
-    val predictedCities by predictViewModel.predicted.collectAsStateWithLifecycle()
-    val isVisible by remember { mutableStateOf(false) }
+    val predictedCities by cityPredictViewModel.predictedCitiesState.collectAsStateWithLifecycle()
     val errorState by weatherViewModel.anotherCityError.collectAsStateWithLifecycle()
 
 
@@ -247,6 +246,8 @@ fun AddLocationScreen(
         ) {
             WeatherIconButton(id = R.drawable.back_icon) {
                 navController.popBackStack()
+                cityPredictViewModel.clearPredicted()
+                weatherViewModel.clearErrorState()
             }
         }
 
@@ -254,7 +255,7 @@ fun AddLocationScreen(
             modifier = Modifier
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             Text(
                 modifier = Modifier.padding(32.dp),
@@ -271,7 +272,7 @@ fun AddLocationScreen(
                 value = city,
                 onValueChange = { newValue ->
                     city = newValue
-                    predictViewModel.getPredicted(newValue)
+                    cityPredictViewModel.getPredicted(newValue)
                 },
                 label = {
                     Text(
@@ -312,7 +313,7 @@ fun AddLocationScreen(
                                 .fillMaxWidth().padding(8.dp)
                                 .clickable {
                                     city = predictedCities[it].name
-                                    predictViewModel.clearPredicted()
+                                    cityPredictViewModel.clearPredicted()
                                 },
                             textAlign = TextAlign.Center,
                             style = TextStyle(

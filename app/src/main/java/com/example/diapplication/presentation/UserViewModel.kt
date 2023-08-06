@@ -24,12 +24,9 @@ class UserViewModel @Inject constructor(
         }
 
     }
-
     fun getUserTheme() {
         viewModelScope.launch {
             repository.getUserTheme(_darkTheme)
         }
     }
-
-
 }

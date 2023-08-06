@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diapplication.data.repository.WeatherRepository
 import com.example.diapplication.domain.entity.Location
+import com.example.diapplication.domain.usecase.PredictCityUseCase
+import com.example.diapplication.domain.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,24 +14,24 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class PredictViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository
+class CityPredictViewModel @Inject constructor(
+    private val cityUseCase: PredictCityUseCase
 ) : ViewModel(){
 
-    private val predictedState = MutableStateFlow(listOf<Location>())
-    val predicted = predictedState
+    private val _predictedCitiesState = MutableStateFlow(listOf<Location>())
+    val predictedCitiesState = _predictedCitiesState
 
     fun getPredicted(location: String?){
         viewModelScope.launch {
             if (location?.isNotEmpty() == true){
-                delay(300)
-                predictedState.value = weatherRepository.getPredicted(location)
+                delay(Constants.PREDICT_DELAY)
+                _predictedCitiesState.value = cityUseCase.invoke(location)
             }
 
         }
     }
 
     fun clearPredicted(){
-        predictedState.value = listOf()
+        _predictedCitiesState.value = listOf()
     }
 }
