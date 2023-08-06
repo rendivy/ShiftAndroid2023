@@ -13,20 +13,23 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
-import com.example.diapplication.presentation.WeatherState
+import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.BigIconSize
 import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.SmallFont
+import com.example.diapplication.ui.theme.SpacingMedium
+import com.example.diapplication.ui.theme.SpacingPartTiny
+import com.example.diapplication.ui.theme.SpacingSmall
 import com.example.diapplication.ui.theme.TinyFont
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.WeatherConditionImage
@@ -36,8 +39,10 @@ import com.example.diapplication.view.utils.WeatherIconButton
 @Composable
 fun DetailsScreen(
     navController: NavController,
-    additionCitiesList: List<WeatherState.Content>
+    weatherViewModel: WeatherViewModel
 ) {
+
+    val additionCitiesList by weatherViewModel.citiesWeatherState.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier
@@ -49,7 +54,7 @@ fun DetailsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(32.dp),
+                    .padding(SpacingMedium),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -64,7 +69,7 @@ fun DetailsScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 32.dp, end = 32.dp),
+                        .padding(start = SpacingMedium, end = SpacingMedium),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -96,10 +101,10 @@ fun DetailsScreen(
                     WeatherConditionImage(
                         weatherCondition = additionCitiesList[i].weather.current.weatherCondition.text,
                         modifier = Modifier
-                            .padding(top = 32.dp, bottom = 8.dp)
+                            .padding(top = SpacingMedium, bottom = SpacingPartTiny)
                             .width(BigIconSize)
                             .height(BigIconSize)
-                            .padding(16.dp)
+                            .padding(SpacingSmall)
                             .align(Alignment.CenterVertically)
                     )
                 }

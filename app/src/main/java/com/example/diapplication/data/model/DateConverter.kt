@@ -2,7 +2,6 @@ package com.example.diapplication.data.model
 
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
@@ -10,7 +9,7 @@ import java.util.Locale
 
 class DateConverter {
     companion object {
-        fun invertDate(dateString: String): String {
+        fun invertDate(dateString: String):String {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
             val date = LocalDate.parse(dateString, formatter)
 

@@ -21,6 +21,7 @@
     <string name ="report_label">Report an Issue</string>
     <string name="currentLocation_label">Current location</string>
     <string name="forecast">Forecast</string>
+    <string name="feels_like">Feels Like</string>
     <string name="details">Details</string>
     <string name="precipitation">Precipitation</string>
     <string name ="humidity">Humidity</string>

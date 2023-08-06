@@ -43,8 +43,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.diapplication.R
@@ -55,10 +53,16 @@ import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.MediumFont
 import com.example.diapplication.ui.theme.PartSmallFont
+import com.example.diapplication.ui.theme.PlusMediumIconSize
 import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.SmallFont
+import com.example.diapplication.ui.theme.SpacingMedium
+import com.example.diapplication.ui.theme.SpacingPartTiny
+import com.example.diapplication.ui.theme.SpacingRegular
+import com.example.diapplication.ui.theme.SpacingSmall
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
+import com.example.diapplication.ui.theme.tinyIconSize
 import com.example.diapplication.view.utils.WeatherConditionImage
 import com.example.diapplication.view.utils.WeatherIconButton
 
@@ -70,7 +74,7 @@ fun ForecastWeatherScreen(weatherState: Weather?) {
     )
     {
         HourlyForecastScreen(weatherState = weatherState)
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(SpacingMedium))
         DailyForecastScreen(weatherState = weatherState)
     }
 }
@@ -85,14 +89,14 @@ fun HourlyForecastScreen(weatherState: Weather?) {
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(UbuntuBold),
             color = MaterialTheme.colorScheme.tertiary,
-        ), modifier = Modifier.padding(start = 32.dp, bottom = 16.dp)
+        ), modifier = Modifier.padding(start = SpacingMedium, bottom = SpacingSmall)
     )
     LazyRow(
         state = lazyListState,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
-            .padding(start = 32.dp, end = 32.dp)
+            .padding(start = SpacingMedium, end = SpacingMedium)
             .fillMaxWidth()
     ) {
         for (i in weatherState?.forecast?.forecastDayList?.get(0)?.hourList?.indices!!) {
@@ -100,7 +104,7 @@ fun HourlyForecastScreen(weatherState: Weather?) {
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+                    modifier = Modifier.padding(start = SpacingPartTiny, end = SpacingPartTiny)
                 ) {
                     Text(
                         text = "$i" + stringResource(id = R.string.hour_minute),
@@ -114,8 +118,8 @@ fun HourlyForecastScreen(weatherState: Weather?) {
                     WeatherConditionImage(
                         weatherCondition = weatherState.forecast.forecastDayList[0].hourList[i].condition.text,
                         modifier = Modifier
-                            .padding(top = 8.dp, bottom = 8.dp)
-                            .size(36.dp)
+                            .padding(top = SpacingPartTiny, bottom = SpacingPartTiny)
+                            .size(PlusMediumIconSize)
 
                     )
                     Text(
@@ -145,11 +149,11 @@ fun DailyForecastScreen(weatherState: Weather?) {
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(UbuntuBold),
             color = MaterialTheme.colorScheme.tertiary,
-        ), modifier = Modifier.padding(start = 32.dp, bottom = 16.dp)
+        ), modifier = Modifier.padding(start = SpacingMedium, bottom = SpacingSmall)
     )
     LazyRow(
         modifier = Modifier
-            .padding(start = 32.dp, end = 32.dp)
+            .padding(start = SpacingMedium, end = SpacingMedium)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
@@ -174,8 +178,8 @@ fun DailyForecastScreen(weatherState: Weather?) {
                         WeatherConditionImage(
                             weatherCondition = weatherState.forecast.forecastDayList[i].day.condition.text,
                             modifier = Modifier
-                                .padding(top = 8.dp, bottom = 8.dp)
-                                .size(36.dp)
+                                .padding(top = SpacingPartTiny, bottom = SpacingPartTiny)
+                                .size(PlusMediumIconSize)
 
                         )
                         Row(
@@ -186,7 +190,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
                                 painter = painterResource(id = R.drawable.down_arrow),
                                 contentDescription = "down_arrow",
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(tinyIconSize)
                             )
                             Text(
                                 text = weatherState.forecast.forecastDayList[i].day.minimumTemperature.toInt()
@@ -207,7 +211,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
                                 painter = painterResource(id = R.drawable.up_arrow),
                                 contentDescription = "down_arrow",
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(tinyIconSize)
                             )
                             Text(
                                 text = weatherState.forecast.forecastDayList[i].day.maximumTemperature.toInt()
@@ -221,7 +225,7 @@ fun DailyForecastScreen(weatherState: Weather?) {
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(SpacingSmall))
                 }
             }
         }
@@ -251,7 +255,7 @@ fun AddLocationScreen(
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(32.dp)
+                .padding(SpacingMedium)
         ) {
             WeatherIconButton(id = R.drawable.back_icon) {
                 navController.popBackStack()
@@ -267,7 +271,7 @@ fun AddLocationScreen(
             verticalArrangement = Arrangement.Top
         ) {
             Text(
-                modifier = Modifier.padding(32.dp),
+                modifier = Modifier.padding(SpacingMedium),
                 text = errorState.toString(),
                 style = TextStyle(
                     fontSize = MediumFont,
@@ -312,14 +316,17 @@ fun AddLocationScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth().padding(24.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(SpacingRegular),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
                     items(predictedCities.size) {
                         Text(
                             text = predictedCities[it].name, modifier = Modifier
-                                .fillMaxWidth().padding(8.dp)
+                                .fillMaxWidth()
+                                .padding(SpacingPartTiny)
                                 .clickable {
                                     city = predictedCities[it].name
                                     cityPredictViewModel.clearPredicted()
@@ -335,7 +342,7 @@ fun AddLocationScreen(
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(SpacingMedium ))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -353,7 +360,7 @@ fun AddLocationScreen(
                     contentDescription = "add",
                     tint = MaterialTheme.colorScheme.secondary
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(SpacingSmall))
                 Text(
                     text = stringResource(id = R.string.add_placeholder),
                     style = TextStyle(
@@ -373,7 +380,7 @@ fun AddLocationScreen(
 
 @Composable
 fun AdditionalDetailsScreen(weatherState: Weather?) {
-    Column(modifier = Modifier.padding(start = 32.dp)) {
+    Column(modifier = Modifier.padding(start = SpacingMedium)) {
         Text(
             text = stringResource(id = R.string.precipitation),
             style = TextStyle(
@@ -394,7 +401,7 @@ fun AdditionalDetailsScreen(weatherState: Weather?) {
             ),
         )
     }
-    Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
+    Column(modifier = Modifier.padding(start = SpacingMedium, top = SpacingPartTiny)) {
         Text(
             text = weatherState?.current?.windDirection.toString() +
                     Constants.SHORT_SPACE + stringResource(id = R.string.wind),
@@ -416,7 +423,7 @@ fun AdditionalDetailsScreen(weatherState: Weather?) {
             ),
         )
     }
-    Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
+    Column(modifier = Modifier.padding(start = SpacingMedium, top = SpacingPartTiny)) {
         Text(
             text = stringResource(id = R.string.humidity),
             style = TextStyle(
@@ -437,7 +444,7 @@ fun AdditionalDetailsScreen(weatherState: Weather?) {
             ),
         )
     }
-    Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
+    Column(modifier = Modifier.padding(start = SpacingMedium, top = SpacingPartTiny)) {
         Text(
             text = stringResource(id = R.string.UV),
             style = TextStyle(
@@ -457,9 +464,9 @@ fun AdditionalDetailsScreen(weatherState: Weather?) {
             ),
         )
     }
-    Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
+    Column(modifier = Modifier.padding(start = SpacingMedium, top = SpacingPartTiny)) {
         Text(
-            text = "Feels Like",
+            text = stringResource(id = R.string.feels_like),
             style = TextStyle(
                 fontSize = SmallFont,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
@@ -478,7 +485,7 @@ fun AdditionalDetailsScreen(weatherState: Weather?) {
             ),
         )
     }
-    Column(modifier = Modifier.padding(start = 32.dp, top = 8.dp)) {
+    Column(modifier = Modifier.padding(start = SpacingMedium, top = SpacingPartTiny)) {
         Text(
             text = stringResource(id = R.string.pressure),
             style = TextStyle(

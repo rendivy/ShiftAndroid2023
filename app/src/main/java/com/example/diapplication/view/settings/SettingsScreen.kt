@@ -16,12 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.ui.theme.RegularFont
+import com.example.diapplication.ui.theme.SpacingMedium
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.view.utils.WeatherIconButton
 
@@ -37,7 +36,7 @@ fun SettingsScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(top = 32.dp)
+            .padding(top = SpacingMedium)
     ) {
         item {
             Row(
