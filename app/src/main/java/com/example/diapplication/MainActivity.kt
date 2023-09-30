@@ -15,7 +15,7 @@ import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.DIapplicationTheme
-import com.example.diapplication.view.navigation.WeatherNavHost
+import com.example.diapplication.presentation.ui.navigation.WeatherNavHost
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
     private val cityPredictViewModel: CityPredictViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-
+                      
     @OptIn(ExperimentalPermissionsApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

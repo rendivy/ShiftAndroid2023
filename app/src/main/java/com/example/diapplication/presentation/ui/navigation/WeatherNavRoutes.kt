@@ -1,4 +1,4 @@
-package com.example.diapplication.view.navigation
+package com.example.diapplication.presentation.ui.navigation
 
 sealed class WeatherNavRoutes(val route: String) {
     object Home : WeatherNavRoutes(route = "weatherScreen")

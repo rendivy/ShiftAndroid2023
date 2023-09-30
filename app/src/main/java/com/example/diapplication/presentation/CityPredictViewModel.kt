@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diapplication.domain.entity.Location
 import com.example.diapplication.domain.usecase.PredictCityUseCase
-import com.example.diapplication.domain.utils.Constants
+import com.example.diapplication.domain.common.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

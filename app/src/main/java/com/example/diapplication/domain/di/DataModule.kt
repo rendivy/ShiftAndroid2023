@@ -1,8 +1,10 @@
 package com.example.diapplication.domain.di
 
 import com.example.diapplication.data.remote.WeatherApiService
-import com.example.diapplication.data.repository.WeatherRepository
-import com.example.diapplication.domain.utils.Constants.BASE_URL
+import com.example.diapplication.domain.common.Constants
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -12,14 +14,24 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
-
-
 
 @Module
 @InstallIn(SingletonComponent::class)
-class WeatherModule {
+object DataModule {
+
+    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder()
+        .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
+        .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)
+        .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideDatabase(): FirebaseDatabase{
+        return Firebase.database
+    }
 
     @get:Provides
     val json = Json {
@@ -29,13 +41,16 @@ class WeatherModule {
     @Singleton
     fun provideWeatherApiService(okHttpClient: OkHttpClient): WeatherApiService = Retrofit.Builder()
         .client(okHttpClient)
-        .baseUrl(BASE_URL)
+        .baseUrl(Constants.BASE_URL)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build().create(WeatherApiService::class.java)
 
+    @Provides
     @Singleton
-    fun provideRepository(apiService: WeatherApiService): WeatherRepository {
-        return WeatherRepository(apiService)
-    }
+    fun provideOkHttpClient(): OkHttpClient = okHttpClient
+
+    @Provides
+    @Singleton
+    fun provideCitiesReference(database: FirebaseDatabase) = database.getReference("cities")
 
 }

@@ -1,4 +1,4 @@
-package com.example.diapplication.view
+package com.example.diapplication.presentation.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -38,9 +38,9 @@ import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.SpacingMedium
 import com.example.diapplication.ui.theme.SpacingSmall
 import com.example.diapplication.ui.theme.UbuntuBold
-import com.example.diapplication.view.forecast.AdditionalDetailsScreen
-import com.example.diapplication.view.forecast.ForecastWeatherScreen
-import com.example.diapplication.view.utils.WeatherConditionImage
+import com.example.diapplication.presentation.ui.forecast.AdditionalDetailsScreen
+import com.example.diapplication.presentation.ui.forecast.ForecastWeatherScreen
+import com.example.diapplication.presentation.ui.utils.WeatherConditionImage
 
 
 @Composable

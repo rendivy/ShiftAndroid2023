@@ -2,7 +2,7 @@ package com.example.diapplication.data.model
 
 import android.content.Intent
 import android.net.Uri
-import com.example.diapplication.domain.utils.Constants
+import com.example.diapplication.domain.common.Constants
 
 class Redirected {
     companion object {

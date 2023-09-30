@@ -1,4 +1,4 @@
-package com.example.diapplication.domain.utils
+package com.example.diapplication.domain.common
 
 object Constants {
     const val API_TOKEN = "ee6dfd6f5e224f0a8ed134208230407"

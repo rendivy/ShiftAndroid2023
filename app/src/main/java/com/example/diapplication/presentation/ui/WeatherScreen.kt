@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalPermissionsApi::class)
 
-package com.example.diapplication.view
+package com.example.diapplication.presentation.ui
 
 
 import androidx.compose.foundation.Image
@@ -41,7 +41,7 @@ import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.SpacingMedium
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
-import com.example.diapplication.view.utils.WeatherIconButton
+import com.example.diapplication.presentation.ui.utils.WeatherIconButton
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 

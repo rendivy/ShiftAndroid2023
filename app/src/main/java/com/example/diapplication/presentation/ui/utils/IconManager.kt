@@ -1,4 +1,4 @@
-package com.example.diapplication.view.utils
+package com.example.diapplication.presentation.ui.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.example.diapplication.R
 import com.example.diapplication.ui.theme.RegularIconSize
 

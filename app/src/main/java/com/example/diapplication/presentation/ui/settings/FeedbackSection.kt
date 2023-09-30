@@ -1,4 +1,4 @@
-package com.example.diapplication.view.settings
+package com.example.diapplication.presentation.ui.settings
 
 import android.content.Context
 import androidx.compose.foundation.clickable
@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -21,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.core.content.ContextCompat
 import com.example.diapplication.R
 import com.example.diapplication.data.model.Redirected
-import com.example.diapplication.domain.utils.Constants
+import com.example.diapplication.domain.common.Constants
 import com.example.diapplication.ui.theme.MediumFont
 import com.example.diapplication.ui.theme.PartSmallFont
 import com.example.diapplication.ui.theme.SpacingMedium
@@ -30,9 +29,8 @@ import com.example.diapplication.ui.theme.SpacingTiny
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
 
-
 @Composable
-fun AboutSection(
+fun FeedbackSection(
     context: Context
 ) {
     Column(
@@ -42,7 +40,7 @@ fun AboutSection(
             .clickable {
                 ContextCompat.startActivity(
                     context,
-                    Redirected.redirectUser(Constants.GIT_HUB_KEY),
+                    Redirected.redirectUser(Constants.ISSUE_KEY),
                     null
                 )
             },
@@ -50,7 +48,7 @@ fun AboutSection(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(
-            text = stringResource(id = R.string.about_label),
+            text = stringResource(id = R.string.feedback_label),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(UbuntuBold),
             fontSize = MediumFont,
@@ -59,15 +57,15 @@ fun AboutSection(
         Spacer(modifier = Modifier.height(SpacingSmall))
 
         Text(
-            text = stringResource(id = R.string.team_label),
+            text = stringResource(id = R.string.report_label),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
-            fontWeight = FontWeight(UbuntuBold),
+            fontWeight = FontWeight(400),
             fontSize = PartSmallFont,
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.tertiary,
         )
         Spacer(modifier = Modifier.height(SpacingTiny))
         Text(
-            text = stringResource(id = R.string.about_column_description),
+            text = stringResource(id = R.string.issue_description),
             fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
             fontWeight = FontWeight(UbuntuBold),
             fontSize = ThickFont,

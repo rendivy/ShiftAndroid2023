@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
-package com.example.diapplication.view.forecast
+package com.example.diapplication.presentation.ui.forecast
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -48,7 +48,7 @@ import androidx.navigation.NavController
 import com.example.diapplication.R
 import com.example.diapplication.data.model.DateConverter
 import com.example.diapplication.domain.entity.Weather
-import com.example.diapplication.domain.utils.Constants
+import com.example.diapplication.domain.common.Constants
 import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.WeatherViewModel
 import com.example.diapplication.ui.theme.MediumFont
@@ -63,8 +63,8 @@ import com.example.diapplication.ui.theme.SpacingSmall
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
 import com.example.diapplication.ui.theme.tinyIconSize
-import com.example.diapplication.view.utils.WeatherConditionImage
-import com.example.diapplication.view.utils.WeatherIconButton
+import com.example.diapplication.presentation.ui.utils.WeatherConditionImage
+import com.example.diapplication.presentation.ui.utils.WeatherIconButton
 
 @Composable
 fun ForecastWeatherScreen(weatherState: Weather?) {

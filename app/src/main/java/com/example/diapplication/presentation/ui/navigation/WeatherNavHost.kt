@@ -1,4 +1,4 @@
-package com.example.diapplication.view.navigation
+package com.example.diapplication.presentation.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -7,10 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherViewModel
-import com.example.diapplication.view.WeatherScreen
-import com.example.diapplication.view.forecast.AddLocationScreen
-import com.example.diapplication.view.forecast.DetailsScreen
-import com.example.diapplication.view.settings.SettingsScreen
+import com.example.diapplication.presentation.ui.WeatherScreen
+import com.example.diapplication.presentation.ui.forecast.AddLocationScreen
+import com.example.diapplication.presentation.ui.forecast.DetailsScreen
+import com.example.diapplication.presentation.ui.settings.SettingsScreen
 
 
 @Composable

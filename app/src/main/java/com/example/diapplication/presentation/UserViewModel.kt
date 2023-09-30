@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okio.AsyncTimeout.Companion.condition
 import javax.inject.Inject
 
 
@@ -16,9 +17,6 @@ class UserViewModel @Inject constructor(
 ) : ViewModel() {
     private val _darkTheme = MutableStateFlow(true)
     val darkTheme: StateFlow<Boolean> = _darkTheme
-
-
-
 
     fun updateUserTheme(condition: Boolean) {
         viewModelScope.launch {

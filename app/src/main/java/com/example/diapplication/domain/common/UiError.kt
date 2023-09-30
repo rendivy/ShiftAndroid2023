@@ -1,4 +1,4 @@
-package com.example.diapplication.domain.utils
+package com.example.diapplication.domain.common
 
 enum class UiError(val message: String) {
     CITY_ALREADY_EXISTS("City already added"),

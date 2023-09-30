@@ -1,4 +1,4 @@
-package com.example.diapplication.view.settings
+package com.example.diapplication.presentation.ui.settings
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,7 @@ import com.example.diapplication.ui.theme.SpacingSmall
 import com.example.diapplication.ui.theme.SpacingTiny
 import com.example.diapplication.ui.theme.ThickFont
 import com.example.diapplication.ui.theme.UbuntuBold
-import com.example.diapplication.view.utils.IconManager
+import com.example.diapplication.presentation.ui.utils.IconManager
 
 @Composable
 fun ThemeSection(

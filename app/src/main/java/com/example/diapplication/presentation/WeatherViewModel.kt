@@ -9,8 +9,8 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diapplication.domain.usecase.UpdateWeatherUseCase
-import com.example.diapplication.domain.utils.Constants
-import com.example.diapplication.domain.utils.UiError
+import com.example.diapplication.domain.common.Constants
+import com.example.diapplication.domain.common.UiError
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
@@ -27,12 +27,14 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val updateWeatherUseCase: UpdateWeatherUseCase,
-    private val citiesReference: DatabaseReference) : ViewModel() {
+    private val citiesReference: DatabaseReference
+) : ViewModel() {
 
     private val _weatherState = MutableStateFlow<WeatherState>(WeatherState.Loading)
     val weatherState: StateFlow<WeatherState> = _weatherState
 
-    private val _citiesWeatherState = MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
+    private val _citiesWeatherState =
+        MutableStateFlow<MutableList<WeatherState.Content>>(mutableListOf())
     val citiesWeatherState: StateFlow<List<WeatherState.Content>> = _citiesWeatherState
 
     private val _anotherCityError = MutableStateFlow<String?>(Constants.EMPTY_STRING)
@@ -44,7 +46,7 @@ class WeatherViewModel @Inject constructor(
 
     private fun getUserCities() {
         citiesReference.get().addOnSuccessListener {
-            if (it.value != null){
+            if (it.value != null) {
                 val cities = it.value as List<String>
                 cities.forEach { cityName ->
                     updateAnotherCityWeather(cityName)
@@ -70,7 +72,7 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    fun clearErrorState(){
+    fun clearErrorState() {
         _anotherCityError.value = Constants.EMPTY_STRING
     }
 

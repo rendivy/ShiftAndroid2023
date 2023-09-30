@@ -1,4 +1,4 @@
-package com.example.diapplication.view.settings
+package com.example.diapplication.presentation.ui.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.ui.theme.RegularFont
 import com.example.diapplication.ui.theme.SpacingMedium
 import com.example.diapplication.ui.theme.UbuntuBold
-import com.example.diapplication.view.utils.WeatherIconButton
+import com.example.diapplication.presentation.ui.utils.WeatherIconButton
 
 
 @Composable
