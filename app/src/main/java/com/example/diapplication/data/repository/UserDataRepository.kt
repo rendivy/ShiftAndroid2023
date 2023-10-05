@@ -11,8 +11,6 @@ class UserDataRepository @Inject constructor(database: FirebaseDatabase) {
     private val themeReference = database.getReference("darkThemeIsEnabled")
     private val tokenReference = database.getReference("token")
 
-
-
     fun getToken(apiToken: MutableStateFlow<String>) {
         tokenReference.get().addOnSuccessListener {
             apiToken.value = it.value as String

@@ -6,6 +6,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Forecast(
-    @SerialName("forecastday") val forecastDayList: List<Forecastday>,
-
-    )
+    @SerialName("forecastday") val forecastDayList: List<Forecastday>
+)

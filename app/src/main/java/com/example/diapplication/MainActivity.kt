@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalPermissionsApi::class)
+
 package com.example.diapplication
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,8 +17,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.diapplication.presentation.CityPredictViewModel
 import com.example.diapplication.presentation.UserViewModel
 import com.example.diapplication.presentation.WeatherViewModel
-import com.example.diapplication.ui.theme.DIapplicationTheme
 import com.example.diapplication.presentation.ui.navigation.WeatherNavHost
+import com.example.diapplication.ui.theme.DIapplicationTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -30,31 +33,30 @@ class MainActivity : ComponentActivity() {
     private val cityPredictViewModel: CityPredictViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-                      
-    @OptIn(ExperimentalPermissionsApi::class)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
             val darkTheme by userViewModel.darkTheme.collectAsStateWithLifecycle()
-
             val context: Context = LocalContext.current
-            val permissionDenied = rememberSaveable { mutableStateOf(false) }
-            val locationPermissionState =
-                rememberPermissionState(permission = android.Manifest.permission.ACCESS_FINE_LOCATION)
 
+            val permissionDenied = rememberSaveable { mutableStateOf(false) }
+            val locationPermissionState = rememberPermissionState(permission = ACCESS_FINE_LOCATION)
+
+            FirebaseApp.initializeApp(this)
+            userViewModel.getUserTheme()
+            weatherViewModel.getCities()
             LaunchedEffect(Unit) {
-                userViewModel.getUserTheme()
                 weatherViewModel.updateUserGeolocation(
                     context = context,
                     fusedLocationProviderClient = fusedLocationProviderClient,
                     locationPermissionState = locationPermissionState,
                     permissionDenied = permissionDenied,
                 )
-                weatherViewModel.getCities()
-            }
 
-            FirebaseApp.initializeApp(this)
+            }
 
             DIapplicationTheme(darkTheme = darkTheme) {
                 WeatherNavHost(

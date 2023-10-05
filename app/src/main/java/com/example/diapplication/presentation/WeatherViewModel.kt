@@ -17,6 +17,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.firebase.database.DatabaseReference
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -53,7 +54,7 @@ class WeatherViewModel @Inject constructor(
                 }
             }
         }.addOnFailureListener {
-            _weatherState.value = WeatherState.Error(true)
+
         }
     }
 
@@ -66,7 +67,8 @@ class WeatherViewModel @Inject constructor(
                 if (!_citiesWeatherState.value.contains(WeatherState.Content(weather))) {
                     _citiesWeatherState.value.add(0, WeatherState.Content(weather))
                 }
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 _weatherState.value = WeatherState.Error(true)
             }
         }
@@ -107,7 +109,7 @@ class WeatherViewModel @Inject constructor(
         context: Context,
         permissionDenied: MutableState<Boolean>,
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (!locationPermissionState.status.isGranted) {
                 locationPermissionState.launchPermissionRequest()
             } else {
