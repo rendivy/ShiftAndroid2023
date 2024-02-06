@@ -1,9 +1,9 @@
 package com.example.diapplication.data.remote
 
 
-import com.example.diapplication.domain.entity.Location
-import com.example.diapplication.domain.entity.Weather
-import com.example.diapplication.domain.utils.Constants.API_TOKEN
+import com.example.diapplication.common.NetworkConstants.API_TOKEN
+import com.example.diapplication.data.entity.Location
+import com.example.diapplication.data.entity.Weather
 import retrofit2.http.GET
 import retrofit2.http.Query
 
