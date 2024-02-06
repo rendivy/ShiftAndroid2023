@@ -20,15 +20,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.core.content.ContextCompat
 import com.example.diapplication.R
+import com.example.diapplication.common.Constants
 import com.example.diapplication.data.model.Redirected
-import com.example.diapplication.domain.common.Constants
-import com.example.diapplication.ui.theme.MediumFont
-import com.example.diapplication.ui.theme.PartSmallFont
-import com.example.diapplication.ui.theme.SpacingMedium
-import com.example.diapplication.ui.theme.SpacingSmall
-import com.example.diapplication.ui.theme.SpacingTiny
-import com.example.diapplication.ui.theme.ThickFont
-import com.example.diapplication.ui.theme.UbuntuBold
+import com.example.diapplication.presentation.ui.theme.MediumFont
+import com.example.diapplication.presentation.ui.theme.PartSmallFont
+import com.example.diapplication.presentation.ui.theme.SpacingMedium
+import com.example.diapplication.presentation.ui.theme.SpacingSmall
+import com.example.diapplication.presentation.ui.theme.SpacingTiny
+import com.example.diapplication.presentation.ui.theme.ThickFont
+import com.example.diapplication.presentation.ui.theme.UbuntuBold
 
 
 @Composable

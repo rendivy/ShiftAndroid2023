@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.diapplication.R
-import com.example.diapplication.ui.theme.RegularIconSize
+import com.example.diapplication.presentation.ui.theme.RegularIconSize
 
 @Composable
 fun IconManager(tintColor: Color){

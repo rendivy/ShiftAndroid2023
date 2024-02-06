@@ -1,11 +1,7 @@
 package com.example.diapplication.data.repository
 
-import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.flow.MutableStateFlow
-import javax.inject.Inject
-import javax.inject.Singleton
 
-
+/*
 @Singleton
 class UserDataRepository @Inject constructor(database: FirebaseDatabase) {
     private val themeReference = database.getReference("darkThemeIsEnabled")
@@ -31,4 +27,4 @@ class UserDataRepository @Inject constructor(database: FirebaseDatabase) {
         }
     }
 
-}
+}*/

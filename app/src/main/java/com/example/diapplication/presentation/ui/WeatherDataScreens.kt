@@ -30,21 +30,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diapplication.R
-import com.example.diapplication.data.model.DateConverter
-import com.example.diapplication.domain.entity.Weather
-import com.example.diapplication.ui.theme.LargeFont
-import com.example.diapplication.ui.theme.LargeIconSize
-import com.example.diapplication.ui.theme.RegularFont
-import com.example.diapplication.ui.theme.SpacingMedium
-import com.example.diapplication.ui.theme.SpacingSmall
-import com.example.diapplication.ui.theme.UbuntuBold
+import com.example.diapplication.common.utils.DateConverter
+import com.example.diapplication.data.entity.Weather
 import com.example.diapplication.presentation.ui.forecast.AdditionalDetailsScreen
 import com.example.diapplication.presentation.ui.forecast.ForecastWeatherScreen
+import com.example.diapplication.presentation.ui.theme.LargeFont
+import com.example.diapplication.presentation.ui.theme.LargeIconSize
+import com.example.diapplication.presentation.ui.theme.RegularFont
+import com.example.diapplication.presentation.ui.theme.SpacingMedium
+import com.example.diapplication.presentation.ui.theme.SpacingSmall
+import com.example.diapplication.presentation.ui.theme.UbuntuBold
 import com.example.diapplication.presentation.ui.utils.WeatherConditionImage
 
 
 @Composable
-fun WeatherForeCastScreen(weatherState: Weather?) {
+fun WeatherForeCastScreen(content: Weather) {
+
     val isForecastClicked = rememberSaveable { mutableStateOf(false) }
 
     Column {
@@ -76,8 +77,8 @@ fun WeatherForeCastScreen(weatherState: Weather?) {
             )
         }
         when (isForecastClicked.value) {
-            false -> AdditionalDetailsScreen(weatherState = weatherState)
-            else -> ForecastWeatherScreen(weatherState = weatherState)
+            false -> AdditionalDetailsScreen(content = content)
+            else -> ForecastWeatherScreen(weatherState = content)
         }
 
     }
@@ -94,7 +95,7 @@ fun MainWeatherData(weatherState: Weather?) {
             .padding(top = 32.dp)
     ) {
         Text(
-            text = DateConverter.convertDateTime(weatherState?.current?.lastUpdated.toString()),
+            text = DateConverter.convertDateTime(weatherState?.current?.lastUpdated),
             style = TextStyle(
                 fontSize = RegularFont,
                 fontFamily = FontFamily(Font(R.font.ubuntu_condensed)),
